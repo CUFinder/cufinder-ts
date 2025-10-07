@@ -1,14 +1,14 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
+    AuthenticationError,
+    CreditLimitError,
     CufinderClientConfig,
-    RequestConfig as SDKRequestConfig,
-    Response,
     CufinderError,
     NetworkError,
-    AuthenticationError,
     RateLimitError,
+    Response,
+    RequestConfig as SDKRequestConfig,
     ValidationError,
-    CreditLimitError,
 } from './shared/types';
 
 /**
