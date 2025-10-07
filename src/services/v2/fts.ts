@@ -1,5 +1,4 @@
 import { FtsV2Params, FtsV2Response } from '../../shared/types';
-import { FtsV2Params, FtsV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 
 /**

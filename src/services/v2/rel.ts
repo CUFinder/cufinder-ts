@@ -1,4 +1,3 @@
-import { BaseResponse, Person } from '../../shared/models';
 import { RelV2Params, RelV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 

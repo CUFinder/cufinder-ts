@@ -1,4 +1,3 @@
-import { BaseResponse, Person } from '../../shared/models';
 import { EppV2Params, EppV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 

@@ -1,4 +1,3 @@
-import { BaseResponse, FundraisingInfo } from '../../shared/models';
 import { ElfV2Params, ElfV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 

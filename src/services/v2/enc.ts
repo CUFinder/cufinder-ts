@@ -1,4 +1,3 @@
-import { BaseResponse, Company } from '../../shared/models';
 import { EncV2Params, EncV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 

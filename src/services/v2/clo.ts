@@ -1,4 +1,3 @@
-import { BaseResponse, CompanyLocation } from '../../shared/models';
 import { CloV2Params, CloV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 

@@ -1,4 +1,3 @@
-import { BaseResponse, LookalikeCompany } from '../../shared/models';
 import { FclV2Params, FclV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 

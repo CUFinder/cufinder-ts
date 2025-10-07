@@ -1,5 +1,4 @@
 import { FweV2Params, FweV2Response } from '../../shared/types';
-import { FweV2Params, FweV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 
 /**

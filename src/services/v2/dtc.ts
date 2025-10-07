@@ -1,5 +1,4 @@
 import { DtcV2Params, DtcV2Response } from '../../shared/types';
-import { DtcV2Params, DtcV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 
 /**

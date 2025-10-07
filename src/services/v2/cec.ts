@@ -1,5 +1,4 @@
 import { CecV2Params, CecV2Response } from '../../shared/types';
-import { CecV2Params, CecV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 
 /**

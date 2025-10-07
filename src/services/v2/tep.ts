@@ -1,4 +1,3 @@
-import { BaseResponse, Person } from '../../shared/models';
 import { TepV2Params, TepV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 

@@ -1,5 +1,4 @@
 import { NtpV2Params, NtpV2Response } from '../../shared/types';
-import { NtpV2Params, NtpV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 
 /**

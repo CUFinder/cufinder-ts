@@ -1,5 +1,4 @@
 import { CarV2Params, CarV2Response } from '../../shared/types';
-import { CarV2Params, CarV2Response } from '../../shared/types';
 import { BaseService } from '../base';
 
 /**
