@@ -3,13 +3,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended',
-    '@typescript-eslint/recommended-requiring-type-checking',
+    'prettier', // Must be last to override other configs
   ],
   root: true,
   env: {
@@ -17,18 +15,38 @@ module.exports = {
     jest: true,
     es6: true,
   },
-  ignorePatterns: ['.eslintrc.js', 'dist/', 'node_modules/'],
+  ignorePatterns: [
+    '.eslintrc.js',
+    'dist/',
+    'node_modules/',
+    '*.config.js',
+    '*.config.ts',
+    '*.d.ts',
+  ],
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    // Prettier integration
+    'prettier/prettier': 'error',
+
+    // TypeScript specific rules
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    '@typescript-eslint/prefer-const': 'error',
     '@typescript-eslint/no-var-requires': 'error',
+
+    // General ESLint rules
     'prefer-const': 'error',
     'no-var': 'error',
     'no-console': 'off',
     'no-debugger': 'error',
+    'no-unused-vars': 'off', // Use TypeScript version instead
+    'no-trailing-spaces': 'error',
+    'eol-last': 'error',
+    'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
+    'object-curly-spacing': ['error', 'always'],
+    'array-bracket-spacing': ['error', 'never'],
+    'comma-dangle': ['error', 'always-multiline'],
+    'quotes': ['error', 'single', { avoidEscape: true }],
+    'semi': ['error', 'always'],
+    'indent': ['error', 4, { SwitchCase: 1 }],
+    'max-len': ['error', { code: 100, ignoreUrls: true, ignoreStrings: true }],
   },
 };
