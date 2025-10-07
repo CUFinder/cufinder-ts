@@ -18,13 +18,13 @@ A comprehensive, type-safe TypeScript SDK for the Cufinder B2B Data Enrichment A
 ## Installation
 
 ```bash
-npm install @cufinder/sdk
+npm install @cufinder/cufinder-ts
 ```
 
 ## Quick Start
 
 ```typescript
-import { CufinderSDK } from '@cufinder/sdk';
+import { CufinderSDK } from '@cufinder/cufinder-ts';
 
 // Initialize the SDK
 const sdk = new CufinderSDK({
@@ -32,21 +32,21 @@ const sdk = new CufinderSDK({
 });
 
 // V1 API usage
-const domain = await sdk.v1.cuf.getDomain({
-  apiKey: 'your-api-key',
-  companyName: 'TechCorp'
+const domain = await sdk.v1.cuf({
+  api_key: 'your-api-key',
+  company_name: 'TechCorp'
 });
 console.log('Company domain:', domain.url);
 
 // V2 API usage
-const company = await sdk.v2.cuf.getDomain({
+const company = await sdk.v2.cuf({
   company_name: 'TechCorp',
   country_code: 'US'
 });
 console.log('Company domain:', company.domain);
 
 // Search for companies
-const companies = await sdk.v2.cse.searchCompanies({
+const companies = await sdk.v2.cse({
   name: 'technology',
   country: 'US'
 });
@@ -69,57 +69,57 @@ interface CufinderClientConfig {
 
 ### V1 API Services (5 endpoints)
 
-#### `sdk.v1.cuf.getDomain(params)`
+#### `sdk.v1.cuf(params)`
 **CUF - Company Name to Domain API (V1)** - Returns the official website URL of a company based on its name.
 
 ```typescript
-const result = await sdk.v1.cuf.getDomain({
-  apiKey: 'your-api-key',
-  companyName: 'TechCorp'
+const result = await sdk.v1.cuf({
+  api_key: 'your-api-key',
+  company_name: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', url: 'https://techcorp.com', credit_count: 0, ... }
 ```
 
-#### `sdk.v1.lcuf.getLinkedInUrl(params)`
+#### `sdk.v1.lcuf(params)`
 **LCUF - Company LinkedIn URL Finder API (V1)** - Finds the official LinkedIn company profile URL from a company name.
 
 ```typescript
-const result = await sdk.v1.lcuf.getLinkedInUrl({
-  apiKey: 'your-api-key',
-  companyName: 'TechCorp'
+const result = await sdk.v1.lcuf({
+  api_key: 'your-api-key',
+  company_name: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', url: 'https://linkedin.com/company/techcorp', ... }
 ```
 
-#### `sdk.v1.dtc.getCompanyName(params)`
+#### `sdk.v1.dtc(params)`
 **DTC - Domain to Company Name API (V1)** - Retrieves the registered company name associated with a given website domain.
 
 ```typescript
-const result = await sdk.v1.dtc.getCompanyName({
-  apiKey: 'your-api-key',
-  companyWebsite: 'https://techcorp.com'
+const result = await sdk.v1.dtc({
+  api_key: 'your-api-key',
+  company_domain: 'techcorp.com'
 });
-// Returns: { query: 'https://techcorp.com', company_name: 'TechCorp', ... }
+// Returns: { query: 'techcorp.com', company_name: 'TechCorp', ... }
 ```
 
-#### `sdk.v1.dte.getEmails(params)`
+#### `sdk.v1.dte(params)`
 **DTE - Company Email Finder API (V1)** - Returns up to five general or role-based business email addresses for a company.
 
 ```typescript
-const result = await sdk.v1.dte.getEmails({
-  apiKey: 'your-api-key',
-  companyDomain: 'techcorp.com'
+const result = await sdk.v1.dte({
+  api_key: 'your-api-key',
+  company_domain: 'techcorp.com'
 });
 // Returns: { query: 'techcorp.com', emails: ['info@techcorp.com', 'contact@techcorp.com'], ... }
 ```
 
-#### `sdk.v1.ntp.getPhones(params)`
+#### `sdk.v1.ntp(params)`
 **NTP - Company Phone Finder API (V1)** - Returns up to two verified phone numbers for a company.
 
 ```typescript
-const result = await sdk.v1.ntp.getPhones({
-  apiKey: 'your-api-key',
-  companyName: 'TechCorp'
+const result = await sdk.v1.ntp({
+  api_key: 'your-api-key',
+  company_name: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', phones: ['+1-555-123-4567', '+1-555-123-4568'], ... }
 ```
@@ -128,142 +128,142 @@ const result = await sdk.v1.ntp.getPhones({
 
 #### Company Services
 
-##### `sdk.v2.cuf.getDomain(params)`
+##### `sdk.v2.cuf(params)`
 **CUF - Company Name to Domain API (V2)** - Returns the official website URL of a company based on its name.
 
 ```typescript
-const result = await sdk.v2.cuf.getDomain({
+const result = await sdk.v2.cuf({
   company_name: 'TechCorp',
   country_code: 'US'
 });
 // Returns: { query: 'TechCorp', domain: 'https://techcorp.com', credit_count: 0, ... }
 ```
 
-##### `sdk.v2.lcuf.getLinkedInUrl(params)`
+##### `sdk.v2.lcuf(params)`
 **LCUF - Company LinkedIn URL Finder API (V2)** - Finds the official LinkedIn company profile URL from a company name.
 
 ```typescript
-const result = await sdk.v2.lcuf.getLinkedInUrl({
+const result = await sdk.v2.lcuf({
   company_name: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', company: { name: 'TechCorp', linkedin_url: '...', ... }, ... }
 ```
 
-##### `sdk.v2.dtc.getCompanyName(params)`
+##### `sdk.v2.dtc(params)`
 **DTC - Domain to Company Name API (V2)** - Retrieves the registered company name associated with a given website domain.
 
 ```typescript
-const result = await sdk.v2.dtc.getCompanyName({
+const result = await sdk.v2.dtc({
   company_website: 'https://techcorp.com'
 });
 // Returns: { query: 'https://techcorp.com', company_name: 'TechCorp', ... }
 ```
 
-##### `sdk.v2.dte.getEmails(params)`
+##### `sdk.v2.dte(params)`
 **DTE - Company Email Finder API (V2)** - Returns up to five general or role-based business email addresses for a company.
 
 ```typescript
-const result = await sdk.v2.dte.getEmails({
+const result = await sdk.v2.dte({
   company_website: 'https://techcorp.com'
 });
 // Returns: { query: 'https://techcorp.com', emails: ['info@techcorp.com', 'contact@techcorp.com'], ... }
 ```
 
-##### `sdk.v2.ntp.getPhones(params)`
+##### `sdk.v2.ntp(params)`
 **NTP - Company Phone Finder API (V2)** - Returns up to two verified phone numbers for a company.
 
 ```typescript
-const result = await sdk.v2.ntp.getPhones({
+const result = await sdk.v2.ntp({
   company_name: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', phones: ['+1-555-123-4567', '+1-555-123-4568'], ... }
 ```
 
-##### `sdk.v2.fcl.getLookalikes(params)`
+##### `sdk.v2.fcl(params)`
 **FCL - Company Lookalikes Finder API (V2)** - Provides a list of similar companies based on an input company's profile.
 
 ```typescript
-const result = await sdk.v2.fcl.getLookalikes({
+const result = await sdk.v2.fcl({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', companies: [{ name: 'Similar Company', ... }], ... }
 ```
 
-##### `sdk.v2.elf.getFundraising(params)`
+##### `sdk.v2.elf(params)`
 **ELF - Company Fundraising API (V2)** - Returns detailed funding information about a company.
 
 ```typescript
-const result = await sdk.v2.elf.getFundraising({
+const result = await sdk.v2.elf({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', fundraising_info: { funding_last_round_type: 'Series B', ... }, ... }
 ```
 
-##### `sdk.v2.car.getRevenue(params)`
+##### `sdk.v2.car(params)`
 **CAR - Company Revenue Finder API (V2)** - Estimates a company's annual revenue based on name.
 
 ```typescript
-const result = await sdk.v2.car.getRevenue({
+const result = await sdk.v2.car({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', annual_revenue: '$75M', ... }
 ```
 
-##### `sdk.v2.fcc.getSubsidiaries(params)`
+##### `sdk.v2.fcc(params)`
 **FCC - Company Subsidiaries Finder API (V2)** - Identifies known subsidiaries of a parent company.
 
 ```typescript
-const result = await sdk.v2.fcc.getSubsidiaries({
+const result = await sdk.v2.fcc({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', subsidiaries: ['Subsidiary A', 'Subsidiary B'], ... }
 ```
 
-##### `sdk.v2.fts.getTechStack(params)`
+##### `sdk.v2.fts(params)`
 **FTS - Company Tech Stack Finder API (V2)** - Detects the technologies a company uses.
 
 ```typescript
-const result = await sdk.v2.fts.getTechStack({
+const result = await sdk.v2.fts({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', technologies: ['React', 'Node.js', 'AWS'], ... }
 ```
 
-##### `sdk.v2.enc.enrichCompany(params)`
+##### `sdk.v2.enc(params)`
 **ENC - Company Enrichment API (V2)** - Provides a complete company profile from a company name.
 
 ```typescript
-const result = await sdk.v2.enc.enrichCompany({
+const result = await sdk.v2.enc({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', company: { name: 'TechCorp', domain: 'techcorp.com', ... }, ... }
 ```
 
-##### `sdk.v2.cec.getEmployeeCountries(params)`
+##### `sdk.v2.cec(params)`
 **CEC - Company Employees Countries API (V2)** - Returns an estimated number of employees for a company.
 
 ```typescript
-const result = await sdk.v2.cec.getEmployeeCountries({
+const result = await sdk.v2.cec({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', countries: { 'US': 500, 'UK': 100 }, ... }
 ```
 
-##### `sdk.v2.clo.getLocations(params)`
+##### `sdk.v2.clo(params)`
 **CLO - Company Locations API (V2)** - Returns the known physical office locations of a company.
 
 ```typescript
-const result = await sdk.v2.clo.getLocations({
+const result = await sdk.v2.clo({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', locations: [{ country: 'US', city: 'San Francisco', ... }], ... }
 ```
 
-##### `sdk.v2.cse.searchCompanies(params?)`
+##### `sdk.v2.cse(params?)`
 **CSE - Company Search API (V2)** - Search for companies by keyword, partial name, industry, location, or other filters.
 
 ```typescript
-const result = await sdk.v2.cse.searchCompanies({
+const result = await sdk.v2.cse({
   name: 'technology',
   country: 'US',
   industry: 'Software',
@@ -275,32 +275,32 @@ const result = await sdk.v2.cse.searchCompanies({
 
 #### Person Services
 
-##### `sdk.v2.rel.reverseEmailLookup(params)`
+##### `sdk.v2.rel(params)`
 **REL - Reverse Email Lookup API (V2)** - Enriches an email address with detailed person and company information.
 
 ```typescript
-const result = await sdk.v2.rel.reverseEmailLookup({
+const result = await sdk.v2.rel({
   email: 'john.doe@techcorp.com'
 });
 // Returns: { query: 'john.doe@techcorp.com', person: { full_name: 'John Doe', ... }, ... }
 ```
 
-##### `sdk.v2.tep.enrichPerson(params)`
+##### `sdk.v2.tep(params)`
 **TEP - Person Enrichment API (V2)** - Returns enriched person data based on full name and company name.
 
 ```typescript
-const result = await sdk.v2.tep.enrichPerson({
+const result = await sdk.v2.tep({
   full_name: 'John Doe',
   company: 'TechCorp'
 });
 // Returns: { query: 'John Doe at TechCorp', person: { full_name: 'John Doe', ... }, ... }
 ```
 
-##### `sdk.v2.pse.searchPeople(params?)`
+##### `sdk.v2.pse(params?)`
 **PSE - Person Search API (V2)** - Search for people by name, company, job title, location, or other filters.
 
 ```typescript
-const result = await sdk.v2.pse.searchPeople({
+const result = await sdk.v2.pse({
   full_name: 'John',
   company_name: 'TechCorp',
   job_title_role: 'Engineer',
@@ -312,21 +312,21 @@ const result = await sdk.v2.pse.searchPeople({
 
 #### LinkedIn Services
 
-##### `sdk.v2.epp.enrichProfile(params)`
+##### `sdk.v2.epp(params)`
 **EPP - LinkedIn Profile Enrichment API (V2)** - Takes a LinkedIn profile URL and returns enriched person and company data.
 
 ```typescript
-const result = await sdk.v2.epp.enrichProfile({
+const result = await sdk.v2.epp({
   linkedin_url: 'https://linkedin.com/in/john-doe'
 });
 // Returns: { query: 'https://linkedin.com/in/john-doe', person: { full_name: 'John Doe', ... }, ... }
 ```
 
-##### `sdk.v2.fwe.getEmailFromProfile(params)`
+##### `sdk.v2.fwe(params)`
 **FWE - LinkedIn Profile Email Finder API (V2)** - Extracts a verified business email address from a LinkedIn profile URL.
 
 ```typescript
-const result = await sdk.v2.fwe.getEmailFromProfile({
+const result = await sdk.v2.fwe({
   linkedin_url: 'https://linkedin.com/in/john-doe'
 });
 // Returns: { query: 'https://linkedin.com/in/john-doe', work_email: 'john.doe@techcorp.com', ... }
@@ -334,11 +334,11 @@ const result = await sdk.v2.fwe.getEmailFromProfile({
 
 #### Search Services
 
-##### `sdk.v2.lbs.searchLocalBusinesses(params?)`
+##### `sdk.v2.lbs(params?)`
 **LBS - Local Business Search API (V2)** - Search for local businesses by location, industry, or name.
 
 ```typescript
-const result = await sdk.v2.lbs.searchLocalBusinesses({
+const result = await sdk.v2.lbs({
   name: 'coffee',
   city: 'San Francisco',
   industry: 'Food & Beverage',
@@ -360,10 +360,10 @@ import {
   CreditLimitError,
   NotFoundError,
   NetworkError
-} from '@cufinder/sdk';
+} from '@cufinder/cufinder-ts';
 
 try {
-  const result = await sdk.v2.cuf.getDomain({
+  const result = await sdk.v2.cuf({
     company_name: 'TechCorp',
     country_code: 'US'
   });
@@ -448,7 +448,7 @@ import type {
   CreditLimitError,
   NotFoundError,
   NetworkError
-} from '@cufinder/sdk';
+} from '@cufinder/cufinder-ts';
 ```
 
 ## Advanced Usage
@@ -471,7 +471,7 @@ const response = await client.post('/custom-endpoint', {
 ```typescript
 const info = sdk.getVersion();
 console.log(info);
-// { version: '1.0.0', name: '@cufinder/sdk', description: '...' }
+// { version: '1.0.0', name: '@cufinder/cufinder-ts', description: '...' }
 ```
 
 ## Development
@@ -578,4 +578,4 @@ MIT
 
 ## Support
 
-For support, please open an issue on the [GitHub repository](https://github.com/cufinder/sdk/issues).
+For support, please open an issue on the [GitHub repository](https://github.com/cufinder/cufinder-ts/issues).
