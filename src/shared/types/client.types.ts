@@ -3,91 +3,91 @@
  */
 
 export interface CufinderClientConfig {
-  apiKey: string;
-  baseUrl?: string;
-  timeout?: number;
-  retries?: number;
-  retryDelay?: number;
+    apiKey: string;
+    baseUrl?: string;
+    timeout?: number;
+    retries?: number;
+    retryDelay?: number;
 }
 
 export interface RequestConfig {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  url: string;
-  headers?: Record<string, string>;
-  params?: Record<string, unknown>;
-  data?: unknown;
-  timeout?: number;
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+    url: string;
+    headers?: Record<string, string>;
+    params?: Record<string, unknown>;
+    data?: unknown;
+    timeout?: number;
 }
 
 export interface Response<T = unknown> {
-  data: T;
-  status: number;
-  statusText: string;
-  headers: Record<string, string>;
+    data: T;
+    status: number;
+    statusText: string;
+    headers: Record<string, string>;
 }
 
 /**
  * SDK Error types
  */
 export class CufinderError extends Error {
-  constructor(
-    message: string,
-    public code: string,
-    public statusCode?: number,
-    public details?: Record<string, unknown>
-  ) {
-    super(message);
-    this.name = 'CufinderError';
-  }
+    constructor(
+        message: string,
+        public code: string,
+        public statusCode?: number,
+        public details?: Record<string, unknown>
+    ) {
+        super(message);
+        this.name = 'CufinderError';
+    }
 }
 
 export class NetworkError extends CufinderError {
-  constructor(message: string, statusCode?: number) {
-    super(message, 'NETWORK_ERROR', statusCode);
-    this.name = 'NetworkError';
-  }
+    constructor(message: string, statusCode?: number) {
+        super(message, 'NETWORK_ERROR', statusCode);
+        this.name = 'NetworkError';
+    }
 }
 
 export class AuthenticationError extends CufinderError {
-  constructor(message: string = 'Authentication failed') {
-    super(message, 'AUTH_ERROR', 401);
-    this.name = 'AuthenticationError';
-  }
+    constructor(message: string = 'Authentication failed') {
+        super(message, 'AUTH_ERROR', 401);
+        this.name = 'AuthenticationError';
+    }
 }
 
 export class ValidationError extends CufinderError {
-  constructor(message: string, details?: Record<string, unknown>) {
-    super(message, 'VALIDATION_ERROR', 400, details);
-    this.name = 'ValidationError';
-  }
+    constructor(message: string, details?: Record<string, unknown>) {
+        super(message, 'VALIDATION_ERROR', 400, details);
+        this.name = 'ValidationError';
+    }
 }
 
 export class RateLimitError extends CufinderError {
-  constructor(message: string = 'Rate limit exceeded', retryAfter?: number) {
-    super(message, 'RATE_LIMIT_ERROR', 429, { retryAfter });
-    this.name = 'RateLimitError';
-  }
+    constructor(message: string = 'Rate limit exceeded', retryAfter?: number) {
+        super(message, 'RATE_LIMIT_ERROR', 429, { retryAfter });
+        this.name = 'RateLimitError';
+    }
 }
 
 export class CreditLimitError extends CufinderError {
-  constructor(message: string = 'Credit limit exceeded') {
-    super(message, 'CREDIT_LIMIT_ERROR', 402);
-    this.name = 'CreditLimitError';
-  }
+    constructor(message: string = 'Credit limit exceeded') {
+        super(message, 'CREDIT_LIMIT_ERROR', 402);
+        this.name = 'CreditLimitError';
+    }
 }
 
 export class NotFoundError extends CufinderError {
-  constructor(message: string = 'Resource not found') {
-    super(message, 'NOT_FOUND_ERROR', 404);
-    this.name = 'NotFoundError';
-  }
+    constructor(message: string = 'Resource not found') {
+        super(message, 'NOT_FOUND_ERROR', 404);
+        this.name = 'NotFoundError';
+    }
 }
 
 /**
  * Utility types
  */
 export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+    [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
 export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;

@@ -1,196 +1,167 @@
 import { BaseResponse } from './base.model';
-import { CompanySearchResult, LocalBusinessResult, LookalikeCompany, FundraisingInfo, Subsidiary, TechStack, EnrichedCompany } from './company.model';
+import {
+    CompanySearchResult,
+    LocalBusinessResult,
+    LookalikeCompany,
+    FundraisingInfo,
+    Subsidiary,
+    TechStack,
+    EnrichedCompany,
+} from './company.model';
 import { Person, EnrichedPerson, PersonSearchResult } from './person.model';
 
-// V1 Service Response Types
+// Service Response Types
 
 /**
- * CUF V1 Response - Company Name to Domain
+ * CUF Response - Company Name to Domain
  */
-export interface CufV1Response extends BaseResponse {
-  domain: string;
+export interface CufResponse extends BaseResponse {
+    domain: string;
 }
 
 /**
- * LCUF V1 Response - Company LinkedIn URL Finder
+ * LCUF Response - Company LinkedIn URL Finder
  */
-export interface LcufV1Response extends BaseResponse {
-  linkedin_url: string;
+export interface LcufResponse extends BaseResponse {
+    linkedin_url: string;
 }
 
 /**
- * DTC V1 Response - Domain to Company Name
+ * DTC Response - Domain to Company Name
  */
-export interface DtcV1Response extends BaseResponse {
-  company_name: string;
+export interface DtcResponse extends BaseResponse {
+    company_name: string;
 }
 
 /**
- * DTE V1 Response - Company Email Finder
+ * DTE Response - Company Email Finder
  */
-export interface DteV1Response extends BaseResponse {
-  emails: string[];
+export interface DteResponse extends BaseResponse {
+    emails: string[];
 }
 
 /**
- * NTP V1 Response - Company Phone Finder
+ * NTP Response - Company Phone Finder
  */
-export interface NtpV1Response extends BaseResponse {
-  phone: string;
-}
-
-// V2 Service Response Types
-
-/**
- * CUF V2 Response - Company Name to Domain
- */
-export interface CufV2Response extends BaseResponse {
-  domain: string;
+export interface NtpResponse extends BaseResponse {
+    phone: string;
 }
 
 /**
- * LCUF V2 Response - Company LinkedIn URL Finder
+ * REL Response - Reverse Email Lookup
  */
-export interface LcufV2Response extends BaseResponse {
-  linkedin_url: string;
+export interface RelResponse extends BaseResponse {
+    person: Person;
 }
 
 /**
- * DTC V2 Response - Domain to Company Name
+ * FCL Response - Company Lookalikes Finder
  */
-export interface DtcV2Response extends BaseResponse {
-  company_name: string;
+export interface FclResponse extends BaseResponse {
+    lookalikes: LookalikeCompany[];
 }
 
 /**
- * DTE V2 Response - Company Email Finder
+ * ELF Response - Company Fundraising API
  */
-export interface DteV2Response extends BaseResponse {
-  emails: string[];
+export interface ElfResponse extends BaseResponse {
+    fundraising: FundraisingInfo;
 }
 
 /**
- * NTP V2 Response - Company Phone Finder
+ * CAR Response - Company Revenue Finder
  */
-export interface NtpV2Response extends BaseResponse {
-  phone: string;
+export interface CarResponse extends BaseResponse {
+    revenue: {
+        annual_revenue: string;
+        currency: string;
+    };
 }
 
 /**
- * REL V2 Response - Reverse Email Lookup
+ * FCC Response - Company Subsidiaries Finder
  */
-export interface RelV2Response extends BaseResponse {
-  person: Person;
+export interface FccResponse extends BaseResponse {
+    subsidiaries: Subsidiary[];
 }
 
 /**
- * FCL V2 Response - Company Lookalikes Finder
+ * FTS Response - Company Tech Stack Finder
  */
-export interface FclV2Response extends BaseResponse {
-  lookalikes: LookalikeCompany[];
+export interface FtsResponse extends BaseResponse {
+    tech_stack: TechStack;
 }
 
 /**
- * ELF V2 Response - Company Fundraising API
+ * EPP Response - LinkedIn Profile Enrichment
  */
-export interface ElfV2Response extends BaseResponse {
-  fundraising: FundraisingInfo;
+export interface EppResponse extends BaseResponse {
+    person: EnrichedPerson;
 }
 
 /**
- * CAR V2 Response - Company Revenue Finder
+ * FWE Response - LinkedIn Profile Email Finder
  */
-export interface CarV2Response extends BaseResponse {
-  revenue: {
-    annual_revenue: string;
-    currency: string;
-  };
+export interface FweResponse extends BaseResponse {
+    email: string;
 }
 
 /**
- * FCC V2 Response - Company Subsidiaries Finder
+ * TEP Response - Person Enrichment
  */
-export interface FccV2Response extends BaseResponse {
-  subsidiaries: Subsidiary[];
+export interface TepResponse extends BaseResponse {
+    person: EnrichedPerson;
 }
 
 /**
- * FTS V2 Response - Company Tech Stack Finder
+ * ENC Response - Company Enrichment
  */
-export interface FtsV2Response extends BaseResponse {
-  tech_stack: TechStack;
+export interface EncResponse extends BaseResponse {
+    company: EnrichedCompany;
 }
 
 /**
- * EPP V2 Response - LinkedIn Profile Enrichment
+ * CEC Response - Company Employees Countries
  */
-export interface EppV2Response extends BaseResponse {
-  person: EnrichedPerson;
+export interface CecResponse extends BaseResponse {
+    countries: Record<string, number>;
 }
 
 /**
- * FWE V2 Response - LinkedIn Profile Email Finder
+ * CLO Response - Company Locations
  */
-export interface FweV2Response extends BaseResponse {
-  email: string;
+export interface CloResponse extends BaseResponse {
+    locations: Array<{
+        country: string;
+        state: string;
+        city: string;
+        address: string;
+    }>;
 }
 
 /**
- * TEP V2 Response - Person Enrichment
+ * CSE Response - Company Search
  */
-export interface TepV2Response extends BaseResponse {
-  person: EnrichedPerson;
+export interface CseResponse extends BaseResponse {
+    companies: CompanySearchResult[];
+    total_results: number;
+    page: number;
 }
 
 /**
- * ENC V2 Response - Company Enrichment
+ * PSE Response - Person Search
  */
-export interface EncV2Response extends BaseResponse {
-  company: EnrichedCompany;
+export interface PseResponse extends BaseResponse {
+    people: PersonSearchResult[];
+    total_results: number;
+    page: number;
 }
 
 /**
- * CEC V2 Response - Company Employees Countries
+ * LBS Response - Local Business Search
  */
-export interface CecV2Response extends BaseResponse {
-  countries: Record<string, number>;
-}
-
-/**
- * CLO V2 Response - Company Locations
- */
-export interface CloV2Response extends BaseResponse {
-  locations: Array<{
-    country: string;
-    state: string;
-    city: string;
-    address: string;
-  }>;
-}
-
-/**
- * CSE V2 Response - Company Search
- */
-export interface CseV2Response extends BaseResponse {
-  companies: CompanySearchResult[];
-  total_results: number;
-  page: number;
-}
-
-/**
- * PSE V2 Response - Person Search
- */
-export interface PseV2Response extends BaseResponse {
-  people: PersonSearchResult[];
-  total_results: number;
-  page: number;
-}
-
-/**
- * LBS V2 Response - Local Business Search
- */
-export interface LbsV2Response extends BaseResponse {
-  businesses: LocalBusinessResult[];
-  total_results: number;
-  page: number;
+export interface LbsResponse extends BaseResponse {
+    businesses: LocalBusinessResult[];
+    total_results: number;
+    page: number;
 }
