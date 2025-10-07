@@ -91,37 +91,68 @@ describe('CufinderSDK', () => {
   });
 
   describe('V1 service integration', () => {
-    it('should allow calling V1 services', () => {
-      expect(sdk.v1.cuf.getDomain).toBeDefined();
-      expect(sdk.v1.lcuf.getLinkedInUrl).toBeDefined();
-      expect(sdk.v1.dtc.getCompanyName).toBeDefined();
-      expect(sdk.v1.dte.getEmails).toBeDefined();
-      expect(sdk.v1.ntp.getPhones).toBeDefined();
+    it('should allow calling V1 services as direct functions', () => {
+      expect(sdk.v1.cuf).toBeDefined();
+      expect(sdk.v1.lcuf).toBeDefined();
+      expect(sdk.v1.dtc).toBeDefined();
+      expect(sdk.v1.dte).toBeDefined();
+      expect(sdk.v1.ntp).toBeDefined();
+      
+      // Test that they are functions
+      expect(typeof sdk.v1.cuf).toBe('function');
+      expect(typeof sdk.v1.lcuf).toBe('function');
+      expect(typeof sdk.v1.dtc).toBe('function');
+      expect(typeof sdk.v1.dte).toBe('function');
+      expect(typeof sdk.v1.ntp).toBe('function');
     });
   });
 
   describe('V2 service integration', () => {
-    it('should allow calling V2 services', () => {
-      expect(sdk.v2.cuf.getDomain).toBeDefined();
-      expect(sdk.v2.lcuf.getLinkedInUrl).toBeDefined();
-      expect(sdk.v2.dtc.getCompanyName).toBeDefined();
-      expect(sdk.v2.dte.getEmails).toBeDefined();
-      expect(sdk.v2.ntp.getPhones).toBeDefined();
-      expect(sdk.v2.rel.reverseEmailLookup).toBeDefined();
-      expect(sdk.v2.fcl.getLookalikes).toBeDefined();
-      expect(sdk.v2.elf.getFundraising).toBeDefined();
-      expect(sdk.v2.car.getRevenue).toBeDefined();
-      expect(sdk.v2.fcc.getSubsidiaries).toBeDefined();
-      expect(sdk.v2.fts.getTechStack).toBeDefined();
-      expect(sdk.v2.epp.enrichProfile).toBeDefined();
-      expect(sdk.v2.fwe.getEmailFromProfile).toBeDefined();
-      expect(sdk.v2.tep.enrichPerson).toBeDefined();
-      expect(sdk.v2.enc.enrichCompany).toBeDefined();
-      expect(sdk.v2.cec.getEmployeeCountries).toBeDefined();
-      expect(sdk.v2.clo.getLocations).toBeDefined();
-      expect(sdk.v2.cse.searchCompanies).toBeDefined();
-      expect(sdk.v2.pse.searchPeople).toBeDefined();
-      expect(sdk.v2.lbs.searchLocalBusinesses).toBeDefined();
+    it('should allow calling V2 services as direct functions', () => {
+      expect(sdk.v2.cuf).toBeDefined();
+      expect(sdk.v2.lcuf).toBeDefined();
+      expect(sdk.v2.dtc).toBeDefined();
+      expect(sdk.v2.dte).toBeDefined();
+      expect(sdk.v2.ntp).toBeDefined();
+      expect(sdk.v2.rel).toBeDefined();
+      expect(sdk.v2.cse).toBeDefined();
+      expect(sdk.v2.pse).toBeDefined();
+      
+      // Test that they are functions
+      expect(typeof sdk.v2.cuf).toBe('function');
+      expect(typeof sdk.v2.lcuf).toBe('function');
+      expect(typeof sdk.v2.dtc).toBe('function');
+      expect(typeof sdk.v2.dte).toBe('function');
+      expect(typeof sdk.v2.ntp).toBe('function');
+      expect(typeof sdk.v2.rel).toBe('function');
+      expect(typeof sdk.v2.cse).toBe('function');
+      expect(typeof sdk.v2.pse).toBe('function');
+      expect(sdk.v2.fcl).toBeDefined();
+      expect(sdk.v2.elf).toBeDefined();
+      expect(sdk.v2.car).toBeDefined();
+      expect(sdk.v2.fcc).toBeDefined();
+      expect(sdk.v2.fts).toBeDefined();
+      expect(sdk.v2.epp).toBeDefined();
+      expect(sdk.v2.fwe).toBeDefined();
+      expect(sdk.v2.tep).toBeDefined();
+      expect(sdk.v2.enc).toBeDefined();
+      expect(sdk.v2.cec).toBeDefined();
+      expect(sdk.v2.clo).toBeDefined();
+      expect(sdk.v2.lbs).toBeDefined();
+      
+      // Test that they are functions
+      expect(typeof sdk.v2.fcl).toBe('function');
+      expect(typeof sdk.v2.elf).toBe('function');
+      expect(typeof sdk.v2.car).toBe('function');
+      expect(typeof sdk.v2.fcc).toBe('function');
+      expect(typeof sdk.v2.fts).toBe('function');
+      expect(typeof sdk.v2.epp).toBe('function');
+      expect(typeof sdk.v2.fwe).toBe('function');
+      expect(typeof sdk.v2.tep).toBe('function');
+      expect(typeof sdk.v2.enc).toBe('function');
+      expect(typeof sdk.v2.cec).toBe('function');
+      expect(typeof sdk.v2.clo).toBe('function');
+      expect(typeof sdk.v2.lbs).toBe('function');
     });
   });
 });

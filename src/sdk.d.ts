@@ -42,37 +42,37 @@ import {
 export declare class CufinderSDK {
   private readonly client: CufinderClient;
 
-  // V1 Services
+  // V1 Services as direct functions
   readonly v1: {
-    cuf: CufV1;
-    lcuf: LcufV1;
-    dtc: DtcV1;
-    dte: DteV1;
-    ntp: NtpV1;
+    cuf: (params: Parameters<CufV1['getDomain']>[0]) => ReturnType<CufV1['getDomain']>;
+    lcuf: (params: Parameters<LcufV1['getLinkedInUrl']>[0]) => ReturnType<LcufV1['getLinkedInUrl']>;
+    dtc: (params: Parameters<DtcV1['getCompanyName']>[0]) => ReturnType<DtcV1['getCompanyName']>;
+    dte: (params: Parameters<DteV1['getEmails']>[0]) => ReturnType<DteV1['getEmails']>;
+    ntp: (params: Parameters<NtpV1['getPhones']>[0]) => ReturnType<NtpV1['getPhones']>;
   };
 
-  // V2 Services
+  // V2 Services as direct functions
   readonly v2: {
-    cuf: CufV2;
-    lcuf: LcufV2;
-    dtc: DtcV2;
-    dte: DteV2;
-    ntp: NtpV2;
-    rel: RelV2;
-    fcl: FclV2;
-    elf: ElfV2;
-    car: CarV2;
-    fcc: FccV2;
-    fts: FtsV2;
-    epp: EppV2;
-    fwe: FweV2;
-    tep: TepV2;
-    enc: EncV2;
-    cec: CecV2;
-    clo: CloV2;
-    cse: CseV2;
-    pse: PseV2;
-    lbs: LbsV2;
+    cuf: (params: Parameters<CufV2['getDomain']>[0]) => ReturnType<CufV2['getDomain']>;
+    lcuf: (params: Parameters<LcufV2['getLinkedInUrl']>[0]) => ReturnType<LcufV2['getLinkedInUrl']>;
+    dtc: (params: Parameters<DtcV2['getCompanyName']>[0]) => ReturnType<DtcV2['getCompanyName']>;
+    dte: (params: Parameters<DteV2['getEmails']>[0]) => ReturnType<DteV2['getEmails']>;
+    ntp: (params: Parameters<NtpV2['getPhones']>[0]) => ReturnType<NtpV2['getPhones']>;
+    rel: (params: Parameters<RelV2['reverseEmailLookup']>[0]) => ReturnType<RelV2['reverseEmailLookup']>;
+    fcl: (params: Parameters<FclV2['getLookalikes']>[0]) => ReturnType<FclV2['getLookalikes']>;
+    elf: (params: Parameters<ElfV2['getFundraising']>[0]) => ReturnType<ElfV2['getFundraising']>;
+    car: (params: Parameters<CarV2['getRevenue']>[0]) => ReturnType<CarV2['getRevenue']>;
+    fcc: (params: Parameters<FccV2['getSubsidiaries']>[0]) => ReturnType<FccV2['getSubsidiaries']>;
+    fts: (params: Parameters<FtsV2['getTechStack']>[0]) => ReturnType<FtsV2['getTechStack']>;
+    epp: (params: Parameters<EppV2['enrichProfile']>[0]) => ReturnType<EppV2['enrichProfile']>;
+    fwe: (params: Parameters<FweV2['getEmailFromProfile']>[0]) => ReturnType<FweV2['getEmailFromProfile']>;
+    tep: (params: Parameters<TepV2['enrichPerson']>[0]) => ReturnType<TepV2['enrichPerson']>;
+    enc: (params: Parameters<EncV2['enrichCompany']>[0]) => ReturnType<EncV2['enrichCompany']>;
+    cec: (params: Parameters<CecV2['getEmployeeCountries']>[0]) => ReturnType<CecV2['getEmployeeCountries']>;
+    clo: (params: Parameters<CloV2['getLocations']>[0]) => ReturnType<CloV2['getLocations']>;
+    cse: (params?: Parameters<CseV2['searchCompanies']>[0]) => ReturnType<CseV2['searchCompanies']>;
+    pse: (params?: Parameters<PseV2['searchPeople']>[0]) => ReturnType<PseV2['searchPeople']>;
+    lbs: (params?: Parameters<LbsV2['searchLocalBusinesses']>[0]) => ReturnType<LbsV2['searchLocalBusinesses']>;
   };
 
   constructor(config: CufinderClientConfig);

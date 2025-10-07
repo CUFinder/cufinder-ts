@@ -1,5 +1,5 @@
 import { BaseResponse } from './base.model';
-import { Company, CompanySearchResult, LocalBusinessResult, LookalikeCompany, FundraisingInfo, Subsidiary, TechStack, EnrichedCompany } from './company.model';
+import { CompanySearchResult, LocalBusinessResult, LookalikeCompany, FundraisingInfo, Subsidiary, TechStack, EnrichedCompany } from './company.model';
 import { Person, EnrichedPerson, PersonSearchResult } from './person.model';
 
 // V1 Service Response Types

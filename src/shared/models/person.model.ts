@@ -1,5 +1,3 @@
-import { BaseResponse } from './base.model';
-
 /**
  * Person data model
  */

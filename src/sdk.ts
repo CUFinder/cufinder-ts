@@ -36,79 +36,108 @@ import {
 
 /**
  * Main CUFinder SDK class
- * Provides access to all V1 and V2 API services
- * Follows SOLID principles by providing a clean interface to all services
+ * Provides access to all V1 and V2 API services as direct functions
+ * Usage: sdk.v1.cuf(params), sdk.v2.dte(params)
  */
 export class CufinderSDK {
   private readonly client: CufinderClient;
 
-  // V1 Services
+  // V1 Services as direct functions
   public readonly v1: {
-    cuf: CufV1;
-    lcuf: LcufV1;
-    dtc: DtcV1;
-    dte: DteV1;
-    ntp: NtpV1;
+    cuf: (params: Parameters<CufV1['getDomain']>[0]) => ReturnType<CufV1['getDomain']>;
+    lcuf: (params: Parameters<LcufV1['getLinkedInUrl']>[0]) => ReturnType<LcufV1['getLinkedInUrl']>;
+    dtc: (params: Parameters<DtcV1['getCompanyName']>[0]) => ReturnType<DtcV1['getCompanyName']>;
+    dte: (params: Parameters<DteV1['getEmails']>[0]) => ReturnType<DteV1['getEmails']>;
+    ntp: (params: Parameters<NtpV1['getPhones']>[0]) => ReturnType<NtpV1['getPhones']>;
   };
 
-  // V2 Services
+  // V2 Services as direct functions
   public readonly v2: {
-    cuf: CufV2;
-    lcuf: LcufV2;
-    dtc: DtcV2;
-    dte: DteV2;
-    ntp: NtpV2;
-    rel: RelV2;
-    fcl: FclV2;
-    elf: ElfV2;
-    car: CarV2;
-    fcc: FccV2;
-    fts: FtsV2;
-    epp: EppV2;
-    fwe: FweV2;
-    tep: TepV2;
-    enc: EncV2;
-    cec: CecV2;
-    clo: CloV2;
-    cse: CseV2;
-    pse: PseV2;
-    lbs: LbsV2;
+    cuf: (params: Parameters<CufV2['getDomain']>[0]) => ReturnType<CufV2['getDomain']>;
+    lcuf: (params: Parameters<LcufV2['getLinkedInUrl']>[0]) => ReturnType<LcufV2['getLinkedInUrl']>;
+    dtc: (params: Parameters<DtcV2['getCompanyName']>[0]) => ReturnType<DtcV2['getCompanyName']>;
+    dte: (params: Parameters<DteV2['getEmails']>[0]) => ReturnType<DteV2['getEmails']>;
+    ntp: (params: Parameters<NtpV2['getPhones']>[0]) => ReturnType<NtpV2['getPhones']>;
+    rel: (params: Parameters<RelV2['reverseEmailLookup']>[0]) => ReturnType<RelV2['reverseEmailLookup']>;
+    fcl: (params: Parameters<FclV2['getLookalikes']>[0]) => ReturnType<FclV2['getLookalikes']>;
+    elf: (params: Parameters<ElfV2['getFundraising']>[0]) => ReturnType<ElfV2['getFundraising']>;
+    car: (params: Parameters<CarV2['getRevenue']>[0]) => ReturnType<CarV2['getRevenue']>;
+    fcc: (params: Parameters<FccV2['getSubsidiaries']>[0]) => ReturnType<FccV2['getSubsidiaries']>;
+    fts: (params: Parameters<FtsV2['getTechStack']>[0]) => ReturnType<FtsV2['getTechStack']>;
+    epp: (params: Parameters<EppV2['enrichProfile']>[0]) => ReturnType<EppV2['enrichProfile']>;
+    fwe: (params: Parameters<FweV2['getEmailFromProfile']>[0]) => ReturnType<FweV2['getEmailFromProfile']>;
+    tep: (params: Parameters<TepV2['enrichPerson']>[0]) => ReturnType<TepV2['enrichPerson']>;
+    enc: (params: Parameters<EncV2['enrichCompany']>[0]) => ReturnType<EncV2['enrichCompany']>;
+    cec: (params: Parameters<CecV2['getEmployeeCountries']>[0]) => ReturnType<CecV2['getEmployeeCountries']>;
+    clo: (params: Parameters<CloV2['getLocations']>[0]) => ReturnType<CloV2['getLocations']>;
+    cse: (params?: Parameters<CseV2['searchCompanies']>[0]) => ReturnType<CseV2['searchCompanies']>;
+    pse: (params?: Parameters<PseV2['searchPeople']>[0]) => ReturnType<PseV2['searchPeople']>;
+    lbs: (params?: Parameters<LbsV2['searchLocalBusinesses']>[0]) => ReturnType<LbsV2['searchLocalBusinesses']>;
   };
 
   constructor(config: CufinderClientConfig) {
     this.client = new CufinderClient(config);
 
-    // Initialize V1 services
+    // Initialize V1 service instances
+    const cufV1 = new CufV1(this.client);
+    const lcufV1 = new LcufV1(this.client);
+    const dtcV1 = new DtcV1(this.client);
+    const dteV1 = new DteV1(this.client);
+    const ntpV1 = new NtpV1(this.client);
+
+    // Initialize V2 service instances
+    const cufV2 = new CufV2(this.client);
+    const lcufV2 = new LcufV2(this.client);
+    const dtcV2 = new DtcV2(this.client);
+    const dteV2 = new DteV2(this.client);
+    const ntpV2 = new NtpV2(this.client);
+    const relV2 = new RelV2(this.client);
+    const fclV2 = new FclV2(this.client);
+    const elfV2 = new ElfV2(this.client);
+    const carV2 = new CarV2(this.client);
+    const fccV2 = new FccV2(this.client);
+    const ftsV2 = new FtsV2(this.client);
+    const eppV2 = new EppV2(this.client);
+    const fweV2 = new FweV2(this.client);
+    const tepV2 = new TepV2(this.client);
+    const encV2 = new EncV2(this.client);
+    const cecV2 = new CecV2(this.client);
+    const cloV2 = new CloV2(this.client);
+    const cseV2 = new CseV2(this.client);
+    const pseV2 = new PseV2(this.client);
+    const lbsV2 = new LbsV2(this.client);
+
+    // Expose V1 services as direct functions
     this.v1 = {
-      cuf: new CufV1(this.client),
-      lcuf: new LcufV1(this.client),
-      dtc: new DtcV1(this.client),
-      dte: new DteV1(this.client),
-      ntp: new NtpV1(this.client),
+      cuf: (params) => cufV1.getDomain(params),
+      lcuf: (params) => lcufV1.getLinkedInUrl(params),
+      dtc: (params) => dtcV1.getCompanyName(params),
+      dte: (params) => dteV1.getEmails(params),
+      ntp: (params) => ntpV1.getPhones(params),
     };
 
-    // Initialize V2 services
+    // Expose V2 services as direct functions
     this.v2 = {
-      cuf: new CufV2(this.client),
-      lcuf: new LcufV2(this.client),
-      dtc: new DtcV2(this.client),
-      dte: new DteV2(this.client),
-      ntp: new NtpV2(this.client),
-      rel: new RelV2(this.client),
-      fcl: new FclV2(this.client),
-      elf: new ElfV2(this.client),
-      car: new CarV2(this.client),
-      fcc: new FccV2(this.client),
-      fts: new FtsV2(this.client),
-      epp: new EppV2(this.client),
-      fwe: new FweV2(this.client),
-      tep: new TepV2(this.client),
-      enc: new EncV2(this.client),
-      cec: new CecV2(this.client),
-      clo: new CloV2(this.client),
-      cse: new CseV2(this.client),
-      pse: new PseV2(this.client),
-      lbs: new LbsV2(this.client),
+      cuf: (params) => cufV2.getDomain(params),
+      lcuf: (params) => lcufV2.getLinkedInUrl(params),
+      dtc: (params) => dtcV2.getCompanyName(params),
+      dte: (params) => dteV2.getEmails(params),
+      ntp: (params) => ntpV2.getPhones(params),
+      rel: (params) => relV2.reverseEmailLookup(params),
+      fcl: (params) => fclV2.getLookalikes(params),
+      elf: (params) => elfV2.getFundraising(params),
+      car: (params) => carV2.getRevenue(params),
+      fcc: (params) => fccV2.getSubsidiaries(params),
+      fts: (params) => ftsV2.getTechStack(params),
+      epp: (params) => eppV2.enrichProfile(params),
+      fwe: (params) => fweV2.getEmailFromProfile(params),
+      tep: (params) => tepV2.enrichPerson(params),
+      enc: (params) => encV2.enrichCompany(params),
+      cec: (params) => cecV2.getEmployeeCountries(params),
+      clo: (params) => cloV2.getLocations(params),
+      cse: (params) => cseV2.searchCompanies(params),
+      pse: (params) => pseV2.searchPeople(params),
+      lbs: (params) => lbsV2.searchLocalBusinesses(params),
     };
   }
 
