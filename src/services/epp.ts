@@ -14,13 +14,6 @@ export class Epp extends BaseService {
     public async enrichProfile(params: EppParams): Promise<EppResponse> {
         this.validateRequired(params.linkedin_url, 'linkedin_url');
 
-        // Basic LinkedIn URL validation
-        const linkedinUrlRegex = /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/;
-        if (!linkedinUrlRegex.test(params.linkedin_url.trim())) {
-            throw new Error(
-                'Invalid LinkedIn profile URL format. Expected format: https://linkedin.com/in/username'
-            );
-        }
 
         try {
             const response = await this.client.post<EppResponse>('/epp', {

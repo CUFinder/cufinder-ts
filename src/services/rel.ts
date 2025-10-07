@@ -14,12 +14,6 @@ export class Rel extends BaseService {
     public async reverseEmailLookup(params: RelParams): Promise<RelResponse> {
         this.validateRequired(params.email, 'email');
 
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(params.email.trim())) {
-            throw new Error('Invalid email address format');
-        }
-
         try {
             const response = await this.client.post<RelResponse>('/rel', {
                 email: params.email.trim(),

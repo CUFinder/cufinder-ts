@@ -31,14 +31,6 @@ export class Cuf extends BaseService {
         this.validateRequired(params.company_name, 'company_name');
         this.validateRequired(params.country_code, 'country_code');
 
-        // Validate country code format (ISO 3166-1 alpha-2)
-        const countryCodeRegex = /^[A-Z]{2}$/;
-        if (!countryCodeRegex.test(params.country_code.trim().toUpperCase())) {
-            throw new Error(
-                'Country code must be a valid 2-letter ISO 3166-1 alpha-2 code (e.g., US, GB)'
-            );
-        }
-
         try {
             const response = await this.client.post<CufResponse>('/cuf', {
                 company_name: params.company_name.trim(),

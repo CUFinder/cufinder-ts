@@ -14,14 +14,6 @@ export class Fwe extends BaseService {
     public async getEmailFromProfile(params: FweParams): Promise<FweResponse> {
         this.validateRequired(params.linkedin_url, 'linkedin_url');
 
-        // Basic LinkedIn URL validation
-        const linkedinUrlRegex = /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/;
-        if (!linkedinUrlRegex.test(params.linkedin_url.trim())) {
-            throw new Error(
-                'Invalid LinkedIn profile URL format. Expected format: https://linkedin.com/in/username'
-            );
-        }
-
         try {
             const response = await this.client.post<FweResponse>('/fwe', {
                 linkedin_url: params.linkedin_url.trim(),
