@@ -1,19 +1,20 @@
 # Cufinder SDK
 
-A comprehensive, type-safe TypeScript SDK for the Cufinder B2B Data Enrichment API. This SDK provides a modern, promise-based interface for interacting with all 25 Cufinder API endpoints across V1 and V2 versions, following SOLID principles and best practices.
+A comprehensive, type-safe TypeScript SDK for the Cufinder B2B Data Enrichment API. This SDK provides a modern, promise-based interface for interacting with all 20 Cufinder API endpoints, following SOLID principles and best practices.
 
 ## Features
 
 - 🚀 **Type-safe**: Full TypeScript support with comprehensive type definitions
 - 🌐 **Universal**: Works in Node.js and modern browsers
 - 🔧 **Modern API**: Promise-based with async/await support
-- 📦 **Versioned**: Support for both V1 and V2 API versions
 - 🛡️ **Error Handling**: Comprehensive error handling with custom error types
 - 🧪 **Well-tested**: Extensive test coverage with Jest
 - 📚 **Well-documented**: Comprehensive JSDoc documentation
-- 🎯 **Complete Coverage**: All 25 Cufinder API endpoints implemented (5 V1 + 20 V2)
+- 🎯 **Complete Coverage**: All 20 Cufinder API endpoints implemented
 - 🏗️ **SOLID Principles**: Clean architecture following SOLID design principles
 - 🔄 **Modular Design**: Each service in separate files for maintainability
+- 🎨 **Code Quality**: ESLint + Prettier for consistent code formatting and linting
+- 📏 **EditorConfig**: Consistent coding standards across different editors
 
 ## Installation
 
@@ -31,22 +32,15 @@ const sdk = new CufinderSDK({
   apiKey: 'your-api-key-here'
 });
 
-// V1 API usage
-const domain = await sdk.v1.cuf({
-  api_key: 'your-api-key',
-  company_name: 'TechCorp'
-});
-console.log('Company domain:', domain.url);
-
-// V2 API usage
-const company = await sdk.v2.cuf({
+// API usage
+const company = await sdk.cuf({
   company_name: 'TechCorp',
   country_code: 'US'
 });
 console.log('Company domain:', company.domain);
 
 // Search for companies
-const companies = await sdk.v2.cse({
+const companies = await sdk.cse({
   name: 'technology',
   country: 'US'
 });
@@ -67,203 +61,144 @@ interface CufinderClientConfig {
 
 ## API Reference
 
-### V1 API Services (5 endpoints)
+### Company Services
 
-#### `sdk.v1.cuf(params)`
-**CUF - Company Name to Domain API (V1)** - Returns the official website URL of a company based on its name.
-
-```typescript
-const result = await sdk.v1.cuf({
-  api_key: 'your-api-key',
-  company_name: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', url: 'https://techcorp.com', credit_count: 0, ... }
-```
-
-#### `sdk.v1.lcuf(params)`
-**LCUF - Company LinkedIn URL Finder API (V1)** - Finds the official LinkedIn company profile URL from a company name.
+#### `sdk.cuf(params)`
+**CUF - Company Name to Domain API** - Returns the official website URL of a company based on its name.
 
 ```typescript
-const result = await sdk.v1.lcuf({
-  api_key: 'your-api-key',
-  company_name: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', url: 'https://linkedin.com/company/techcorp', ... }
-```
-
-#### `sdk.v1.dtc(params)`
-**DTC - Domain to Company Name API (V1)** - Retrieves the registered company name associated with a given website domain.
-
-```typescript
-const result = await sdk.v1.dtc({
-  api_key: 'your-api-key',
-  company_domain: 'techcorp.com'
-});
-// Returns: { query: 'techcorp.com', company_name: 'TechCorp', ... }
-```
-
-#### `sdk.v1.dte(params)`
-**DTE - Company Email Finder API (V1)** - Returns up to five general or role-based business email addresses for a company.
-
-```typescript
-const result = await sdk.v1.dte({
-  api_key: 'your-api-key',
-  company_domain: 'techcorp.com'
-});
-// Returns: { query: 'techcorp.com', emails: ['info@techcorp.com', 'contact@techcorp.com'], ... }
-```
-
-#### `sdk.v1.ntp(params)`
-**NTP - Company Phone Finder API (V1)** - Returns up to two verified phone numbers for a company.
-
-```typescript
-const result = await sdk.v1.ntp({
-  api_key: 'your-api-key',
-  company_name: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', phones: ['+1-555-123-4567', '+1-555-123-4568'], ... }
-```
-
-### V2 API Services (20 endpoints)
-
-#### Company Services
-
-##### `sdk.v2.cuf(params)`
-**CUF - Company Name to Domain API (V2)** - Returns the official website URL of a company based on its name.
-
-```typescript
-const result = await sdk.v2.cuf({
+const result = await sdk.cuf({
   company_name: 'TechCorp',
   country_code: 'US'
 });
 // Returns: { query: 'TechCorp', domain: 'https://techcorp.com', credit_count: 0, ... }
 ```
 
-##### `sdk.v2.lcuf(params)`
-**LCUF - Company LinkedIn URL Finder API (V2)** - Finds the official LinkedIn company profile URL from a company name.
+#### `sdk.lcuf(params)`
+**LCUF - Company LinkedIn URL Finder API** - Finds the official LinkedIn company profile URL from a company name.
 
 ```typescript
-const result = await sdk.v2.lcuf({
+const result = await sdk.lcuf({
   company_name: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', company: { name: 'TechCorp', linkedin_url: '...', ... }, ... }
 ```
 
-##### `sdk.v2.dtc(params)`
-**DTC - Domain to Company Name API (V2)** - Retrieves the registered company name associated with a given website domain.
+#### `sdk.dtc(params)`
+**DTC - Domain to Company Name API** - Retrieves the registered company name associated with a given website domain.
 
 ```typescript
-const result = await sdk.v2.dtc({
+const result = await sdk.dtc({
   company_website: 'https://techcorp.com'
 });
 // Returns: { query: 'https://techcorp.com', company_name: 'TechCorp', ... }
 ```
 
-##### `sdk.v2.dte(params)`
-**DTE - Company Email Finder API (V2)** - Returns up to five general or role-based business email addresses for a company.
+#### `sdk.dte(params)`
+**DTE - Company Email Finder API** - Returns up to five general or role-based business email addresses for a company.
 
 ```typescript
-const result = await sdk.v2.dte({
+const result = await sdk.dte({
   company_website: 'https://techcorp.com'
 });
 // Returns: { query: 'https://techcorp.com', emails: ['info@techcorp.com', 'contact@techcorp.com'], ... }
 ```
 
-##### `sdk.v2.ntp(params)`
-**NTP - Company Phone Finder API (V2)** - Returns up to two verified phone numbers for a company.
+#### `sdk.ntp(params)`
+**NTP - Company Phone Finder API** - Returns up to two verified phone numbers for a company.
 
 ```typescript
-const result = await sdk.v2.ntp({
+const result = await sdk.ntp({
   company_name: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', phones: ['+1-555-123-4567', '+1-555-123-4568'], ... }
 ```
 
-##### `sdk.v2.fcl(params)`
-**FCL - Company Lookalikes Finder API (V2)** - Provides a list of similar companies based on an input company's profile.
+#### `sdk.fcl(params)`
+**FCL - Company Lookalikes Finder API** - Provides a list of similar companies based on an input company's profile.
 
 ```typescript
-const result = await sdk.v2.fcl({
+const result = await sdk.fcl({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', companies: [{ name: 'Similar Company', ... }], ... }
 ```
 
-##### `sdk.v2.elf(params)`
-**ELF - Company Fundraising API (V2)** - Returns detailed funding information about a company.
+#### `sdk.elf(params)`
+**ELF - Company Fundraising API** - Returns detailed funding information about a company.
 
 ```typescript
-const result = await sdk.v2.elf({
+const result = await sdk.elf({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', fundraising_info: { funding_last_round_type: 'Series B', ... }, ... }
 ```
 
-##### `sdk.v2.car(params)`
-**CAR - Company Revenue Finder API (V2)** - Estimates a company's annual revenue based on name.
+#### `sdk.car(params)`
+**CAR - Company Revenue Finder API** - Estimates a company's annual revenue based on name.
 
 ```typescript
-const result = await sdk.v2.car({
+const result = await sdk.car({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', annual_revenue: '$75M', ... }
 ```
 
-##### `sdk.v2.fcc(params)`
-**FCC - Company Subsidiaries Finder API (V2)** - Identifies known subsidiaries of a parent company.
+#### `sdk.fcc(params)`
+**FCC - Company Subsidiaries Finder API** - Identifies known subsidiaries of a parent company.
 
 ```typescript
-const result = await sdk.v2.fcc({
+const result = await sdk.fcc({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', subsidiaries: ['Subsidiary A', 'Subsidiary B'], ... }
 ```
 
-##### `sdk.v2.fts(params)`
-**FTS - Company Tech Stack Finder API (V2)** - Detects the technologies a company uses.
+#### `sdk.fts(params)`
+**FTS - Company Tech Stack Finder API** - Detects the technologies a company uses.
 
 ```typescript
-const result = await sdk.v2.fts({
+const result = await sdk.fts({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', technologies: ['React', 'Node.js', 'AWS'], ... }
 ```
 
-##### `sdk.v2.enc(params)`
-**ENC - Company Enrichment API (V2)** - Provides a complete company profile from a company name.
+#### `sdk.enc(params)`
+**ENC - Company Enrichment API** - Provides a complete company profile from a company name.
 
 ```typescript
-const result = await sdk.v2.enc({
+const result = await sdk.enc({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', company: { name: 'TechCorp', domain: 'techcorp.com', ... }, ... }
 ```
 
-##### `sdk.v2.cec(params)`
-**CEC - Company Employees Countries API (V2)** - Returns an estimated number of employees for a company.
+#### `sdk.cec(params)`
+**CEC - Company Employees Countries API** - Returns an estimated number of employees for a company.
 
 ```typescript
-const result = await sdk.v2.cec({
+const result = await sdk.cec({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', countries: { 'US': 500, 'UK': 100 }, ... }
 ```
 
-##### `sdk.v2.clo(params)`
-**CLO - Company Locations API (V2)** - Returns the known physical office locations of a company.
+#### `sdk.clo(params)`
+**CLO - Company Locations API** - Returns the known physical office locations of a company.
 
 ```typescript
-const result = await sdk.v2.clo({
+const result = await sdk.clo({
   query: 'TechCorp'
 });
 // Returns: { query: 'TechCorp', locations: [{ country: 'US', city: 'San Francisco', ... }], ... }
 ```
 
-##### `sdk.v2.cse(params?)`
-**CSE - Company Search API (V2)** - Search for companies by keyword, partial name, industry, location, or other filters.
+#### `sdk.cse(params?)`
+**CSE - Company Search API** - Search for companies by keyword, partial name, industry, location, or other filters.
 
 ```typescript
-const result = await sdk.v2.cse({
+const result = await sdk.cse({
   name: 'technology',
   country: 'US',
   industry: 'Software',
@@ -273,34 +208,34 @@ const result = await sdk.v2.cse({
 // Returns: { companies: [...], ... }
 ```
 
-#### Person Services
+### Person Services
 
-##### `sdk.v2.rel(params)`
-**REL - Reverse Email Lookup API (V2)** - Enriches an email address with detailed person and company information.
+#### `sdk.rel(params)`
+**REL - Reverse Email Lookup API** - Enriches an email address with detailed person and company information.
 
 ```typescript
-const result = await sdk.v2.rel({
+const result = await sdk.rel({
   email: 'john.doe@techcorp.com'
 });
 // Returns: { query: 'john.doe@techcorp.com', person: { full_name: 'John Doe', ... }, ... }
 ```
 
-##### `sdk.v2.tep(params)`
-**TEP - Person Enrichment API (V2)** - Returns enriched person data based on full name and company name.
+#### `sdk.tep(params)`
+**TEP - Person Enrichment API** - Returns enriched person data based on full name and company name.
 
 ```typescript
-const result = await sdk.v2.tep({
+const result = await sdk.tep({
   full_name: 'John Doe',
   company: 'TechCorp'
 });
 // Returns: { query: 'John Doe at TechCorp', person: { full_name: 'John Doe', ... }, ... }
 ```
 
-##### `sdk.v2.pse(params?)`
-**PSE - Person Search API (V2)** - Search for people by name, company, job title, location, or other filters.
+#### `sdk.pse(params?)`
+**PSE - Person Search API** - Search for people by name, company, job title, location, or other filters.
 
 ```typescript
-const result = await sdk.v2.pse({
+const result = await sdk.pse({
   full_name: 'John',
   company_name: 'TechCorp',
   job_title_role: 'Engineer',
@@ -310,35 +245,35 @@ const result = await sdk.v2.pse({
 // Returns: { peoples: [...], ... }
 ```
 
-#### LinkedIn Services
+### LinkedIn Services
 
-##### `sdk.v2.epp(params)`
-**EPP - LinkedIn Profile Enrichment API (V2)** - Takes a LinkedIn profile URL and returns enriched person and company data.
+#### `sdk.epp(params)`
+**EPP - LinkedIn Profile Enrichment API** - Takes a LinkedIn profile URL and returns enriched person and company data.
 
 ```typescript
-const result = await sdk.v2.epp({
+const result = await sdk.epp({
   linkedin_url: 'https://linkedin.com/in/john-doe'
 });
 // Returns: { query: 'https://linkedin.com/in/john-doe', person: { full_name: 'John Doe', ... }, ... }
 ```
 
-##### `sdk.v2.fwe(params)`
-**FWE - LinkedIn Profile Email Finder API (V2)** - Extracts a verified business email address from a LinkedIn profile URL.
+#### `sdk.fwe(params)`
+**FWE - LinkedIn Profile Email Finder API** - Extracts a verified business email address from a LinkedIn profile URL.
 
 ```typescript
-const result = await sdk.v2.fwe({
+const result = await sdk.fwe({
   linkedin_url: 'https://linkedin.com/in/john-doe'
 });
 // Returns: { query: 'https://linkedin.com/in/john-doe', work_email: 'john.doe@techcorp.com', ... }
 ```
 
-#### Search Services
+### Search Services
 
-##### `sdk.v2.lbs(params?)`
-**LBS - Local Business Search API (V2)** - Search for local businesses by location, industry, or name.
+#### `sdk.lbs(params?)`
+**LBS - Local Business Search API** - Search for local businesses by location, industry, or name.
 
 ```typescript
-const result = await sdk.v2.lbs({
+const result = await sdk.lbs({
   name: 'coffee',
   city: 'San Francisco',
   industry: 'Food & Beverage',
@@ -352,18 +287,18 @@ const result = await sdk.v2.lbs({
 The SDK provides comprehensive error handling with custom error types:
 
 ```typescript
-import { 
-  CufinderError, 
-  AuthenticationError, 
-  ValidationError, 
-  RateLimitError, 
+import {
+  CufinderError,
+  AuthenticationError,
+  ValidationError,
+  RateLimitError,
   CreditLimitError,
   NotFoundError,
   NetworkError
 } from '@cufinder/cufinder-ts';
 
 try {
-  const result = await sdk.v2.cuf({
+  const result = await sdk.cuf({
     company_name: 'TechCorp',
     country_code: 'US'
   });
@@ -392,39 +327,32 @@ The SDK exports comprehensive TypeScript types:
 
 ```typescript
 import type {
-  // V1 Request types
-  CufV1Params,
-  LcufV1Params,
-  DtcV1Params,
-  DteV1Params,
-  NtpV1Params,
-  
-  // V2 Request types
-  CufV2Params,
-  LcufV2Params,
-  DtcV2Params,
-  DteV2Params,
-  NtpV2Params,
-  RelV2Params,
-  FclV2Params,
-  ElfV2Params,
-  CarV2Params,
-  FccV2Params,
-  FtsV2Params,
-  EppV2Params,
-  FweV2Params,
-  TepV2Params,
-  EncV2Params,
-  CecV2Params,
-  CloV2Params,
-  CseV2Params,
-  PseV2Params,
-  LbsV2Params,
-  
+  // Request types
+  CufParams,
+  LcufParams,
+  DtcParams,
+  DteParams,
+  NtpParams,
+  RelParams,
+  FclParams,
+  ElfParams,
+  CarParams,
+  FccParams,
+  FtsParams,
+  EppParams,
+  FweParams,
+  TepParams,
+  EncParams,
+  CecParams,
+  CloParams,
+  CseParams,
+  PseParams,
+  LbsParams,
+
   // Response types
   BaseResponse,
   ApiResponse,
-  
+
   // Model types
   Company,
   Person,
@@ -436,10 +364,10 @@ import type {
   LookalikeCompany,
   FundraisingInfo,
   CompanyLocation,
-  
+
   // Configuration
   CufinderClientConfig,
-  
+
   // Error types
   CufinderError,
   AuthenticationError,
@@ -466,16 +394,6 @@ const response = await client.post('/custom-endpoint', {
 });
 ```
 
-### SDK Information
-
-```typescript
-const info = sdk.getVersion();
-console.log(info);
-// { version: '1.0.0', name: '@cufinder/cufinder-ts', description: '...' }
-```
-
-## Development
-
 ### Building
 
 ```bash
@@ -487,20 +405,35 @@ npm run build
 ```bash
 npm test
 npm run test:watch
+npm run test:coverage
 ```
 
-### Linting
+### Code Quality
 
 ```bash
-npm run lint
-npm run lint:fix
+# Linting
+npm run lint          # Check for linting issues
+npm run lint:fix      # Auto-fix linting issues
+
+# Formatting
+npm run format        # Format code with Prettier
+npm run format:check  # Check formatting without fixing
+
+# Type checking
+npm run type-check    # TypeScript type checking
+
+# All checks
+npm run check         # Run all checks (type + lint + format)
+npm run fix           # Auto-fix all issues
 ```
 
-### Type Checking
+### Development Workflow
 
-```bash
-npm run type-check
-```
+1. **Make changes** to the code
+2. **Run checks**: `npm run check` to ensure code quality
+3. **Auto-fix issues**: `npm run fix` to automatically fix most problems
+4. **Run tests**: `npm test` to ensure everything works
+5. **Build**: `npm run build` to create the distribution files
 
 ## Browser Support
 
@@ -522,16 +455,8 @@ For older browsers, you may need to include polyfills for:
 
 ## API Endpoints Coverage
 
-This SDK implements all 25 Cufinder API endpoints:
+This SDK covers all 20 Cufinder API endpoints:
 
-### V1 API Endpoints (5)
-- **CUF** - Company Name to Domain API
-- **LCUF** - Company LinkedIn URL Finder API
-- **DTC** - Domain to Company Name API
-- **DTE** - Company Email Finder API
-- **NTP** - Company Phone Finder API
-
-### V2 API Endpoints (20)
 - **CUF** - Company Name to Domain API
 - **LCUF** - Company LinkedIn URL Finder API
 - **DTC** - Domain to Company Name API
@@ -553,6 +478,30 @@ This SDK implements all 25 Cufinder API endpoints:
 - **PSE** - Person Search API
 - **LBS** - Local Business Search API
 
+## Code Quality & Standards
+
+This project maintains high code quality through:
+
+### Linting & Formatting
+- **ESLint**: TypeScript-aware linting with custom rules
+- **Prettier**: Consistent code formatting
+- **EditorConfig**: Cross-editor coding standards
+- **VS Code Integration**: Auto-formatting and linting on save
+
+### Configuration Files
+- `.editorconfig` - Consistent indentation, line endings, and charset
+- `.eslintrc.js` - ESLint configuration with TypeScript support
+- `.prettierrc` - Prettier formatting rules
+- `.vscode/settings.json` - VS Code workspace settings
+- `.vscode/extensions.json` - Recommended VS Code extensions
+
+### Quality Checks
+All code must pass:
+- TypeScript type checking
+- ESLint linting rules
+- Prettier formatting standards
+- Jest test suite
+
 ## Architecture
 
 The SDK follows SOLID principles:
@@ -572,9 +521,19 @@ MIT
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests
-5. Run the test suite
-6. Submit a pull request
+4. **Run quality checks**: `npm run check` to ensure code quality
+5. **Auto-fix issues**: `npm run fix` to automatically fix most problems
+6. **Add tests** for new functionality
+7. **Run the test suite**: `npm test` to ensure everything works
+8. **Build the project**: `npm run build` to verify the build works
+9. Submit a pull request
+
+### Development Setup
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Install recommended VS Code extensions (if using VS Code)
+4. Start developing with auto-formatting and linting enabled
 
 ## Support
 
