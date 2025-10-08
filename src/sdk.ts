@@ -3,26 +3,26 @@ import { CufinderClientConfig } from './shared/types';
 
 // Services
 import {
-    Cuf,
-    Lcuf,
-    Dtc,
-    Dte,
-    Ntp,
-    Rel,
-    Fcl,
-    Elf,
     Car,
-    Fcc,
-    Fts,
-    Epp,
-    Fwe,
-    Tep,
-    Enc,
     Cec,
     Clo,
     Cse,
-    Pse,
+    Cuf,
+    Dtc,
+    Dte,
+    Elf,
+    Enc,
+    Epp,
+    Fcc,
+    Fcl,
+    Fts,
+    Fwe,
     Lbs,
+    Lcuf,
+    Ntp,
+    Pse,
+    Rel,
+    Tep,
 } from './services';
 
 /**
@@ -143,17 +143,5 @@ export class CufinderSDK {
      */
     public getClient(): CufinderClient {
         return this.client;
-    }
-
-    /**
-     * Get SDK version information
-     * @returns SDK version and metadata
-     */
-    public getVersion(): { version: string; name: string; description: string } {
-        return {
-            version: '1.1.0',
-            name: '@cufinder/cufinder-ts',
-            description: 'Type-safe TypeScript SDK for the Cufinder B2B Data Enrichment API',
-        };
     }
 }

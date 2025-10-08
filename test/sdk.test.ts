@@ -1,5 +1,5 @@
-import { CufinderSDK } from '../src/sdk';
 import { CufinderClient } from '../src/client';
+import { CufinderSDK } from '../src/sdk';
 
 // Mock the client
 jest.mock('../src/client');
@@ -68,17 +68,6 @@ describe('CufinderSDK', () => {
         it('should return the underlying client', () => {
             const client = sdk.getClient();
             expect(client).toBe(mockClient);
-        });
-    });
-
-    describe('getVersion', () => {
-        it('should return version information', () => {
-            const version = sdk.getVersion();
-            expect(version).toEqual({
-                version: '1.1.0',
-                name: '@cufinder/cufinder-ts',
-                description: 'Type-safe TypeScript SDK for the Cufinder B2B Data Enrichment API',
-            });
         });
     });
 
