@@ -1,8 +1,8 @@
-import { BaseApiClient } from '../src/base_api_client';
-import { Cufinder } from '../src/client';
+import { BaseApiClient } from '../lib/base_api_client';
+import { Cufinder } from '../lib/client';
 
 // Mock the base API client
-jest.mock('../src/base_api_client');
+jest.mock('../lib/base_api_client');
 
 describe('Cufinder', () => {
     let client: Cufinder;

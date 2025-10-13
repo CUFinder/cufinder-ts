@@ -1,12 +1,12 @@
-import { Lcuf } from '../../src/services/lcuf';
-import { CufinderClient } from '../../src/client';
-import { LcufResponse } from '../../src/shared/types';
+import { Cec } from '../../lib/services/cec';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { CecResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Lcuf', () => {
-    let service: Lcuf;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Cec', () => {
+    let service: Cec;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Lcuf', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Lcuf(mockClient);
+        service = new Cec(mockClient);
     });
 
     afterEach(() => {
@@ -30,16 +30,19 @@ describe('Lcuf', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: LcufResponse = {
+        const mockResponse: CecResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'lcuf',
+                service_name: 'cec',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            linkedin_url: 'https://linkedin.com/company/techcorp',
+            countries: {
+                US: 100,
+                GB: 200,
+            },
         };
 
         const validParams = {

@@ -1,12 +1,12 @@
-import { Fts } from '../../src/services/fts';
-import { CufinderClient } from '../../src/client';
-import { FtsResponse } from '../../src/shared/types';
+import { Fcc } from '../../lib/services/fcc';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { FccResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Fts', () => {
-    let service: Fts;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Fcc', () => {
+    let service: Fcc;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Fts', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Fts(mockClient);
+        service = new Fcc(mockClient);
     });
 
     afterEach(() => {
@@ -30,20 +30,16 @@ describe('Fts', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: FtsResponse = {
+        const mockResponse: FccResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'fts',
+                service_name: 'fcc',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            tech_stack: {
-                categories: [],
-                total_technologies: 0,
-                confidence: 0,
-            },
+            subsidiaries: [],
         };
 
         const validParams = {

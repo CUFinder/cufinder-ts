@@ -1,12 +1,12 @@
-import { Ntp } from '../../src/services/ntp';
-import { CufinderClient } from '../../src/client';
-import { NtpResponse } from '../../src/shared/types';
+import { Elf } from '../../lib/services/elf';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { ElfResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Ntp', () => {
-    let service: Ntp;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Elf', () => {
+    let service: Elf;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Ntp', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Ntp(mockClient);
+        service = new Elf(mockClient);
     });
 
     afterEach(() => {
@@ -30,16 +30,21 @@ describe('Ntp', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: NtpResponse = {
+        const mockResponse: ElfResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'ntp',
+                service_name: 'elf',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            phone: '1234567890',
+            fundraising: {
+                funding_last_round_type: 'Series A',
+                funding_ammount_currency_code: 'USD',
+                funding_money_raised: '1000000',
+                funding_last_round_investors_url: 'https://example.com',
+            },
         };
 
         const validParams = {

@@ -1,12 +1,12 @@
-import { Tep } from '../../src/services/tep';
-import { CufinderClient } from '../../src/client';
-import { TepResponse } from '../../src/shared/types';
+import { Tep } from '../../lib/services/tep';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { TepResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
 describe('Tep', () => {
     let service: Tep;
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {

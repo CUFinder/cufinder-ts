@@ -1,12 +1,12 @@
-import { Pse } from '../../src/services/pse';
-import { CufinderClient } from '../../src/client';
-import { PseResponse } from '../../src/shared/types';
+import { Clo } from '../../lib/services/clo';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { CloResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Pse', () => {
-    let service: Pse;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Clo', () => {
+    let service: Clo;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Pse', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Pse(mockClient);
+        service = new Clo(mockClient);
     });
 
     afterEach(() => {
@@ -30,18 +30,16 @@ describe('Pse', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: PseResponse = {
+        const mockResponse: CloResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'pse',
+                service_name: 'clo',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            people: [],
-            total_results: 0,
-            page: 1,
+            locations: [],
         };
 
         const validParams = {

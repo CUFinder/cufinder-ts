@@ -13,7 +13,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": "lib",
     "removeComments": false,
     "noEmit": false,
     "strict": true,
@@ -35,7 +35,7 @@
     "verbatimModuleSyntax": false
   },
   "include": [
-    "src/**/*"
+    "lib/**/*"
   ],
   "exclude": [
     "node_modules",

@@ -1,8 +1,8 @@
-import { Cuf } from '../../src/services/cuf';
-import { BaseApiClient } from '../../src/base_api_client';
-import { CufResponse } from '../../src/shared/types';
+import { Cuf } from '../../lib/services/cuf';
+import { BaseApiClient } from '../../lib/base_api_client';
+import { CufResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/base_api_client');
+jest.mock("../../lib/base_api_client");
 
 describe('Cuf', () => {
     let service: Cuf;

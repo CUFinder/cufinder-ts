@@ -1,12 +1,12 @@
-import { Cec } from '../../src/services/cec';
-import { CufinderClient } from '../../src/client';
-import { CecResponse } from '../../src/shared/types';
+import { Ntp } from '../../lib/services/ntp';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { NtpResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Cec', () => {
-    let service: Cec;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Ntp', () => {
+    let service: Ntp;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Cec', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Cec(mockClient);
+        service = new Ntp(mockClient);
     });
 
     afterEach(() => {
@@ -30,19 +30,16 @@ describe('Cec', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: CecResponse = {
+        const mockResponse: NtpResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'cec',
+                service_name: 'ntp',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            countries: {
-                US: 100,
-                GB: 200,
-            },
+            phone: '1234567890',
         };
 
         const validParams = {

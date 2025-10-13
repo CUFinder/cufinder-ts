@@ -1,6 +1,6 @@
-import { BaseApiClient } from '../src/base_api_client';
-import { BaseService } from '../src/services/base';
-import { CufinderError } from '../src/shared/types';
+import { BaseApiClient } from '../lib/base_api_client';
+import { BaseService } from '../lib/services/base';
+import { CufinderError } from '../lib/shared/types';
 
 /**
  * Mock class for testing BaseService functionality

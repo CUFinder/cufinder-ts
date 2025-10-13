@@ -1,12 +1,12 @@
-import { Car } from '../../src/services/car';
-import { CufinderClient } from '../../src/client';
-import { CarResponse } from '../../src/shared/types';
+import { Car } from '../../lib/services/car';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { CarResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
 describe('Car', () => {
     let service: Car;
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {

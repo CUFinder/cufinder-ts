@@ -1,12 +1,12 @@
-import { Fcc } from '../../src/services/fcc';
-import { CufinderClient } from '../../src/client';
-import { FccResponse } from '../../src/shared/types';
+import { Dtc } from '../../lib/services/dtc';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { DtcResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Fcc', () => {
-    let service: Fcc;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Dtc', () => {
+    let service: Dtc;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Fcc', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Fcc(mockClient);
+        service = new Dtc(mockClient);
     });
 
     afterEach(() => {
@@ -30,16 +30,16 @@ describe('Fcc', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: FccResponse = {
+        const mockResponse: DtcResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'fcc',
+                service_name: 'dtc',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            subsidiaries: [],
+            company_name: 'Test Company',
         };
 
         const validParams = {

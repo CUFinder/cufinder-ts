@@ -1,12 +1,12 @@
-import { Clo } from '../../src/services/clo';
-import { CufinderClient } from '../../src/client';
-import { CloResponse } from '../../src/shared/types';
+import { Fts } from '../../lib/services/fts';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { FtsResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Clo', () => {
-    let service: Clo;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Fts', () => {
+    let service: Fts;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Clo', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Clo(mockClient);
+        service = new Fts(mockClient);
     });
 
     afterEach(() => {
@@ -30,16 +30,20 @@ describe('Clo', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: CloResponse = {
+        const mockResponse: FtsResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'clo',
+                service_name: 'fts',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            locations: [],
+            tech_stack: {
+                categories: [],
+                total_technologies: 0,
+                confidence: 0,
+            },
         };
 
         const validParams = {

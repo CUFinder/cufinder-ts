@@ -1,12 +1,12 @@
-import { Cse } from '../../src/services/cse';
-import { CufinderClient } from '../../src/client';
-import { CseResponse } from '../../src/shared/types';
+import { Cse } from '../../lib/services/cse';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { CseResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
 describe('Cse', () => {
     let service: Cse;
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {

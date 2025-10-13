@@ -1,12 +1,12 @@
-import { Fwe } from '../../src/services/fwe';
-import { CufinderClient } from '../../src/client';
-import { FweResponse } from '../../src/shared/types';
+import { Fwe } from '../../lib/services/fwe';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { FweResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
 describe('Fwe', () => {
     let service: Fwe;
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {

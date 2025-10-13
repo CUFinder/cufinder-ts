@@ -1,12 +1,12 @@
-import { Fcl } from '../../src/services/fcl';
-import { CufinderClient } from '../../src/client';
-import { FclResponse } from '../../src/shared/types';
+import { Lbs } from '../../lib/services/lbs';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { LbsResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Fcl', () => {
-    let service: Fcl;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Lbs', () => {
+    let service: Lbs;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Fcl', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Fcl(mockClient);
+        service = new Lbs(mockClient);
     });
 
     afterEach(() => {
@@ -30,16 +30,18 @@ describe('Fcl', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: FclResponse = {
+        const mockResponse: LbsResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'fcl',
+                service_name: 'lbs',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            lookalikes: [],
+            businesses: [],
+            total_results: 0,
+            page: 1,
         };
 
         const validParams = {

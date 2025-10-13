@@ -1,12 +1,12 @@
-import { Lbs } from '../../src/services/lbs';
-import { CufinderClient } from '../../src/client';
-import { LbsResponse } from '../../src/shared/types';
+import { Pse } from '../../lib/services/pse';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { PseResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Lbs', () => {
-    let service: Lbs;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Pse', () => {
+    let service: Pse;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Lbs', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Lbs(mockClient);
+        service = new Pse(mockClient);
     });
 
     afterEach(() => {
@@ -30,16 +30,16 @@ describe('Lbs', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: LbsResponse = {
+        const mockResponse: PseResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'lbs',
+                service_name: 'pse',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            businesses: [],
+            people: [],
             total_results: 0,
             page: 1,
         };

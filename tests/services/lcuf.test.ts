@@ -1,12 +1,12 @@
-import { Dtc } from '../../src/services/dtc';
-import { CufinderClient } from '../../src/client';
-import { DtcResponse } from '../../src/shared/types';
+import { Lcuf } from '../../lib/services/lcuf';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { LcufResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Dtc', () => {
-    let service: Dtc;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Lcuf', () => {
+    let service: Lcuf;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Dtc', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Dtc(mockClient);
+        service = new Lcuf(mockClient);
     });
 
     afterEach(() => {
@@ -30,16 +30,16 @@ describe('Dtc', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: DtcResponse = {
+        const mockResponse: LcufResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'dtc',
+                service_name: 'lcuf',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            company_name: 'Test Company',
+            linkedin_url: 'https://linkedin.com/company/techcorp',
         };
 
         const validParams = {

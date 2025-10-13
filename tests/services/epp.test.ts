@@ -1,12 +1,12 @@
-import { Epp } from '../../src/services/epp';
-import { CufinderClient } from '../../src/client';
-import { EppResponse } from '../../src/shared/types';
+import { Epp } from '../../lib/services/epp';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { EppResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
 describe('Epp', () => {
     let service: Epp;
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {

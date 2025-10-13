@@ -1,12 +1,12 @@
-import { Elf } from '../../src/services/elf';
-import { CufinderClient } from '../../src/client';
-import { ElfResponse } from '../../src/shared/types';
+import { Fcl } from '../../lib/services/fcl';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { FclResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
-describe('Elf', () => {
-    let service: Elf;
-    let mockClient: jest.Mocked<CufinderClient>;
+describe('Fcl', () => {
+    let service: Fcl;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
@@ -22,7 +22,7 @@ describe('Elf', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Elf(mockClient);
+        service = new Fcl(mockClient);
     });
 
     afterEach(() => {
@@ -30,21 +30,16 @@ describe('Elf', () => {
     });
 
     describe('service methods', () => {
-        const mockResponse: ElfResponse = {
+        const mockResponse: FclResponse = {
             query: 'test-query',
             credit_count: 1,
             meta_data: {
                 user_id: 123,
-                service_name: 'elf',
+                service_name: 'fcl',
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            fundraising: {
-                funding_last_round_type: 'Series A',
-                funding_ammount_currency_code: 'USD',
-                funding_money_raised: '1000000',
-                funding_last_round_investors_url: 'https://example.com',
-            },
+            lookalikes: [],
         };
 
         const validParams = {

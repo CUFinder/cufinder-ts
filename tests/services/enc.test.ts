@@ -1,12 +1,12 @@
-import { Enc } from '../../src/services/enc';
-import { CufinderClient } from '../../src/client';
-import { EncResponse } from '../../src/shared/types';
+import { Enc } from '../../lib/services/enc';
+import { BaseApiClient } from "../../lib/base_api_client";
+import { EncResponse } from '../../lib/shared/types';
 
-jest.mock('../../src/client');
+jest.mock("../../lib/base_api_client");
 
 describe('Enc', () => {
     let service: Enc;
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {
