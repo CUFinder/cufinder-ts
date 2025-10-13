@@ -1,22 +1,25 @@
-import { NtpParams, NtpResponse } from '../shared/types';
+import { NtpResponse } from '../shared/types';
 import { BaseService } from './base';
 
 /**
  * NTP - Company Phone Finder API (V2)
  * Returns up to two verified phone numbers for a company
  */
-export class Ntp extends BaseService {
+export class NtpService extends BaseService {
     /**
      * Get company phones from company name
-     * @param params - NTP V2 parameters
+     * @param companyName - The name of the company to get phone numbers for
      * @returns Promise resolving to company phone information
+     * @example
+     * ```typescript
+     * const result = await client.ntp('apple');
+     * console.log(result.phone);
+     * ```
      */
-    public async getPhones(params: NtpParams): Promise<NtpResponse> {
-        this.validateRequired(params.company_name, 'company_name');
-
+    public async getPhones(companyName: string): Promise<NtpResponse> {
         try {
             const response = await this.client.post('/ntp', {
-                company_name: params.company_name.trim(),
+                company_name: companyName.trim(),
             });
 
             return this.parseResponseData<NtpResponse>(response.data);

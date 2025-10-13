@@ -13,21 +13,6 @@ export abstract class BaseService {
     }
 
     /**
-     * Validate that a required parameter is provided
-     * @param value - The value to validate
-     * @param paramName - The name of the parameter for error messages
-     */
-    protected validateRequired(value: any, paramName: string): void {
-        if (value === undefined || value === null || value === '') {
-            throw new CufinderError(
-                `Parameter '${paramName}' is required`,
-                'VALIDATION_ERROR',
-                400
-            );
-        }
-    }
-
-    /**
      * Validate API key format
      * @param apiKey - The API key to validate
      */

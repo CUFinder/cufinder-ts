@@ -1,147 +1,353 @@
 import { BaseApiClient } from './base_api_client';
-import { CufinderClientConfig } from './shared/types';
+import {
+    CarResponse,
+    CecResponse,
+    CloResponse,
+    CseResponse,
+    CufResponse,
+    DtcResponse,
+    DteResponse,
+    ElfResponse,
+    EncResponse,
+    EppResponse,
+    FccResponse,
+    FclResponse,
+    FtsResponse,
+    FweResponse,
+    LbsResponse,
+    LcufResponse,
+    NtpResponse,
+    PseResponse,
+    RelResponse,
+    TepResponse,
+} from './shared/models/responses.model';
+import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/types';
 
 // Services
 import {
-    Car,
-    Cec,
-    Clo,
-    Cse,
-    Cuf,
-    Dtc,
-    Dte,
-    Elf,
-    Enc,
-    Epp,
-    Fcc,
-    Fcl,
-    Fts,
-    Fwe,
-    Lbs,
-    Lcuf,
-    Ntp,
-    Pse,
-    Rel,
-    Tep,
+    CarService,
+    CecService,
+    CloService,
+    CseService,
+    CufService,
+    DtcService,
+    DteService,
+    ElfService,
+    EncService,
+    EppService,
+    FccService,
+    FclService,
+    FtsService,
+    FweService,
+    LbsService,
+    LcufService,
+    NtpService,
+    PseService,
+    RelService,
+    TepService,
 } from './services';
 
 /**
  * Main Cufinder client class
- * Provides access to all API services as direct functions
- * Usage: client.cuf(params), client.dte(params)
+ * Provides access to all API services
+ *
+ * @example
+ * ```typescript
+ * import { Cufinder } from '@cufinder/cufinder-ts';
+ *
+ * const client = new Cufinder('your-api-key');
+ * ```
  */
 export class Cufinder {
     private readonly client: BaseApiClient;
 
-    // Services as direct functions
-    public readonly cuf: (params: Parameters<Cuf['getDomain']>[0]) => ReturnType<Cuf['getDomain']>;
-    public readonly lcuf: (
-        params: Parameters<Lcuf['getLinkedInUrl']>[0]
-    ) => ReturnType<Lcuf['getLinkedInUrl']>;
-    public readonly dtc: (
-        params: Parameters<Dtc['getCompanyName']>[0]
-    ) => ReturnType<Dtc['getCompanyName']>;
-    public readonly dte: (params: Parameters<Dte['getEmails']>[0]) => ReturnType<Dte['getEmails']>;
-    public readonly ntp: (params: Parameters<Ntp['getPhones']>[0]) => ReturnType<Ntp['getPhones']>;
-    public readonly rel: (
-        params: Parameters<Rel['reverseEmailLookup']>[0]
-    ) => ReturnType<Rel['reverseEmailLookup']>;
-    public readonly fcl: (
-        params: Parameters<Fcl['getLookalikes']>[0]
-    ) => ReturnType<Fcl['getLookalikes']>;
-    public readonly elf: (
-        params: Parameters<Elf['getFundraising']>[0]
-    ) => ReturnType<Elf['getFundraising']>;
-    public readonly car: (
-        params: Parameters<Car['getRevenue']>[0]
-    ) => ReturnType<Car['getRevenue']>;
-    public readonly fcc: (
-        params: Parameters<Fcc['getSubsidiaries']>[0]
-    ) => ReturnType<Fcc['getSubsidiaries']>;
-    public readonly fts: (
-        params: Parameters<Fts['getTechStack']>[0]
-    ) => ReturnType<Fts['getTechStack']>;
-    public readonly epp: (
-        params: Parameters<Epp['enrichProfile']>[0]
-    ) => ReturnType<Epp['enrichProfile']>;
-    public readonly fwe: (
-        params: Parameters<Fwe['getEmailFromProfile']>[0]
-    ) => ReturnType<Fwe['getEmailFromProfile']>;
-    public readonly tep: (
-        params: Parameters<Tep['enrichPerson']>[0]
-    ) => ReturnType<Tep['enrichPerson']>;
-    public readonly enc: (
-        params: Parameters<Enc['enrichCompany']>[0]
-    ) => ReturnType<Enc['enrichCompany']>;
-    public readonly cec: (
-        params: Parameters<Cec['getEmployeeCountries']>[0]
-    ) => ReturnType<Cec['getEmployeeCountries']>;
-    public readonly clo: (
-        params: Parameters<Clo['getLocations']>[0]
-    ) => ReturnType<Clo['getLocations']>;
-    public readonly cse: (
-        params?: Parameters<Cse['searchCompanies']>[0]
-    ) => ReturnType<Cse['searchCompanies']>;
-    public readonly pse: (
-        params?: Parameters<Pse['searchPeople']>[0]
-    ) => ReturnType<Pse['searchPeople']>;
-    public readonly lbs: (
-        params?: Parameters<Lbs['searchLocalBusinesses']>[0]
-    ) => ReturnType<Lbs['searchLocalBusinesses']>;
+    /**
+     * Get company domain from company name
+     * @param companyName - The name of the company to find the domain for
+     * @param countryCode - The 2-letter ISO country code (e.g., 'US', 'GB')
+     * @returns Promise resolving to company domain information
+     * @example
+     * ```typescript
+     * const response = await client.cuf('apple', 'US');
+     * console.log(response.domain); // 'apple.com'
+     * ```
+     */
+    public readonly cuf: (companyName: string, countryCode: string) => Promise<CufResponse>;
+
+    /**
+     * Get LinkedIn URL from company name
+     * @param companyName - The name of the company to find LinkedIn URL for
+     * @returns Promise resolving to LinkedIn URL information
+     * @example
+     * ```typescript
+     * const response = await client.lcuf('apple');
+     * console.log(response.linkedin_url); // 'linkedin.com/company/apple'
+     * ```
+     */
+    public readonly lcuf: (companyName: string) => Promise<LcufResponse>;
+
+    /**
+     * Get company name from domain
+     * @param websiteUrl - The website URL to get company name for
+     * @returns Promise resolving to company name information
+     * @example
+     * ```typescript
+     * const response = await client.dtc('https://apple.com');
+     * console.log(response.company_name); // 'apple'
+     * ```
+     */
+    public readonly dtc: (websiteUrl: string) => Promise<DtcResponse>;
+
+    /**
+     * Get company emails from domain
+     * @param websiteUrl - The website URL to get emails for
+     * @returns Promise resolving to company email information
+     * @example
+     * ```typescript
+     * const response = await client.dte('https://apple.com');
+     * console.log(response.emails); // ['contact@apple.com', 'info@apple.com']
+     * ```
+     */
+    public readonly dte: (websiteUrl: string) => Promise<DteResponse>;
+
+    /**
+     * Get company phone numbers
+     * @param companyName - The name of the company to get phone numbers for
+     * @returns Promise resolving to phone number information
+     * @example
+     * ```typescript
+     * const response = await client.ntp('apple');
+     * console.log(response.phone); // '+1-408-996-1010'
+     * ```
+     */
+    public readonly ntp: (companyName: string) => Promise<NtpResponse>;
+
+    /**
+     * Reverse email lookup
+     * @param email - The email address to lookup
+     * @returns Promise resolving to person information
+     * @example
+     * ```typescript
+     * const response = await client.rel('test@example.com');
+     * console.log(response.person.name); // Person details
+     * ```
+     */
+    public readonly rel: (email: string) => Promise<RelResponse>;
+
+    /**
+     * Find company lookalikes
+     * @param query - The company name to find lookalikes for
+     * @returns Promise resolving to lookalike companies
+     * @example
+     * ```typescript
+     * const response = await client.fcl('apple');
+     * console.log(response.lookalikes); // Array of similar companies
+     * ```
+     */
+    public readonly fcl: (query: string) => Promise<FclResponse>;
+
+    /**
+     * Get company fundraising information
+     * @param query - The company name to get fundraising info for
+     * @returns Promise resolving to fundraising data
+     * @example
+     * ```typescript
+     * const response = await client.elf('apple');
+     * console.log(response.fundraising); // Fundraising details
+     * ```
+     */
+    public readonly elf: (query: string) => Promise<ElfResponse>;
+
+    /**
+     * Get company revenue information
+     * @param query - The company name to get revenue info for
+     * @returns Promise resolving to revenue data
+     * @example
+     * ```typescript
+     * const response = await client.car('apple');
+     * console.log(response.revenue.annual_revenue); // '$394.3B'
+     * ```
+     */
+    public readonly car: (query: string) => Promise<CarResponse>;
+
+    /**
+     * Get company subsidiaries
+     * @param query - The company name to get subsidiaries for
+     * @returns Promise resolving to subsidiaries information
+     * @example
+     * ```typescript
+     * const subsidiaries = await client.fcc('apple');
+     * console.log(subsidiaries.subsidiaries); // Array of subsidiaries
+     * ```
+     */
+    public readonly fcc: (query: string) => Promise<FccResponse>;
+
+    /**
+     * Get company tech stack
+     * @param query - The company name to get tech stack for
+     * @returns Promise resolving to tech stack information
+     * @example
+     * ```typescript
+     * const techStack = await client.fts('apple');
+     * console.log(techStack.tech_stack); // Technology stack details
+     * ```
+     */
+    public readonly fts: (query: string) => Promise<FtsResponse>;
+
+    /**
+     * Enrich LinkedIn profile
+     * @param linkedinUrl - The LinkedIn profile URL to enrich
+     * @returns Promise resolving to enriched person data
+     * @example
+     * ```typescript
+     * const person = await client.epp('https://linkedin.com/in/test');
+     * console.log(person.person); // Enriched person data
+     * ```
+     */
+    public readonly epp: (linkedinUrl: string) => Promise<EppResponse>;
+
+    /**
+     * Get email from LinkedIn profile
+     * @param linkedinUrl - The LinkedIn profile URL to get email from
+     * @returns Promise resolving to email information
+     * @example
+     * ```typescript
+     * const email = await client.fwe('https://linkedin.com/in/test');
+     * console.log(email.email); // 'test@example.com'
+     * ```
+     */
+    public readonly fwe: (linkedinUrl: string) => Promise<FweResponse>;
+
+    /**
+     * Enrich person data
+     * @param fullName - The full name of the person to enrich
+     * @param company - The company name where the person works
+     * @returns Promise resolving to enriched person data
+     * @example
+     * ```typescript
+     * const person = await client.tep('john doe', 'apple');
+     * console.log(person.person); // Enriched person data
+     * ```
+     */
+    public readonly tep: (fullName: string, company: string) => Promise<TepResponse>;
+
+    /**
+     * Enrich company data
+     * @param query - The company name to enrich
+     * @returns Promise resolving to enriched company data
+     * @example
+     * ```typescript
+     * const company = await client.enc('apple');
+     * console.log(company.company); // Enriched company data
+     * ```
+     */
+    public readonly enc: (query: string) => Promise<EncResponse>;
+
+    /**
+     * Get company employee countries
+     * @param query - The company name to get employee countries for
+     * @returns Promise resolving to employee countries data
+     * @example
+     * ```typescript
+     * const countries = await client.cec('apple');
+     * console.log(countries.countries); // Country distribution data
+     * ```
+     */
+    public readonly cec: (query: string) => Promise<CecResponse>;
+
+    /**
+     * Get company locations
+     * @param query - The company name to get locations for
+     * @returns Promise resolving to company locations
+     * @example
+     * ```typescript
+     * const locations = await client.clo('apple');
+     * console.log(locations.locations); // Array of company locations
+     * ```
+     */
+    public readonly clo: (query: string) => Promise<CloResponse>;
+
+    /**
+     * Search for companies
+     * @param params - Optional search parameters
+     * @returns Promise resolving to company search results
+     * @example
+     * ```typescript
+     * const companies = await client.cse({ name: 'technology', country: 'US' });
+     * console.log(companies.companies); // Array of company results
+     * ```
+     */
+    public readonly cse: (params?: CseParams) => Promise<CseResponse>;
+
+    /**
+     * Search for people
+     * @param params - Optional search parameters
+     * @returns Promise resolving to people search results
+     * @example
+     * ```typescript
+     * const people = await client.pse({ full_name: 'john doe' });
+     * console.log(people.people); // Array of person results
+     * ```
+     */
+    public readonly pse: (params?: PseParams) => Promise<PseResponse>;
+
+    /**
+     * Search for local businesses
+     * @param params - Optional search parameters
+     * @returns Promise resolving to local business search results
+     * @example
+     * ```typescript
+     * const businesses = await client.lbs({ name: 'restaurant' });
+     * console.log(businesses.businesses); // Array of business results
+     * ```
+     */
+    public readonly lbs: (params?: LbsParams) => Promise<LbsResponse>;
 
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
         // Initialize service instances
-        const cuf = new Cuf(this.client);
-        const lcuf = new Lcuf(this.client);
-        const dtc = new Dtc(this.client);
-        const dte = new Dte(this.client);
-        const ntp = new Ntp(this.client);
-        const rel = new Rel(this.client);
-        const fcl = new Fcl(this.client);
-        const elf = new Elf(this.client);
-        const car = new Car(this.client);
-        const fcc = new Fcc(this.client);
-        const fts = new Fts(this.client);
-        const epp = new Epp(this.client);
-        const fwe = new Fwe(this.client);
-        const tep = new Tep(this.client);
-        const enc = new Enc(this.client);
-        const cec = new Cec(this.client);
-        const clo = new Clo(this.client);
-        const cse = new Cse(this.client);
-        const pse = new Pse(this.client);
-        const lbs = new Lbs(this.client);
+        const cuf = new CufService(this.client);
+        const lcuf = new LcufService(this.client);
+        const dtc = new DtcService(this.client);
+        const dte = new DteService(this.client);
+        const ntp = new NtpService(this.client);
+        const rel = new RelService(this.client);
+        const fcl = new FclService(this.client);
+        const elf = new ElfService(this.client);
+        const car = new CarService(this.client);
+        const fcc = new FccService(this.client);
+        const fts = new FtsService(this.client);
+        const epp = new EppService(this.client);
+        const fwe = new FweService(this.client);
+        const tep = new TepService(this.client);
+        const enc = new EncService(this.client);
+        const cec = new CecService(this.client);
+        const clo = new CloService(this.client);
+        const cse = new CseService(this.client);
+        const pse = new PseService(this.client);
+        const lbs = new LbsService(this.client);
 
         // Expose services as direct functions
-        this.cuf = params => cuf.getDomain(params);
-        this.lcuf = params => lcuf.getLinkedInUrl(params);
-        this.dtc = params => dtc.getCompanyName(params);
-        this.dte = params => dte.getEmails(params);
-        this.ntp = params => ntp.getPhones(params);
-        this.rel = params => rel.reverseEmailLookup(params);
-        this.fcl = params => fcl.getLookalikes(params);
-        this.elf = params => elf.getFundraising(params);
-        this.car = params => car.getRevenue(params);
-        this.fcc = params => fcc.getSubsidiaries(params);
-        this.fts = params => fts.getTechStack(params);
-        this.epp = params => epp.enrichProfile(params);
-        this.fwe = params => fwe.getEmailFromProfile(params);
-        this.tep = params => tep.enrichPerson(params);
-        this.enc = params => enc.enrichCompany(params);
-        this.cec = params => cec.getEmployeeCountries(params);
-        this.clo = params => clo.getLocations(params);
+        this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
+        this.lcuf = companyName => lcuf.getLinkedInUrl(companyName);
+        this.dtc = websiteUrl => dtc.getCompanyName(websiteUrl);
+        this.dte = websiteUrl => dte.getEmails(websiteUrl);
+        this.ntp = companyName => ntp.getPhones(companyName);
+        this.rel = email => rel.reverseEmailLookup(email);
+        this.fcl = query => fcl.getLookalikes(query);
+        this.elf = query => elf.getFundraising(query);
+        this.car = query => car.getRevenue(query);
+        this.fcc = query => fcc.getSubsidiaries(query);
+        this.fts = query => fts.getTechStack(query);
+        this.epp = linkedinUrl => epp.enrichProfile(linkedinUrl);
+        this.fwe = linkedinUrl => fwe.getEmailFromProfile(linkedinUrl);
+        this.tep = (fullName, company) => tep.enrichPerson(fullName, company);
+        this.enc = query => enc.enrichCompany(query);
+        this.cec = query => cec.getEmployeeCountries(query);
+        this.clo = query => clo.getLocations(query);
         this.cse = params => cse.searchCompanies(params);
         this.pse = params => pse.searchPeople(params);
         this.lbs = params => lbs.searchLocalBusinesses(params);
-    }
-
-    /**
-     * Get the underlying HTTP client for advanced usage
-     * @returns The BaseApiClient instance
-     */
-    public getClient(): BaseApiClient {
-        return this.client;
     }
 }

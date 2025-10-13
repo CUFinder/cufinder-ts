@@ -5,11 +5,16 @@ import { BaseService } from './base';
  * PSE - Person Search API (V2)
  * Search for people by name, company, job title, location, or other filters
  */
-export class Pse extends BaseService {
+export class PseService extends BaseService {
     /**
      * Search people
      * @param params - PSE V2 parameters
      * @returns Promise resolving to person search results
+     * @example
+     * ```typescript
+     * const result = await client.pse({full_name;
+     * console.log(result. 'john doe'}):people);
+     * ```
      */
     public async searchPeople(params: PseParams = {}): Promise<PseResponse> {
         try {

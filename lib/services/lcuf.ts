@@ -1,29 +1,25 @@
-import { LcufParams, LcufResponse } from '../shared/types';
+import { LcufResponse } from '../shared/types';
 import { BaseService } from './base';
 
 /**
  * LCUF - Company LinkedIn URL Finder API (V2)
  * Finds the official LinkedIn company profile URL from a company name
  */
-export class Lcuf extends BaseService {
+export class LcufService extends BaseService {
     /**
      * Get LinkedIn URL from company name
-     * @param params - LCUF V2 parameters
+     * @param companyName - The name of the company to find LinkedIn URL for
      * @returns Promise resolving to LinkedIn URL information
      * @example
      * ```typescript
-     * const linkedin = await sdk.lcuf({
-     *   company_name: 'TechCorp'
-     * });
-     * console.log(linkedin.linkedin_url); // 'https://linkedin.com/company/techcorp'
+     * const linkedin = await client.lcuf('apple');
+     * console.log(linkedin.linkedin_url); // 'https://linkedin.com/company/apple'
      * ```
      */
-    public async getLinkedInUrl(params: LcufParams): Promise<LcufResponse> {
-        this.validateRequired(params.company_name, 'company_name');
-
+    public async getLinkedInUrl(companyName: string): Promise<LcufResponse> {
         try {
             const response = await this.client.post('/lcuf', {
-                company_name: params.company_name.trim(),
+                company_name: companyName.trim(),
             });
 
             return this.parseResponseData<LcufResponse>(response.data);

@@ -1,22 +1,25 @@
-import { CecParams, CecResponse } from '../shared/types';
+import { CecResponse } from '../shared/types';
 import { BaseService } from './base';
 
 /**
  * CEC - Company Employees Countries API (V2)
  * Returns an estimated number of employees for a company
  */
-export class Cec extends BaseService {
+export class CecService extends BaseService {
     /**
      * Get company employee countries
-     * @param params - CEC V2 parameters
+     * @param query - The company name to get employee countries for
      * @returns Promise resolving to employee countries data
+     * @example
+     * ```typescript
+     * const result = await client.cec('apple');
+     * console.log(result.countries);
+     * ```
      */
-    public async getEmployeeCountries(params: CecParams): Promise<CecResponse> {
-        this.validateRequired(params.query, 'query');
-
+    public async getEmployeeCountries(query: string): Promise<CecResponse> {
         try {
             const response = await this.client.post('/cec', {
-                query: params.query.trim(),
+                query: query.trim(),
             });
 
             return this.parseResponseData<CecResponse>(response.data);

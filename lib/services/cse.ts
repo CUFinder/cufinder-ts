@@ -5,7 +5,7 @@ import { BaseService } from './base';
  * CSE - Company Search API (V2)
  * Search for companies by keyword, partial name, industry, location, or other filters
  */
-export class Cse extends BaseService {
+export class CseService extends BaseService {
     /**
      * Search companies
      * @param params - CSE V2 parameters

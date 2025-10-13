@@ -5,11 +5,16 @@ import { BaseService } from './base';
  * LBS - Local Business Search API (V2)
  * Search for local businesses by location, industry, or name
  */
-export class Lbs extends BaseService {
+export class LbsService extends BaseService {
     /**
      * Search local businesses
      * @param params - LBS V2 parameters
      * @returns Promise resolving to local business search results
+     * @example
+     * ```typescript
+     * const result = await client.lbs({name;
+     * console.log(result. 'restaurant'}):businesses);
+     * ```
      */
     public async searchLocalBusinesses(params: LbsParams = {}): Promise<LbsResponse> {
         try {

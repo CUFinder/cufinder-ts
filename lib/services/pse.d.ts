@@ -5,6 +5,6 @@ import { BaseService } from './base';
  * PSE - Person Search API (V2)
  * Search for people by various criteria
  */
-export declare class Pse extends BaseService {
+export declare class PseService extends BaseService {
   searchPeople(params?: PseParams): Promise<PseResponse>;
 }

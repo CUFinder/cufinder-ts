@@ -1,22 +1,25 @@
-import { RelParams, RelResponse } from '../shared/types';
+import { RelResponse } from '../shared/types';
 import { BaseService } from './base';
 
 /**
  * REL - Reverse Email Lookup API (V2)
  * Enriches an email address with detailed person and company information
  */
-export class Rel extends BaseService {
+export class RelService extends BaseService {
     /**
      * Reverse email lookup
-     * @param params - REL V2 parameters
+     * @param email - The email address to lookup
      * @returns Promise resolving to person information
+     * @example
+     * ```typescript
+     * const result = await client.rel('test@example.com');
+     * console.log(result.person);
+     * ```
      */
-    public async reverseEmailLookup(params: RelParams): Promise<RelResponse> {
-        this.validateRequired(params.email, 'email');
-
+    public async reverseEmailLookup(email: string): Promise<RelResponse> {
         try {
             const response = await this.client.post('/rel', {
-                email: params.email.trim(),
+                email: email.trim(),
             });
 
             return this.parseResponseData<RelResponse>(response.data);

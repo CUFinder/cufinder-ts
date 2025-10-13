@@ -5,6 +5,6 @@ import { BaseService } from './base';
  * FCC - Company Subsidiaries Finder API (V2)
  * Returns subsidiary companies information
  */
-export declare class Fcc extends BaseService {
+export declare class FccService extends BaseService {
   getSubsidiaries(params: FccParams): Promise<FccResponse>;
 }

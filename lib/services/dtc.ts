@@ -1,29 +1,25 @@
-import { DtcParams, DtcResponse } from '../shared/types';
+import { DtcResponse } from '../shared/types';
 import { BaseService } from './base';
 
 /**
  * DTC - Domain to Company Name API (V2)
  * Retrieves the registered company name associated with a given website domain
  */
-export class Dtc extends BaseService {
+export class DtcService extends BaseService {
     /**
      * Get company name from domain
-     * @param params - DTC V2 parameters
+     * @param websiteUrl - The website URL to get company name for
      * @returns Promise resolving to company name information
+     * @example
+     * ```typescript
+     * const company = await client.dtc('https://apple.com');
+     * console.log(company.company_name); // 'Apple Inc.'
+     * ```
      */
-    public async getCompanyName(params: DtcParams): Promise<DtcResponse> {
-        this.validateRequired(params.company_website, 'company_website');
-
-        // Basic URL validation
-        try {
-            new URL(params.company_website.trim());
-        } catch {
-            throw new Error('Invalid website URL format');
-        }
-
+    public async getCompanyName(websiteUrl: string): Promise<DtcResponse> {
         try {
             const response = await this.client.post('/dtc', {
-                company_website: params.company_website.trim(),
+                company_website: websiteUrl.trim(),
             });
 
             return this.parseResponseData<DtcResponse>(response.data);

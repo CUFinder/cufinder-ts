@@ -1,22 +1,25 @@
-import { FweParams, FweResponse } from '../shared/types';
+import { FweResponse } from '../shared/types';
 import { BaseService } from './base';
 
 /**
  * FWE - LinkedIn Profile Email Finder API (V2)
  * Extracts a verified business email address from a LinkedIn profile URL
  */
-export class Fwe extends BaseService {
+export class FweService extends BaseService {
     /**
      * Get email from LinkedIn profile
-     * @param params - FWE V2 parameters
+     * @param linkedinUrl - The LinkedIn profile URL to get email from
      * @returns Promise resolving to email address
+     * @example
+     * ```typescript
+     * const result = await client.fwe('https;
+     * console.log(result.//linkedin.com/in/test'):email);
+     * ```
      */
-    public async getEmailFromProfile(params: FweParams): Promise<FweResponse> {
-        this.validateRequired(params.linkedin_url, 'linkedin_url');
-
+    public async getEmailFromProfile(linkedinUrl: string): Promise<FweResponse> {
         try {
             const response = await this.client.post('/fwe', {
-                linkedin_url: params.linkedin_url.trim(),
+                linkedin_url: linkedinUrl.trim(),
             });
 
             return this.parseResponseData<FweResponse>(response.data);
