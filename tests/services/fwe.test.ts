@@ -1,8 +1,8 @@
-import { Fwe } from '../../lib/services/fwe';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { FweService } from '../../lib/services/fwe';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { FweResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Fwe', () => {
     let service: Fwe;
@@ -22,7 +22,7 @@ describe('Fwe', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Fwe(mockClient);
+        service = new FweService(mockClient);
     });
 
     afterEach(() => {

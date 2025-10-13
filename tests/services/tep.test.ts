@@ -1,8 +1,8 @@
-import { Tep } from '../../lib/services/tep';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { TepService } from '../../lib/services/tep';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { TepResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Tep', () => {
     let service: Tep;
@@ -22,7 +22,7 @@ describe('Tep', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Tep(mockClient);
+        service = new TepService(mockClient);
     });
 
     afterEach(() => {

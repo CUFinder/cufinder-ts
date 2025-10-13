@@ -1,8 +1,8 @@
-import { Dtc } from '../../lib/services/dtc';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { DtcService } from '../../lib/services/dtc';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { DtcResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Dtc', () => {
     let service: Dtc;
@@ -22,7 +22,7 @@ describe('Dtc', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Dtc(mockClient);
+        service = new DtcService(mockClient);
     });
 
     afterEach(() => {

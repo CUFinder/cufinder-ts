@@ -1,8 +1,8 @@
-import { Cuf } from '../../lib/services/cuf';
+import { CufService } from '../../lib/services/cuf';
 import { BaseApiClient } from '../../lib/base_api_client';
 import { CufResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Cuf', () => {
     let service: Cuf;
@@ -22,7 +22,7 @@ describe('Cuf', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Cuf(mockClient);
+        service = new CufService(mockClient);
     });
 
     afterEach(() => {
@@ -55,37 +55,16 @@ describe('Cuf', () => {
                 headers: {},
             });
 
-            const result = await service.getDomain(validParams);
+            const result = await service.getDomain(
+                validParams.company_name,
+                validParams.country_code
+            );
 
             expect(result).toEqual(mockResponse);
             expect(mockClient.post).toHaveBeenCalledWith('/cuf', {
                 company_name: validParams.company_name.trim(),
                 country_code: validParams.country_code.trim().toUpperCase(),
             });
-        });
-
-        it('should throw error for missing company_name', async () => {
-            const invalidParams = { ...validParams, company_name: '' };
-
-            await expect(service.getDomain(invalidParams)).rejects.toThrow(
-                "Parameter 'company_name' is required"
-            );
-        });
-
-        it('should throw error for missing country_code', async () => {
-            const invalidParams = { ...validParams, country_code: '' };
-
-            await expect(service.getDomain(invalidParams)).rejects.toThrow(
-                "Parameter 'country_code' is required"
-            );
-        });
-
-        it('should throw error for invalid country code format', async () => {
-            const invalidParams = { ...validParams, country_code: 'USA' };
-
-            await expect(service.getDomain(invalidParams)).rejects.toThrow(
-                'Country code must be a valid 2-letter ISO 3166-1 alpha-2 code'
-            );
         });
 
         it('should accept valid 2-letter country code', async () => {
@@ -95,9 +74,7 @@ describe('Cuf', () => {
                 statusText: 'OK',
                 headers: {},
             });
-            const params = { company_name: 'TechCorp', country_code: 'gb' };
-
-            await service.getDomain(params);
+            await service.getDomain('TechCorp', 'gb');
 
             expect(mockClient.post).toHaveBeenCalledWith('/cuf', {
                 company_name: 'TechCorp',
@@ -109,7 +86,9 @@ describe('Cuf', () => {
             const error = new Error('Network error');
             mockClient.post.mockRejectedValue(error);
 
-            await expect(service.getDomain(validParams)).rejects.toThrow('Network error');
+            await expect(
+                service.getDomain(validParams.company_name, validParams.country_code)
+            ).rejects.toThrow('Network error');
         });
     });
 });

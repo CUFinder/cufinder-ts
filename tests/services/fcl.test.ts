@@ -1,8 +1,8 @@
-import { Fcl } from '../../lib/services/fcl';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { FclService } from '../../lib/services/fcl';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { FclResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Fcl', () => {
     let service: Fcl;
@@ -22,7 +22,7 @@ describe('Fcl', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Fcl(mockClient);
+        service = new FclService(mockClient);
     });
 
     afterEach(() => {

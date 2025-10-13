@@ -1,8 +1,8 @@
-import { Cse } from '../../lib/services/cse';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { CseService } from '../../lib/services/cse';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { CseResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Cse', () => {
     let service: Cse;
@@ -22,7 +22,7 @@ describe('Cse', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Cse(mockClient);
+        service = new CseService(mockClient);
     });
 
     afterEach(() => {

@@ -1,8 +1,8 @@
-import { Fts } from '../../lib/services/fts';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { FtsService } from '../../lib/services/fts';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { FtsResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Fts', () => {
     let service: Fts;
@@ -22,7 +22,7 @@ describe('Fts', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Fts(mockClient);
+        service = new FtsService(mockClient);
     });
 
     afterEach(() => {

@@ -1,8 +1,8 @@
-import { Clo } from '../../lib/services/clo';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { CloService } from '../../lib/services/clo';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { CloResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Clo', () => {
     let service: Clo;
@@ -22,7 +22,7 @@ describe('Clo', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Clo(mockClient);
+        service = new CloService(mockClient);
     });
 
     afterEach(() => {

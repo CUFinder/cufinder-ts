@@ -1,8 +1,8 @@
-import { Lbs } from '../../lib/services/lbs';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { LbsService } from '../../lib/services/lbs';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { LbsResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Lbs', () => {
     let service: Lbs;
@@ -22,7 +22,7 @@ describe('Lbs', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Lbs(mockClient);
+        service = new LbsService(mockClient);
     });
 
     afterEach(() => {

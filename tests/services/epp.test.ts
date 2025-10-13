@@ -1,8 +1,8 @@
-import { Epp } from '../../lib/services/epp';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { EppService } from '../../lib/services/epp';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { EppResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Epp', () => {
     let service: Epp;
@@ -22,7 +22,7 @@ describe('Epp', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Epp(mockClient);
+        service = new EppService(mockClient);
     });
 
     afterEach(() => {

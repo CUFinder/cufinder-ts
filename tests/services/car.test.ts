@@ -1,8 +1,8 @@
-import { Car } from '../../lib/services/car';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { CarService } from '../../lib/services/car';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { CarResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Car', () => {
     let service: Car;
@@ -22,7 +22,7 @@ describe('Car', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Car(mockClient);
+        service = new CarService(mockClient);
     });
 
     afterEach(() => {

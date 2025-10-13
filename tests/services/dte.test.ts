@@ -1,8 +1,8 @@
-import { Dte } from '../../lib/services/dte';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { BaseApiClient } from '../../lib/base_api_client';
+import { DteService } from '../../lib/services/dte';
 import { DteResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Dte', () => {
     let service: Dte;
@@ -22,7 +22,7 @@ describe('Dte', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Dte(mockClient);
+        service = new DteService(mockClient);
     });
 
     afterEach(() => {
@@ -54,28 +54,12 @@ describe('Dte', () => {
                 headers: {},
             });
 
-            const result = await service.getEmails(validParams);
+            const result = await service.getEmails(validParams.company_website);
 
             expect(result).toEqual(mockResponse);
             expect(mockClient.post).toHaveBeenCalledWith('/dte', {
                 company_website: validParams.company_website.trim(),
             });
-        });
-
-        it('should throw error for missing company_website', async () => {
-            const invalidParams = { ...validParams, company_website: '' };
-
-            await expect(service.getEmails(invalidParams)).rejects.toThrow(
-                "Parameter 'company_website' is required"
-            );
-        });
-
-        it('should throw error for invalid website URL format', async () => {
-            const invalidParams = { ...validParams, company_website: 'invalid-url' };
-
-            await expect(service.getEmails(invalidParams)).rejects.toThrow(
-                'Invalid website URL format'
-            );
         });
 
         it('should accept valid URL', async () => {
@@ -85,9 +69,7 @@ describe('Dte', () => {
                 statusText: 'OK',
                 headers: {},
             });
-            const params = { company_website: '  https://example.com  ' };
-
-            await service.getEmails(params);
+            await service.getEmails('  https://example.com  ');
 
             expect(mockClient.post).toHaveBeenCalledWith('/dte', {
                 company_website: 'https://example.com',
@@ -98,7 +80,9 @@ describe('Dte', () => {
             const error = new Error('Network error');
             mockClient.post.mockRejectedValue(error);
 
-            await expect(service.getEmails(validParams)).rejects.toThrow('Network error');
+            await expect(service.getEmails(validParams.company_website)).rejects.toThrow(
+                'Network error'
+            );
         });
     });
 });

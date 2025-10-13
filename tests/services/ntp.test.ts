@@ -1,8 +1,8 @@
-import { Ntp } from '../../lib/services/ntp';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { NtpService } from '../../lib/services/ntp';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { NtpResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Ntp', () => {
     let service: Ntp;
@@ -22,7 +22,7 @@ describe('Ntp', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Ntp(mockClient);
+        service = new NtpService(mockClient);
     });
 
     afterEach(() => {

@@ -1,8 +1,8 @@
-import { Lcuf } from '../../lib/services/lcuf';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { LcufService } from '../../lib/services/lcuf';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { LcufResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Lcuf', () => {
     let service: Lcuf;
@@ -22,7 +22,7 @@ describe('Lcuf', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Lcuf(mockClient);
+        service = new LcufService(mockClient);
     });
 
     afterEach(() => {

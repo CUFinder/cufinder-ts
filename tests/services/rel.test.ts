@@ -1,8 +1,8 @@
-import { Rel } from '../../lib/services/rel';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { RelService } from '../../lib/services/rel';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { RelResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Rel', () => {
     let service: Rel;
@@ -22,7 +22,7 @@ describe('Rel', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Rel(mockClient);
+        service = new RelService(mockClient);
     });
 
     afterEach(() => {

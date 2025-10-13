@@ -1,8 +1,8 @@
-import { Enc } from '../../lib/services/enc';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { EncService } from '../../lib/services/enc';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { EncResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Enc', () => {
     let service: Enc;
@@ -22,7 +22,7 @@ describe('Enc', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Enc(mockClient);
+        service = new EncService(mockClient);
     });
 
     afterEach(() => {

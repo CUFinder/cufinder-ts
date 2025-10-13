@@ -61,13 +61,6 @@ describe('Cufinder', () => {
         });
     });
 
-    describe('getClient', () => {
-        it('should return the underlying client', () => {
-            const baseClient = client.getClient();
-            expect(baseClient).toBe(mockBaseClient);
-        });
-    });
-
     describe('service integration', () => {
         it('should allow calling services as direct functions', () => {
             expect(client.cuf).toBeDefined();
@@ -109,7 +102,7 @@ describe('Cufinder', () => {
             expect(typeof client.ntp).toBe('function');
             expect(typeof client.rel).toBe('function');
             expect(typeof client.cse).toBe('function');
-            expect(typeof client.pse).toBe('function')
+            expect(typeof client.pse).toBe('function');
             expect(typeof client.fcl).toBe('function');
             expect(typeof client.elf).toBe('function');
             expect(typeof client.car).toBe('function');

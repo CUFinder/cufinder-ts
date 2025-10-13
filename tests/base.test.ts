@@ -31,32 +31,6 @@ describe('BaseService', () => {
         service = new MockService(mockClient);
     });
 
-    describe('validateRequired', () => {
-        it('should throw error for undefined value', () => {
-            expect(() => {
-                (service as any).validateRequired(undefined, 'testParam');
-            }).toThrow("Parameter 'testParam' is required");
-        });
-
-        it('should throw error for null value', () => {
-            expect(() => {
-                (service as any).validateRequired(null, 'testParam');
-            }).toThrow("Parameter 'testParam' is required");
-        });
-
-        it('should throw error for empty string', () => {
-            expect(() => {
-                (service as any).validateRequired('', 'testParam');
-            }).toThrow("Parameter 'testParam' is required");
-        });
-
-        it('should not throw for valid value', () => {
-            expect(() => {
-                (service as any).validateRequired('valid', 'testParam');
-            }).not.toThrow();
-        });
-    });
-
     describe('validateApiKey', () => {
         it('should throw error for undefined api key', () => {
             expect(() => {

@@ -1,8 +1,8 @@
-import { Pse } from '../../lib/services/pse';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { PseService } from '../../lib/services/pse';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { PseResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Pse', () => {
     let service: Pse;
@@ -22,7 +22,7 @@ describe('Pse', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Pse(mockClient);
+        service = new PseService(mockClient);
     });
 
     afterEach(() => {

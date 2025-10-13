@@ -1,8 +1,8 @@
-import { Elf } from '../../lib/services/elf';
-import { BaseApiClient } from "../../lib/base_api_client";
+import { ElfService } from '../../lib/services/elf';
+import { BaseApiClient } from '../../lib/base_api_client';
 import { ElfResponse } from '../../lib/shared/types';
 
-jest.mock("../../lib/base_api_client");
+jest.mock('../../lib/base_api_client');
 
 describe('Elf', () => {
     let service: Elf;
@@ -22,7 +22,7 @@ describe('Elf', () => {
             setTimeout: jest.fn(),
         } as any;
 
-        service = new Elf(mockClient);
+        service = new ElfService(mockClient);
     });
 
     afterEach(() => {
