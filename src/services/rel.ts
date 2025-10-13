@@ -15,11 +15,11 @@ export class Rel extends BaseService {
         this.validateRequired(params.email, 'email');
 
         try {
-            const response = await this.client.post<RelResponse>('/rel', {
+            const response = await this.client.post('/rel', {
                 email: params.email.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<RelResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'REL Service');
         }

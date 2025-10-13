@@ -42,6 +42,26 @@ export abstract class BaseService {
     }
 
     /**
+     * Parse API response data from the wrapped response format
+     * @param response - The raw API response
+     * @returns Parsed response data
+     */
+    protected parseResponseData<T>(response: any): T {
+        // Handle wrapped response format: { status: 1, data: {...} }
+        if (
+            response &&
+            typeof response === 'object' &&
+            'status' in response &&
+            'data' in response
+        ) {
+            return response.data as T;
+        }
+
+        // Handle direct response format
+        return response as T;
+    }
+
+    /**
      * Handle service errors consistently
      * @param error - The error to handle
      * @param serviceName - The name of the service for error context

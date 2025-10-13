@@ -15,11 +15,11 @@ export class Elf extends BaseService {
         this.validateRequired(params.query, 'query');
 
         try {
-            const response = await this.client.post<ElfResponse>('/elf', {
+            const response = await this.client.post('/elf', {
                 query: params.query.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<ElfResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'ELF Service');
         }

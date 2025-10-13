@@ -15,11 +15,11 @@ export class Enc extends BaseService {
         this.validateRequired(params.query, 'query');
 
         try {
-            const response = await this.client.post<EncResponse>('/enc', {
+            const response = await this.client.post('/enc', {
                 query: params.query.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<EncResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'ENC Service');
         }

@@ -23,9 +23,9 @@ export class Lbs extends BaseService {
             if (params['industry'] !== undefined) searchParams['industry'] = params['industry'];
             if (params['page'] !== undefined) searchParams['page'] = params['page'];
 
-            const response = await this.client.post<LbsResponse>('/lbs', searchParams);
+            const response = await this.client.post('/lbs', searchParams);
 
-            return response.data;
+            return this.parseResponseData<LbsResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'LBS Service');
         }

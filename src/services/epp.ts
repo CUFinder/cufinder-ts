@@ -14,13 +14,12 @@ export class Epp extends BaseService {
     public async enrichProfile(params: EppParams): Promise<EppResponse> {
         this.validateRequired(params.linkedin_url, 'linkedin_url');
 
-
         try {
-            const response = await this.client.post<EppResponse>('/epp', {
+            const response = await this.client.post('/epp', {
                 linkedin_url: params.linkedin_url.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<EppResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'EPP Service');
         }

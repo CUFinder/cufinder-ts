@@ -15,11 +15,11 @@ export class Fts extends BaseService {
         this.validateRequired(params.query, 'query');
 
         try {
-            const response = await this.client.post<FtsResponse>('/fts', {
+            const response = await this.client.post('/fts', {
                 query: params.query.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<FtsResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'FTS Service');
         }

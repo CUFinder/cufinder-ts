@@ -16,12 +16,12 @@ export class Tep extends BaseService {
         this.validateRequired(params.company, 'company');
 
         try {
-            const response = await this.client.post<TepResponse>('/tep', {
+            const response = await this.client.post('/tep', {
                 full_name: params.full_name.trim(),
                 company: params.company.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<TepResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'TEP Service');
         }

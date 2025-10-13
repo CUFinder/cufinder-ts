@@ -7,24 +7,17 @@ import { BaseService } from './base';
  */
 export class Dte extends BaseService {
     /**
-   * Get company emails from domain
-   * @param params - DTE V2 parameters
-   * @returns Promise resolving to company email information
-   * @example
-   * ```typescript
-   * const emails = await sdk.v2.dte({
-   company_website: 'https://example.com'
- });
- console.log(emails.emails); // ['contact@example.com', 'info@example.com']
-   * ```
-   * @example
-   * ```typescript
-   * const emails = await sdk.v2.dte({
-   *   company_website: 'https://example.com'
-   * });
-   * console.log(emails.emails); // ['contact@example.com', 'info@example.com']
-   * ```
-   */
+     * Get company emails from domain
+     * @param params - DTE V2 parameters
+     * @returns Promise resolving to company email information
+     * @example
+     * ```typescript
+     * const emails = await sdk.dte({
+     *   company_website: 'https://example.com'
+     * });
+     * console.log(emails.emails); // ['contact@example.com', 'info@example.com']
+     * ```
+     */
     public async getEmails(params: DteParams): Promise<DteResponse> {
         this.validateRequired(params.company_website, 'company_website');
 
@@ -36,11 +29,11 @@ export class Dte extends BaseService {
         }
 
         try {
-            const response = await this.client.post<DteResponse>('/dte', {
+            const response = await this.client.post('/dte', {
                 company_website: params.company_website.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<DteResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'DTE Service');
         }

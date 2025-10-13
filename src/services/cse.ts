@@ -7,18 +7,18 @@ import { BaseService } from './base';
  */
 export class Cse extends BaseService {
     /**
-   * Search companies
-   * @param params - CSE V2 parameters
-   * @returns Promise resolving to company search results
-   * @example
-   * ```typescript
-   * const companies = await sdk.v2.cse({
-   name: 'technology',
-   country: 'US'
- });
- console.log(companies.companies); // Array of company results
-   * ```
-   */
+     * Search companies
+     * @param params - CSE V2 parameters
+     * @returns Promise resolving to company search results
+     * @example
+     * ```typescript
+     * const companies = await sdk.cse({
+     *   name: 'technology',
+     *   country: 'US'
+     * });
+     * console.log(companies.companies); // Array of company results
+     * ```
+     */
     public async searchCompanies(params: CseParams = {}): Promise<CseResponse> {
         try {
             const searchParams: Record<string, any> = {};
@@ -52,9 +52,9 @@ export class Cse extends BaseService {
                 searchParams['annual_revenue_max'] = params['annual_revenue_max'];
             if (params['page'] !== undefined) searchParams['page'] = params['page'];
 
-            const response = await this.client.post<CseResponse>('/cse', searchParams);
+            const response = await this.client.post('/cse', searchParams);
 
-            return response.data;
+            return this.parseResponseData<CseResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'CSE Service');
         }

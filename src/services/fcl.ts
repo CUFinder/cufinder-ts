@@ -15,11 +15,11 @@ export class Fcl extends BaseService {
         this.validateRequired(params.query, 'query');
 
         try {
-            const response = await this.client.post<FclResponse>('/fcl', {
+            const response = await this.client.post('/fcl', {
                 query: params.query.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<FclResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'FCL Service');
         }

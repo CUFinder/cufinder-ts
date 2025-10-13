@@ -15,11 +15,11 @@ export class Fwe extends BaseService {
         this.validateRequired(params.linkedin_url, 'linkedin_url');
 
         try {
-            const response = await this.client.post<FweResponse>('/fwe', {
+            const response = await this.client.post('/fwe', {
                 linkedin_url: params.linkedin_url.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<FweResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'FWE Service');
         }

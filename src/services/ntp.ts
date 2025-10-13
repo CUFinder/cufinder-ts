@@ -15,11 +15,11 @@ export class Ntp extends BaseService {
         this.validateRequired(params.company_name, 'company_name');
 
         try {
-            const response = await this.client.post<NtpResponse>('/ntp', {
+            const response = await this.client.post('/ntp', {
                 company_name: params.company_name.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<NtpResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'NTP Service');
         }

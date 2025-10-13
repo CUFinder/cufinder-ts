@@ -46,9 +46,9 @@ export class Pse extends BaseService {
                 searchParams['company_annual_revenue_max'] = params['company_annual_revenue_max'];
             if (params['page'] !== undefined) searchParams['page'] = params['page'];
 
-            const response = await this.client.post<PseResponse>('/pse', searchParams);
+            const response = await this.client.post('/pse', searchParams);
 
-            return response.data;
+            return this.parseResponseData<PseResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'PSE Service');
         }

@@ -22,11 +22,11 @@ export class Dtc extends BaseService {
         }
 
         try {
-            const response = await this.client.post<DtcResponse>('/dtc', {
+            const response = await this.client.post('/dtc', {
                 company_website: params.company_website.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<DtcResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'DTC Service');
         }

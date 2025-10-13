@@ -15,11 +15,11 @@ export class Clo extends BaseService {
         this.validateRequired(params.query, 'query');
 
         try {
-            const response = await this.client.post<CloResponse>('/clo', {
+            const response = await this.client.post('/clo', {
                 query: params.query.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<CloResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'CLO Service');
         }

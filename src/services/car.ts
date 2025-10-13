@@ -15,11 +15,11 @@ export class Car extends BaseService {
         this.validateRequired(params.query, 'query');
 
         try {
-            const response = await this.client.post<CarResponse>('/car', {
+            const response = await this.client.post('/car', {
                 query: params.query.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<CarResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'CAR Service');
         }

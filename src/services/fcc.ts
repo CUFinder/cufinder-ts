@@ -15,11 +15,11 @@ export class Fcc extends BaseService {
         this.validateRequired(params.query, 'query');
 
         try {
-            const response = await this.client.post<FccResponse>('/fcc', {
+            const response = await this.client.post('/fcc', {
                 query: params.query.trim(),
             });
 
-            return response.data;
+            return this.parseResponseData<FccResponse>(response.data);
         } catch (error) {
             throw this.handleError(error, 'FCC Service');
         }
