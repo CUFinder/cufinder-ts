@@ -3,11 +3,7 @@
  */
 
 export interface CufinderClientConfig {
-    apiKey: string;
-    baseUrl?: string;
     timeout?: number;
-    retries?: number;
-    retryDelay?: number;
 }
 
 export interface RequestConfig {

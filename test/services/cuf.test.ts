@@ -1,12 +1,12 @@
 import { Cuf } from '../../src/services/cuf';
-import { CufinderClient } from '../../src/client';
+import { BaseApiClient } from '../../src/base_api_client';
 import { CufResponse } from '../../src/shared/types';
 
-jest.mock('../../src/client');
+jest.mock('../../src/base_api_client');
 
 describe('Cuf', () => {
     let service: Cuf;
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
         mockClient = {

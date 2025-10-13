@@ -1,4 +1,4 @@
-import { CufinderClient } from '../client';
+import { BaseApiClient } from '../base_api_client';
 import { CufinderError } from '../shared/types';
 
 /**
@@ -6,9 +6,9 @@ import { CufinderError } from '../shared/types';
  * Follows SOLID principles by providing a single responsibility base class
  */
 export abstract class BaseService {
-    protected client: CufinderClient;
+    protected client: BaseApiClient;
 
-    constructor(client: CufinderClient) {
+    constructor(client: BaseApiClient) {
         this.client = client;
     }
 

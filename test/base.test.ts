@@ -1,4 +1,4 @@
-import { CufinderClient } from '../src/client';
+import { BaseApiClient } from '../src/base_api_client';
 import { BaseService } from '../src/services/base';
 import { CufinderError } from '../src/shared/types';
 
@@ -12,7 +12,7 @@ class MockService extends BaseService {
 }
 
 describe('BaseService', () => {
-    let mockClient: jest.Mocked<CufinderClient>;
+    let mockClient: jest.Mocked<BaseApiClient>;
     let service: MockService;
 
     beforeEach(() => {
@@ -25,7 +25,6 @@ describe('BaseService', () => {
             getApiKey: jest.fn(),
             getBaseUrl: jest.fn(),
             setApiKey: jest.fn(),
-            setBaseUrl: jest.fn(),
             setTimeout: jest.fn(),
         } as any;
 

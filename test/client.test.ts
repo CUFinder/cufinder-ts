@@ -1,31 +1,29 @@
-import { CufinderClient } from '../src/client';
-import axios from 'axios';
+import { BaseApiClient } from '../src/base_api_client';
+import { Cufinder } from '../src/client';
 
-// Mock axios
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// Mock the base API client
+jest.mock('../src/base_api_client');
 
-describe('CufinderClient', () => {
-    let client: CufinderClient;
-    const mockAxiosInstance = {
-        defaults: {
-            baseURL: 'https://api.cufinder.io/v2',
-            timeout: 30000,
-            headers: {},
-        },
-        interceptors: {
-            request: { use: jest.fn() },
-            response: { use: jest.fn() },
-        },
-        request: jest.fn(),
-    };
+describe('Cufinder', () => {
+    let client: Cufinder;
+    let mockBaseClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
-        mockedAxios.create.mockReturnValue(mockAxiosInstance as any);
-        mockAxiosInstance.defaults.headers['x-api-key'] = 'test-api-key-123456789';
-        client = new CufinderClient({
-            apiKey: 'test-api-key-123456789',
-        });
+        mockBaseClient = {
+            post: jest.fn(),
+            get: jest.fn(),
+            put: jest.fn(),
+            delete: jest.fn(),
+            patch: jest.fn(),
+            getApiKey: jest.fn(),
+            getBaseUrl: jest.fn(),
+            setApiKey: jest.fn(),
+            setTimeout: jest.fn(),
+        } as any;
+
+        (BaseApiClient as jest.Mock).mockImplementation(() => mockBaseClient);
+
+        client = new Cufinder('test-api-key');
     });
 
     afterEach(() => {
@@ -33,187 +31,97 @@ describe('CufinderClient', () => {
     });
 
     describe('constructor', () => {
-        it('should throw error for missing API key', () => {
-            expect(() => {
-                new CufinderClient({} as any);
-            }).toThrow('API key is required');
-        });
-
         it('should initialize with correct config', () => {
-            expect(mockedAxios.create).toHaveBeenCalledWith({
-                baseURL: 'https://api.cufinder.io/v2',
-                timeout: 30000,
-                headers: {
-                    'x-api-key': 'test-api-key-123456789',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'User-Agent': '@cufinder/cufinder-ts/1.0.0',
-                },
+            expect(BaseApiClient).toHaveBeenCalledWith({
+                apiKey: 'test-api-key',
             });
         });
 
-        it('should use custom base URL', () => {
-            new CufinderClient({
-                apiKey: 'test-api-key-123456789',
-                baseUrl: 'https://custom.api.com',
-            });
-
-            expect(mockedAxios.create).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    baseURL: 'https://custom.api.com',
-                })
-            );
-        });
-
-        it('should use custom timeout', () => {
-            new CufinderClient({
-                apiKey: 'test-api-key-123456789',
-                timeout: 60000,
-            });
-
-            expect(mockedAxios.create).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    timeout: 60000,
-                })
-            );
-        });
-
-        it('should set up request and response interceptors', () => {
-            expect(mockAxiosInstance.interceptors.request.use).toHaveBeenCalled();
-            expect(mockAxiosInstance.interceptors.response.use).toHaveBeenCalled();
+        it('should initialize all services', () => {
+            expect(client.cuf).toBeDefined();
+            expect(client.lcuf).toBeDefined();
+            expect(client.dtc).toBeDefined();
+            expect(client.dte).toBeDefined();
+            expect(client.ntp).toBeDefined();
+            expect(client.rel).toBeDefined();
+            expect(client.fcl).toBeDefined();
+            expect(client.elf).toBeDefined();
+            expect(client.car).toBeDefined();
+            expect(client.fcc).toBeDefined();
+            expect(client.fts).toBeDefined();
+            expect(client.epp).toBeDefined();
+            expect(client.fwe).toBeDefined();
+            expect(client.tep).toBeDefined();
+            expect(client.enc).toBeDefined();
+            expect(client.cec).toBeDefined();
+            expect(client.clo).toBeDefined();
+            expect(client.cse).toBeDefined();
+            expect(client.pse).toBeDefined();
+            expect(client.lbs).toBeDefined();
         });
     });
 
-    describe('request', () => {
-        const mockResponse = {
-            data: { success: true },
-            status: 200,
-            statusText: 'OK',
-            headers: { 'content-type': 'application/json' },
-        };
-
-        it('should make a successful request', async () => {
-            mockAxiosInstance.request.mockResolvedValue(mockResponse);
-
-            const result = await client.request({
-                method: 'GET',
-                url: '/test',
-            });
-
-            expect(result).toEqual({
-                data: { success: true },
-                status: 200,
-                statusText: 'OK',
-                headers: { 'content-type': 'application/json' },
-            });
-
-            expect(mockAxiosInstance.request).toHaveBeenCalledWith({
-                method: 'GET',
-                url: '/test',
-                headers: {},
-            });
-        });
-
-        it('should handle request errors', async () => {
-            const error = new Error('Request failed');
-            mockAxiosInstance.request.mockRejectedValue(error);
-
-            await expect(
-                client.request({
-                    method: 'GET',
-                    url: '/test',
-                })
-            ).rejects.toThrow();
+    describe('getClient', () => {
+        it('should return the underlying client', () => {
+            const baseClient = client.getClient();
+            expect(baseClient).toBe(mockBaseClient);
         });
     });
 
-    describe('get', () => {
-        it('should make GET request', async () => {
-            const mockResponse = {
-                data: { result: 'test' },
-                status: 200,
-                statusText: 'OK',
-                headers: {},
-            };
-            mockAxiosInstance.request.mockResolvedValue(mockResponse);
+    describe('service integration', () => {
+        it('should allow calling services as direct functions', () => {
+            expect(client.cuf).toBeDefined();
+            expect(client.lcuf).toBeDefined();
+            expect(client.dtc).toBeDefined();
+            expect(client.dte).toBeDefined();
+            expect(client.ntp).toBeDefined();
+            expect(client.rel).toBeDefined();
+            expect(client.cse).toBeDefined();
+            expect(client.pse).toBeDefined();
 
-            const result = await client.get(
-                '/test',
-                { param: 'value' },
-                { 'Custom-Header': 'value' }
-            );
+            // Test that they are functions
+            expect(client.cuf).toBeDefined();
+            expect(client.lcuf).toBeDefined();
+            expect(client.dtc).toBeDefined();
+            expect(client.dte).toBeDefined();
+            expect(client.ntp).toBeDefined();
+            expect(client.rel).toBeDefined();
+            expect(client.cse).toBeDefined();
+            expect(client.pse).toBeDefined();
+            expect(client.fcl).toBeDefined();
+            expect(client.elf).toBeDefined();
+            expect(client.car).toBeDefined();
+            expect(client.fcc).toBeDefined();
+            expect(client.fts).toBeDefined();
+            expect(client.epp).toBeDefined();
+            expect(client.fwe).toBeDefined();
+            expect(client.tep).toBeDefined();
+            expect(client.enc).toBeDefined();
+            expect(client.cec).toBeDefined();
+            expect(client.clo).toBeDefined();
+            expect(client.lbs).toBeDefined();
 
-            expect(mockAxiosInstance.request).toHaveBeenCalledWith({
-                method: 'GET',
-                url: '/test',
-                params: { param: 'value' },
-                headers: { 'Custom-Header': 'value' },
-                data: undefined,
-                timeout: undefined,
-            });
-
-            expect(result).toEqual(mockResponse);
-        });
-    });
-
-    describe('post', () => {
-        it('should make POST request', async () => {
-            const mockResponse = {
-                data: { result: 'test' },
-                status: 200,
-                statusText: 'OK',
-                headers: {},
-            };
-            mockAxiosInstance.request.mockResolvedValue(mockResponse);
-
-            const result = await client.post(
-                '/test',
-                { data: 'value' },
-                { 'Custom-Header': 'value' }
-            );
-
-            expect(mockAxiosInstance.request).toHaveBeenCalledWith({
-                method: 'POST',
-                url: '/test',
-                data: { data: 'value' },
-                headers: { 'Custom-Header': 'value' },
-                params: undefined,
-                timeout: undefined,
-            });
-
-            expect(result).toEqual(mockResponse);
-        });
-    });
-
-    describe('utility methods', () => {
-        it('should get masked API key', () => {
-            const apiKey = client.getApiKey();
-            expect(apiKey).toBe('test...6789');
-        });
-
-        it('should get base URL', () => {
-            const baseUrl = client.getBaseUrl();
-            expect(baseUrl).toBe('https://api.cufinder.io/v2');
-        });
-
-        it('should update API key', () => {
-            client.setApiKey('new-api-key');
-            expect(mockAxiosInstance.defaults.headers['x-api-key']).toBe('new-api-key');
-        });
-
-        it('should update base URL', () => {
-            client.setBaseUrl('https://new.api.com');
-            expect(mockAxiosInstance.defaults.baseURL).toBe('https://new.api.com');
-        });
-
-        it('should update timeout', () => {
-            client.setTimeout(45000);
-            expect(mockAxiosInstance.defaults.timeout).toBe(45000);
-        });
-
-        it('should throw error for empty API key', () => {
-            expect(() => {
-                client.setApiKey('');
-            }).toThrow('API key cannot be empty');
+            // Test that they are functions
+            expect(typeof client.cuf).toBe('function');
+            expect(typeof client.lcuf).toBe('function');
+            expect(typeof client.dtc).toBe('function');
+            expect(typeof client.dte).toBe('function');
+            expect(typeof client.ntp).toBe('function');
+            expect(typeof client.rel).toBe('function');
+            expect(typeof client.cse).toBe('function');
+            expect(typeof client.pse).toBe('function')
+            expect(typeof client.fcl).toBe('function');
+            expect(typeof client.elf).toBe('function');
+            expect(typeof client.car).toBe('function');
+            expect(typeof client.fcc).toBe('function');
+            expect(typeof client.fts).toBe('function');
+            expect(typeof client.epp).toBe('function');
+            expect(typeof client.fwe).toBe('function');
+            expect(typeof client.tep).toBe('function');
+            expect(typeof client.enc).toBe('function');
+            expect(typeof client.cec).toBe('function');
+            expect(typeof client.clo).toBe('function');
+            expect(typeof client.lbs).toBe('function');
         });
     });
 });

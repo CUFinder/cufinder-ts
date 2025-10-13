@@ -3,25 +3,23 @@
  *
  * @example
  * ```typescript
- * import { CufinderSDK } from '@cufinder/cufinder-ts';
+ * import { Cufinder } from '@cufinder/cufinder-ts';
  *
- * const sdk = new CufinderSDK({
- *   apiKey: 'your-api-key-here'
- * });
+ * const client = new Cufinder('your-api-key-here');
  *
  * // API usage
- * const company = await sdk.cuf({
+ * const company = await client.cuf({
  *   company_name: 'TechCorp',
  *   country_code: 'US'
  * });
  * ```
  */
 
-// Main SDK export
-export { CufinderSDK } from './sdk';
+// Main client export
+export { Cufinder } from './client';
 
-// Client export
-export { CufinderClient } from './client';
+// Base API client export
+export { BaseApiClient } from './base_api_client';
 
 // Model exports
 export * from './shared/models';
@@ -33,18 +31,4 @@ export * from './shared/types';
 export * from './services';
 
 // Default export for convenience
-export { CufinderSDK as default } from './sdk';
-
-// Version information
-export const VERSION = '1.1.0';
-
-// SDK metadata
-export const SDK_INFO = {
-    name: '@cufinder/cufinder-ts',
-    version: VERSION,
-    description: 'Type-safe TypeScript SDK for the Cufinder B2B Data Enrichment API',
-    homepage: 'https://github.com/cufinder/cufinder-ts',
-    repository: 'https://github.com/cufinder/cufinder-ts.git',
-    author: 'Cufinder Team',
-    license: 'MIT',
-} as const;
+export { Cufinder as default } from './client';

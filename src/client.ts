@@ -1,299 +1,147 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { BaseApiClient } from './base_api_client';
+import { CufinderClientConfig } from './shared/types';
+
+// Services
 import {
-    AuthenticationError,
-    CreditLimitError,
-    CufinderClientConfig,
-    CufinderError,
-    NetworkError,
-    RateLimitError,
-    Response,
-    RequestConfig as SDKRequestConfig,
-    ValidationError,
-} from './shared/types';
+    Car,
+    Cec,
+    Clo,
+    Cse,
+    Cuf,
+    Dtc,
+    Dte,
+    Elf,
+    Enc,
+    Epp,
+    Fcc,
+    Fcl,
+    Fts,
+    Fwe,
+    Lbs,
+    Lcuf,
+    Ntp,
+    Pse,
+    Rel,
+    Tep,
+} from './services';
 
 /**
- * Main Cufinder API client class
- * Provides a type-safe interface for interacting with the Cufinder B2B data enrichment API
- * Follows SOLID principles:
- * - Single Responsibility: Handles HTTP communication only
- * - Open/Closed: Extensible through service classes
- * - Liskov Substitution: Can be replaced with mock implementations
- * - Interface Segregation: Provides focused interfaces
- * - Dependency Inversion: Depends on abstractions, not concretions
+ * Main Cufinder client class
+ * Provides access to all API services as direct functions
+ * Usage: client.cuf(params), client.dte(params)
  */
-export class CufinderClient {
-    private readonly httpClient: AxiosInstance;
+export class Cufinder {
+    private readonly client: BaseApiClient;
 
-    constructor(config: CufinderClientConfig & { apiKey: string }) {
-        if (!config.apiKey) {
-            throw new ValidationError('API key is required');
-        }
+    // Services as direct functions
+    public readonly cuf: (params: Parameters<Cuf['getDomain']>[0]) => ReturnType<Cuf['getDomain']>;
+    public readonly lcuf: (
+        params: Parameters<Lcuf['getLinkedInUrl']>[0]
+    ) => ReturnType<Lcuf['getLinkedInUrl']>;
+    public readonly dtc: (
+        params: Parameters<Dtc['getCompanyName']>[0]
+    ) => ReturnType<Dtc['getCompanyName']>;
+    public readonly dte: (params: Parameters<Dte['getEmails']>[0]) => ReturnType<Dte['getEmails']>;
+    public readonly ntp: (params: Parameters<Ntp['getPhones']>[0]) => ReturnType<Ntp['getPhones']>;
+    public readonly rel: (
+        params: Parameters<Rel['reverseEmailLookup']>[0]
+    ) => ReturnType<Rel['reverseEmailLookup']>;
+    public readonly fcl: (
+        params: Parameters<Fcl['getLookalikes']>[0]
+    ) => ReturnType<Fcl['getLookalikes']>;
+    public readonly elf: (
+        params: Parameters<Elf['getFundraising']>[0]
+    ) => ReturnType<Elf['getFundraising']>;
+    public readonly car: (
+        params: Parameters<Car['getRevenue']>[0]
+    ) => ReturnType<Car['getRevenue']>;
+    public readonly fcc: (
+        params: Parameters<Fcc['getSubsidiaries']>[0]
+    ) => ReturnType<Fcc['getSubsidiaries']>;
+    public readonly fts: (
+        params: Parameters<Fts['getTechStack']>[0]
+    ) => ReturnType<Fts['getTechStack']>;
+    public readonly epp: (
+        params: Parameters<Epp['enrichProfile']>[0]
+    ) => ReturnType<Epp['enrichProfile']>;
+    public readonly fwe: (
+        params: Parameters<Fwe['getEmailFromProfile']>[0]
+    ) => ReturnType<Fwe['getEmailFromProfile']>;
+    public readonly tep: (
+        params: Parameters<Tep['enrichPerson']>[0]
+    ) => ReturnType<Tep['enrichPerson']>;
+    public readonly enc: (
+        params: Parameters<Enc['enrichCompany']>[0]
+    ) => ReturnType<Enc['enrichCompany']>;
+    public readonly cec: (
+        params: Parameters<Cec['getEmployeeCountries']>[0]
+    ) => ReturnType<Cec['getEmployeeCountries']>;
+    public readonly clo: (
+        params: Parameters<Clo['getLocations']>[0]
+    ) => ReturnType<Clo['getLocations']>;
+    public readonly cse: (
+        params?: Parameters<Cse['searchCompanies']>[0]
+    ) => ReturnType<Cse['searchCompanies']>;
+    public readonly pse: (
+        params?: Parameters<Pse['searchPeople']>[0]
+    ) => ReturnType<Pse['searchPeople']>;
+    public readonly lbs: (
+        params?: Parameters<Lbs['searchLocalBusinesses']>[0]
+    ) => ReturnType<Lbs['searchLocalBusinesses']>;
 
-        // Initialize HTTP client
-        this.httpClient = axios.create({
-            baseURL: 'https://api.cufinder.io/v2',
-            timeout: config.timeout || 30000,
-            headers: {
-                'x-api-key': config.apiKey,
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': '@cufinder/cufinder-ts/1.0.0',
-            },
-        });
+    constructor(apiKey: string, options?: CufinderClientConfig) {
+        this.client = new BaseApiClient({ apiKey, ...options });
 
-        // Add request interceptor for logging and error handling
-        this.httpClient.interceptors.request.use(
-            config => {
-                // Add request ID for tracking
-                config.headers['X-Request-ID'] = this.generateRequestId();
-                return config;
-            },
-            error => {
-                return Promise.reject(this.handleRequestError(error));
-            }
-        );
+        // Initialize service instances
+        const cuf = new Cuf(this.client);
+        const lcuf = new Lcuf(this.client);
+        const dtc = new Dtc(this.client);
+        const dte = new Dte(this.client);
+        const ntp = new Ntp(this.client);
+        const rel = new Rel(this.client);
+        const fcl = new Fcl(this.client);
+        const elf = new Elf(this.client);
+        const car = new Car(this.client);
+        const fcc = new Fcc(this.client);
+        const fts = new Fts(this.client);
+        const epp = new Epp(this.client);
+        const fwe = new Fwe(this.client);
+        const tep = new Tep(this.client);
+        const enc = new Enc(this.client);
+        const cec = new Cec(this.client);
+        const clo = new Clo(this.client);
+        const cse = new Cse(this.client);
+        const pse = new Pse(this.client);
+        const lbs = new Lbs(this.client);
 
-        // Add response interceptor for error handling
-        this.httpClient.interceptors.response.use(
-            response => response,
-            error => {
-                return Promise.reject(this.handleResponseError(error));
-            }
-        );
+        // Expose services as direct functions
+        this.cuf = params => cuf.getDomain(params);
+        this.lcuf = params => lcuf.getLinkedInUrl(params);
+        this.dtc = params => dtc.getCompanyName(params);
+        this.dte = params => dte.getEmails(params);
+        this.ntp = params => ntp.getPhones(params);
+        this.rel = params => rel.reverseEmailLookup(params);
+        this.fcl = params => fcl.getLookalikes(params);
+        this.elf = params => elf.getFundraising(params);
+        this.car = params => car.getRevenue(params);
+        this.fcc = params => fcc.getSubsidiaries(params);
+        this.fts = params => fts.getTechStack(params);
+        this.epp = params => epp.enrichProfile(params);
+        this.fwe = params => fwe.getEmailFromProfile(params);
+        this.tep = params => tep.enrichPerson(params);
+        this.enc = params => enc.enrichCompany(params);
+        this.cec = params => cec.getEmployeeCountries(params);
+        this.clo = params => clo.getLocations(params);
+        this.cse = params => cse.searchCompanies(params);
+        this.pse = params => pse.searchPeople(params);
+        this.lbs = params => lbs.searchLocalBusinesses(params);
     }
 
     /**
-     * Make a raw HTTP request to the API
-     * @param config Request configuration
-     * @returns Promise resolving to the response
+     * Get the underlying HTTP client for advanced usage
+     * @returns The BaseApiClient instance
      */
-    public async request<T = unknown>(config: SDKRequestConfig): Promise<Response<T>> {
-        try {
-            const axiosConfig: AxiosRequestConfig = {
-                method: config.method,
-                url: config.url,
-                headers: config.headers || {},
-                ...(config.params && { params: config.params }),
-                ...(config.data !== undefined && { data: config.data }),
-                ...(config.timeout && { timeout: config.timeout }),
-            };
-
-            const response: AxiosResponse<T> = await this.httpClient.request(axiosConfig);
-
-            return {
-                data: response.data,
-                status: response.status,
-                statusText: response.statusText,
-                headers: response.headers as Record<string, string>,
-            };
-        } catch (error) {
-            throw this.handleRequestError(error);
-        }
-    }
-
-    /**
-     * Make a GET request
-     * @param url Request URL
-     * @param params Query parameters
-     * @param headers Additional headers
-     * @returns Promise resolving to the response
-     */
-    public async get<T = unknown>(
-        url: string,
-        params?: Record<string, unknown>,
-        headers?: Record<string, string>
-    ): Promise<Response<T>> {
-        return this.request<T>({
-            method: 'GET',
-            url,
-            ...(params && { params }),
-            headers: headers || {},
-        });
-    }
-
-    /**
-     * Make a POST request
-     * @param url Request URL
-     * @param data Request body
-     * @param headers Additional headers
-     * @returns Promise resolving to the response
-     */
-    public async post<T = unknown>(
-        url: string,
-        data?: unknown,
-        headers?: Record<string, string>
-    ): Promise<Response<T>> {
-        return this.request<T>({
-            method: 'POST',
-            url,
-            ...(data !== undefined && { data }),
-            headers: headers || {},
-        });
-    }
-
-    /**
-     * Make a PUT request
-     * @param url Request URL
-     * @param data Request body
-     * @param headers Additional headers
-     * @returns Promise resolving to the response
-     */
-    public async put<T = unknown>(
-        url: string,
-        data?: unknown,
-        headers?: Record<string, string>
-    ): Promise<Response<T>> {
-        return this.request<T>({
-            method: 'PUT',
-            url,
-            ...(data !== undefined && { data }),
-            headers: headers || {},
-        });
-    }
-
-    /**
-     * Make a DELETE request
-     * @param url Request URL
-     * @param headers Additional headers
-     * @returns Promise resolving to the response
-     */
-    public async delete<T = unknown>(
-        url: string,
-        headers?: Record<string, string>
-    ): Promise<Response<T>> {
-        return this.request<T>({
-            method: 'DELETE',
-            url,
-            headers: headers || {},
-        });
-    }
-
-    /**
-     * Make a PATCH request
-     * @param url Request URL
-     * @param data Request body
-     * @param headers Additional headers
-     * @returns Promise resolving to the response
-     */
-    public async patch<T = unknown>(
-        url: string,
-        data?: unknown,
-        headers?: Record<string, string>
-    ): Promise<Response<T>> {
-        return this.request<T>({
-            method: 'PATCH',
-            url,
-            ...(data !== undefined && { data }),
-            headers: headers || {},
-        });
-    }
-
-    /**
-     * Get the current API key (masked for security)
-     * @returns Masked API key
-     */
-    public getApiKey(): string {
-        const apiKey = this.httpClient.defaults.headers['x-api-key'] as string;
-        if (!apiKey) return '';
-
-        return apiKey.length > 8
-            ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}`
-            : '****';
-    }
-
-    /**
-     * Get the base URL
-     * @returns Base URL
-     */
-    public getBaseUrl(): string {
-        return this.httpClient.defaults.baseURL || '';
-    }
-
-    /**
-     * Update the API key
-     * @param apiKey New API key
-     */
-    public setApiKey(apiKey: string): void {
-        if (!apiKey) {
-            throw new ValidationError('API key cannot be empty');
-        }
-        this.httpClient.defaults.headers['x-api-key'] = apiKey;
-    }
-
-    /**
-     * Update the request timeout
-     * @param timeout Timeout in milliseconds
-     */
-    public setTimeout(timeout: number): void {
-        this.httpClient.defaults.timeout = timeout;
-    }
-
-    /**
-     * Generate a unique request ID
-     * @returns Request ID
-     */
-    private generateRequestId(): string {
-        return `req_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-    }
-
-    /**
-     * Handle request errors
-     * @param error Error object
-     * @returns Formatted error
-     */
-    private handleRequestError(error: unknown): CufinderError {
-        if (axios.isAxiosError(error)) {
-            if (error.code === 'ECONNABORTED') {
-                return new NetworkError('Request timeout', 408);
-            }
-            if (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED') {
-                return new NetworkError('Unable to connect to API', 0);
-            }
-        }
-
-        return new CufinderError(
-            error instanceof Error ? error.message : 'Unknown request error',
-            'REQUEST_ERROR'
-        );
-    }
-
-    /**
-     * Handle response errors
-     * @param error Error object
-     * @returns Formatted error
-     */
-    private handleResponseError(error: unknown): CufinderError {
-        if (axios.isAxiosError(error) && error.response) {
-            const { status, data } = error.response;
-            const message = (data as { message?: string })?.message || error.message;
-
-            switch (status) {
-                case 401:
-                    return new AuthenticationError(message);
-                case 400:
-                    return new ValidationError(message, data as Record<string, unknown>);
-                case 402:
-                    return new CreditLimitError(message);
-                case 429:
-                    const retryAfter = error.response.headers['retry-after'];
-                    return new RateLimitError(
-                        message,
-                        retryAfter ? parseInt(retryAfter, 10) : undefined
-                    );
-                case 500:
-                case 502:
-                case 503:
-                case 504:
-                    return new NetworkError(`Server error: ${message}`, status);
-                default:
-                    return new CufinderError(
-                        message,
-                        'API_ERROR',
-                        status,
-                        data as Record<string, unknown>
-                    );
-            }
-        }
-
-        return this.handleRequestError(error);
+    public getClient(): BaseApiClient {
+        return this.client;
     }
 }
