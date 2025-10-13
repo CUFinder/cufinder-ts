@@ -1,7 +1,7 @@
 {
   "name": "@cufinder/cufinder-ts",
   "version": "1.1.0",
-  "description": "Type-safe TypeScript SDK for easily integrating with the Cufinder API, compatible with Node.js and browsers.",
+  "description": "Typescript SDK for the CUFinder API.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -17,12 +17,11 @@
     "README.md"
   ],
   "keywords": [
+    "ts-sdk",
     "cufinder",
-    "api",
-    "sdk",
-    "typescript"
+    "cufinder-sdk"
   ],
-  "author": "Cufinder Team",
+  "author": "CUFinder Team <support@cufinder.io> (https://cufinder.io)",
   "license": "MIT",
   "repository": {
     "type": "git",
