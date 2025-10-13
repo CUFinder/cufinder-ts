@@ -1,20 +1,6 @@
-# Cufinder SDK
+# CUFinder Typescript SDK
 
-A comprehensive, type-safe TypeScript SDK for the Cufinder B2B Data Enrichment API. This SDK provides a modern, promise-based interface for interacting with all 20 Cufinder API endpoints, following SOLID principles and best practices.
-
-## Features
-
-- 🚀 **Type-safe**: Full TypeScript support with comprehensive type definitions
-- 🌐 **Universal**: Works in Node.js and modern browsers
-- 🔧 **Modern API**: Promise-based with async/await support
-- 🛡️ **Error Handling**: Comprehensive error handling with custom error types
-- 🧪 **Well-tested**: Extensive test coverage with Jest
-- 📚 **Well-documented**: Comprehensive JSDoc documentation
-- 🎯 **Complete Coverage**: All 20 Cufinder API endpoints implemented
-- 🏗️ **SOLID Principles**: Clean architecture following SOLID design principles
-- 🔄 **Modular Design**: Each service in separate files for maintainability
-- 🎨 **Code Quality**: ESLint + Prettier for consistent code formatting and linting
-- 📏 **EditorConfig**: Consistent coding standards across different editors
+A Typescript SDK for the CUFinder API that provides access to all company and person enrichment services.
 
 ## Installation
 
@@ -25,39 +11,62 @@ npm install @cufinder/cufinder-ts
 ## Quick Start
 
 ```typescript
-import { CufinderSDK } from '@cufinder/cufinder-ts';
+import { Cufinder } from '@cufinder/cufinder-ts';
 
-// Initialize the SDK
-const sdk = new CufinderSDK({
-  apiKey: 'your-api-key-here'
-});
+// Initialize the client
+const client = new Cufinder('your-api-key-here');
 
 // API usage
-const company = await sdk.cuf({
-  company_name: 'TechCorp',
-  country_code: 'US'
-});
+const company = await client.cuf('apple', 'US');
 console.log('Company domain:', company.domain);
 
 // Search for companies
-const companies = await sdk.cse({
+const companies = await client.cse({
   name: 'technology',
   country: 'US'
 });
 console.log('Found companies:', companies.companies);
 ```
 
-## SDK Configuration
+## Client Configuration
 
 ```typescript
 interface CufinderClientConfig {
-  apiKey: string;           // Required: Your API key
-  baseUrl?: string;         // Optional: API base URL (default: https://api.cufinder.io)
   timeout?: number;         // Optional: Request timeout in ms (default: 30000)
-  retries?: number;         // Optional: Number of retries (default: 3)
-  retryDelay?: number;      // Optional: Delay between retries in ms (default: 1000)
 }
+
+// Initialize with API key only
+const client = new Cufinder('your-api-key-here');
+
+// Initialize with API key and options
+const client = new Cufinder('your-api-key-here', { timeout: 60000 });
 ```
+
+## API Endpoints Coverage
+
+This SDK covers all 20 Cufinder API endpoints:
+
+- **CUF** - Company Name to Domain API
+- **LCUF** - Company LinkedIn URL Finder API
+- **DTC** - Domain to Company Name API
+- **DTE** - Company Email Finder API
+- **NTP** - Company Phone Finder API
+- **REL** - Reverse Email Lookup API
+- **FCL** - Company Lookalikes Finder API
+- **ELF** - Company Fundraising API
+- **CAR** - Company Revenue Finder API
+- **FCC** - Company Subsidiaries Finder API
+- **FTS** - Company Tech Stack Finder API
+- **EPP** - LinkedIn Profile Enrichment API
+- **FWE** - LinkedIn Profile Email Finder API
+- **TEP** - Person Enrichment API
+- **ENC** - Company Enrichment API
+- **CEC** - Company Employees Countries API
+- **CLO** - Company Locations API
+- **CSE** - Company Search API
+- **PSE** - Person Search API
+- **LBS** - Local Business Search API
+
 
 ## API Reference
 
@@ -378,162 +387,6 @@ import type {
   NetworkError
 } from '@cufinder/cufinder-ts';
 ```
-
-## Advanced Usage
-
-### Direct HTTP Client Access
-
-For advanced usage, you can access the underlying HTTP client:
-
-```typescript
-const client = sdk.getClient();
-
-// Make custom requests
-const response = await client.post('/custom-endpoint', {
-  custom_data: 'value'
-});
-```
-
-### Building
-
-```bash
-npm run build
-```
-
-### Testing
-
-```bash
-npm test
-npm run test:watch
-npm run test:coverage
-```
-
-### Code Quality
-
-```bash
-# Linting
-npm run lint          # Check for linting issues
-npm run lint:fix      # Auto-fix linting issues
-
-# Formatting
-npm run format        # Format code with Prettier
-npm run format:check  # Check formatting without fixing
-
-# Type checking
-npm run type-check    # TypeScript type checking
-
-# All checks
-npm run check         # Run all checks (type + lint + format)
-npm run fix           # Auto-fix all issues
-```
-
-### Development Workflow
-
-1. **Make changes** to the code
-2. **Run checks**: `npm run check` to ensure code quality
-3. **Auto-fix issues**: `npm run fix` to automatically fix most problems
-4. **Run tests**: `npm test` to ensure everything works
-5. **Build**: `npm run build` to create the distribution files
-
-## Browser Support
-
-This SDK is compatible with modern browsers that support:
-- ES2020 features
-- Fetch API
-- Promise/async-await
-
-For older browsers, you may need to include polyfills for:
-- `fetch`
-- `Promise`
-- `Object.assign`
-- `Array.includes`
-
-## Node.js Support
-
-- Node.js 16.0.0 or higher
-- Uses `axios` for HTTP requests in Node.js environments
-
-## API Endpoints Coverage
-
-This SDK covers all 20 Cufinder API endpoints:
-
-- **CUF** - Company Name to Domain API
-- **LCUF** - Company LinkedIn URL Finder API
-- **DTC** - Domain to Company Name API
-- **DTE** - Company Email Finder API
-- **NTP** - Company Phone Finder API
-- **REL** - Reverse Email Lookup API
-- **FCL** - Company Lookalikes Finder API
-- **ELF** - Company Fundraising API
-- **CAR** - Company Revenue Finder API
-- **FCC** - Company Subsidiaries Finder API
-- **FTS** - Company Tech Stack Finder API
-- **EPP** - LinkedIn Profile Enrichment API
-- **FWE** - LinkedIn Profile Email Finder API
-- **TEP** - Person Enrichment API
-- **ENC** - Company Enrichment API
-- **CEC** - Company Employees Countries API
-- **CLO** - Company Locations API
-- **CSE** - Company Search API
-- **PSE** - Person Search API
-- **LBS** - Local Business Search API
-
-## Code Quality & Standards
-
-This project maintains high code quality through:
-
-### Linting & Formatting
-- **ESLint**: TypeScript-aware linting with custom rules
-- **Prettier**: Consistent code formatting
-- **EditorConfig**: Cross-editor coding standards
-- **VS Code Integration**: Auto-formatting and linting on save
-
-### Configuration Files
-- `.editorconfig` - Consistent indentation, line endings, and charset
-- `.eslintrc.js` - ESLint configuration with TypeScript support
-- `.prettierrc` - Prettier formatting rules
-- `.vscode/settings.json` - VS Code workspace settings
-- `.vscode/extensions.json` - Recommended VS Code extensions
-
-### Quality Checks
-All code must pass:
-- TypeScript type checking
-- ESLint linting rules
-- Prettier formatting standards
-- Jest test suite
-
-## Architecture
-
-The SDK follows SOLID principles:
-
-- **Single Responsibility**: Each service class handles one specific API endpoint
-- **Open/Closed**: Easy to extend with new services without modifying existing code
-- **Liskov Substitution**: All services extend BaseService and can be used interchangeably
-- **Interface Segregation**: Focused interfaces for each service type
-- **Dependency Inversion**: Services depend on abstractions (BaseService, CufinderClient)
-
-## License
-
-MIT
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. **Run quality checks**: `npm run check` to ensure code quality
-5. **Auto-fix issues**: `npm run fix` to automatically fix most problems
-6. **Add tests** for new functionality
-7. **Run the test suite**: `npm test` to ensure everything works
-8. **Build the project**: `npm run build` to verify the build works
-9. Submit a pull request
-
-### Development Setup
-
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Install recommended VS Code extensions (if using VS Code)
-4. Start developing with auto-formatting and linting enabled
 
 ## Support
 
