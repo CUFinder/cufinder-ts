@@ -89,8 +89,8 @@ export class CufinderSDK {
         params?: Parameters<Lbs['searchLocalBusinesses']>[0]
     ) => ReturnType<Lbs['searchLocalBusinesses']>;
 
-    constructor(config: CufinderClientConfig) {
-        this.client = new CufinderClient(config);
+    constructor(apiKey: string, options?: CufinderClientConfig) {
+        this.client = new CufinderClient({ apiKey, ...options });
 
         // Initialize service instances
         const cuf = new Cuf(this.client);

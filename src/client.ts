@@ -24,14 +24,14 @@ import {
 export class CufinderClient {
     private readonly httpClient: AxiosInstance;
 
-    constructor(config: CufinderClientConfig) {
+    constructor(config: CufinderClientConfig & { apiKey: string }) {
         if (!config.apiKey) {
             throw new ValidationError('API key is required');
         }
 
         // Initialize HTTP client
         this.httpClient = axios.create({
-            baseURL: config.baseUrl || 'https://api.cufinder.io/v2',
+            baseURL: 'https://api.cufinder.io/v2',
             timeout: config.timeout || 30000,
             headers: {
                 'x-api-key': config.apiKey,
@@ -217,14 +217,6 @@ export class CufinderClient {
             throw new ValidationError('API key cannot be empty');
         }
         this.httpClient.defaults.headers['x-api-key'] = apiKey;
-    }
-
-    /**
-     * Update the base URL
-     * @param baseUrl New base URL
-     */
-    public setBaseUrl(baseUrl: string): void {
-        this.httpClient.defaults.baseURL = baseUrl;
     }
 
     /**
