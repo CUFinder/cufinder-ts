@@ -1,14 +1,14 @@
 import { BaseResponse } from './base.model';
 import {
     CompanySearchResult,
+    EnrichedCompany,
+    FundraisingInfo,
     LocalBusinessResult,
     LookalikeCompany,
-    FundraisingInfo,
     Subsidiary,
     TechStack,
-    EnrichedCompany,
 } from './company.model';
-import { Person, EnrichedPerson, PersonSearchResult } from './person.model';
+import { EnrichedPerson, Person, PersonSearchResult } from './person.model';
 
 // Service Response Types
 
@@ -72,10 +72,7 @@ export interface ElfResponse extends BaseResponse {
  * CAR Response - Company Revenue Finder
  */
 export interface CarResponse extends BaseResponse {
-    revenue: {
-        annual_revenue: string;
-        currency: string;
-    };
+    annual_revenue: string;
 }
 
 /**
@@ -144,24 +141,18 @@ export interface CloResponse extends BaseResponse {
  */
 export interface CseResponse extends BaseResponse {
     companies: CompanySearchResult[];
-    total_results: number;
-    page: number;
 }
 
 /**
  * PSE Response - Person Search
  */
 export interface PseResponse extends BaseResponse {
-    people: PersonSearchResult[];
-    total_results: number;
-    page: number;
+    peoples: PersonSearchResult[];
 }
 
 /**
  * LBS Response - Local Business Search
  */
 export interface LbsResponse extends BaseResponse {
-    businesses: LocalBusinessResult[];
-    total_results: number;
-    page: number;
+    companies: LocalBusinessResult[];
 }
