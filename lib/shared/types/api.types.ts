@@ -80,7 +80,7 @@ export interface EncParams {
     query: string;
 }
 
-// CEC - Company Employees Countries API
+// CEC - Company Employee Count API
 export interface CecParams {
     query: string;
 }
