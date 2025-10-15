@@ -43,7 +43,7 @@ export interface DteResponse extends BaseResponse {
  * NTP Response - Company Phone Finder
  */
 export interface NtpResponse extends BaseResponse {
-    phones: string;
+    phones: string[];
 }
 
 /**
@@ -64,7 +64,7 @@ export interface FclResponse extends BaseResponse {
  * ELF Response - Company Fundraising API
  */
 export interface ElfResponse extends BaseResponse {
-    fundraising: FundraisingInfo;
+    fundraising_info: FundraisingInfo;
 }
 
 /**

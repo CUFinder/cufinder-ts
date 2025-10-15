@@ -13,7 +13,7 @@ export class NtpService extends BaseService {
      * @example
      * ```typescript
      * const result = await client.ntp('apple');
-     * console.log(result.phone);
+     * console.log(result.phones);
      * ```
      */
     public async getPhones(companyName: string): Promise<NtpResponse> {
