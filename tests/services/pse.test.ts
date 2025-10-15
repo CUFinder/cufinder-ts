@@ -1,11 +1,11 @@
-import { PseService } from '../../lib/services/pse';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { PseService } from '../../lib/services/pse';
 import { PseResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Pse', () => {
-    let service: Pse;
+    let service: PseService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
@@ -39,9 +39,7 @@ describe('Pse', () => {
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            people: [],
-            total_results: 0,
-            page: 1,
+            peoples: [],
         };
 
         const validParams = {

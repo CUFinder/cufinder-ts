@@ -1,11 +1,11 @@
-import { EncService } from '../../lib/services/enc';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { EncService } from '../../lib/services/enc';
 import { EncResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Enc', () => {
-    let service: Enc;
+    let service: EncService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

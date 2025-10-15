@@ -1,11 +1,11 @@
-import { CloService } from '../../lib/services/clo';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { CloService } from '../../lib/services/clo';
 import { CloResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Clo', () => {
-    let service: Clo;
+    let service: CloService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

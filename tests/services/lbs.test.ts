@@ -1,11 +1,11 @@
-import { LbsService } from '../../lib/services/lbs';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { LbsService } from '../../lib/services/lbs';
 import { LbsResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Lbs', () => {
-    let service: Lbs;
+    let service: LbsService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
@@ -39,9 +39,7 @@ describe('Lbs', () => {
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            businesses: [],
-            total_results: 0,
-            page: 1,
+            companies: [],
         };
 
         const validParams = {

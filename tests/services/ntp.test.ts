@@ -1,11 +1,11 @@
-import { NtpService } from '../../lib/services/ntp';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { NtpService } from '../../lib/services/ntp';
 import { NtpResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Ntp', () => {
-    let service: Ntp;
+    let service: NtpService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

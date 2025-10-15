@@ -1,11 +1,11 @@
-import { DtcService } from '../../lib/services/dtc';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { DtcService } from '../../lib/services/dtc';
 import { DtcResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Dtc', () => {
-    let service: Dtc;
+    let service: DtcService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
