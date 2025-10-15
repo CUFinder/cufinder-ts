@@ -1,11 +1,11 @@
-import { CarService } from '../../lib/services/car';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { CarService } from '../../lib/services/car';
 import { CarResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Car', () => {
-    let service: Car;
+    let service: CarService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
@@ -39,10 +39,7 @@ describe('Car', () => {
                 spent_time: 200,
                 query_log: 'test-log',
             },
-            revenue: {
-                annual_revenue: '$1,000,000',
-                currency: 'USD',
-            },
+            annual_revenue: '$1,000,000',
         };
 
         const validParams = {

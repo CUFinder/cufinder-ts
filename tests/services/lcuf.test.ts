@@ -1,11 +1,11 @@
-import { LcufService } from '../../lib/services/lcuf';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { LcufService } from '../../lib/services/lcuf';
 import { LcufResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Lcuf', () => {
-    let service: Lcuf;
+    let service: LcufService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

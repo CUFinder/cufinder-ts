@@ -1,11 +1,11 @@
-import { ElfService } from '../../lib/services/elf';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { ElfService } from '../../lib/services/elf';
 import { ElfResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Elf', () => {
-    let service: Elf;
+    let service: ElfService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

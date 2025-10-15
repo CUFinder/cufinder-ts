@@ -5,7 +5,7 @@ import { DteResponse } from '../../lib/shared/types';
 jest.mock('../../lib/base_api_client');
 
 describe('Dte', () => {
-    let service: Dte;
+    let service: DteService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

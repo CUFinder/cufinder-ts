@@ -1,11 +1,11 @@
-import { RelService } from '../../lib/services/rel';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { RelService } from '../../lib/services/rel';
 import { RelResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Rel', () => {
-    let service: Rel;
+    let service: RelService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

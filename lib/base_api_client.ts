@@ -5,15 +5,17 @@ import {
     CufinderClientConfig,
     CufinderError,
     NetworkError,
+    NotFoundError,
+    PayloadError,
     RateLimitError,
     Response,
     RequestConfig as SDKRequestConfig,
-    ValidationError,
+    ServerError,
 } from './shared/types';
 
 /**
- * Base API client class for Cufinder
- * Provides a type-safe interface for interacting with the Cufinder B2B data enrichment API
+ * Base API client class for CUFinder
+ * Provides a type-safe interface for interacting with the CUFinder B2B data enrichment API
  * Follows SOLID principles:
  * - Single Responsibility: Handles HTTP communication only
  * - Open/Closed: Extensible through service classes
@@ -26,7 +28,7 @@ export class BaseApiClient {
 
     constructor(config: CufinderClientConfig & { apiKey: string }) {
         if (!config.apiKey) {
-            throw new ValidationError('API key is required');
+            throw new AuthenticationError('API key is required');
         }
 
         // Initialize HTTP client
@@ -36,7 +38,7 @@ export class BaseApiClient {
             headers: {
                 'x-api-key': config.apiKey,
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': '@cufinder/cufinder-ts/1.0.0',
+                'User-Agent': '@cufinder/cufinder-ts/1.3.0',
             },
         });
 
@@ -214,7 +216,7 @@ export class BaseApiClient {
      */
     public setApiKey(apiKey: string): void {
         if (!apiKey) {
-            throw new ValidationError('API key cannot be empty');
+            throw new AuthenticationError('API key cannot be empty');
         }
         this.httpClient.defaults.headers['x-api-key'] = apiKey;
     }
@@ -267,12 +269,18 @@ export class BaseApiClient {
             const message = (data as { message?: string })?.message || error.message;
 
             switch (status) {
-                case 401:
-                    return new AuthenticationError(message);
                 case 400:
-                    return new ValidationError(message, data as Record<string, unknown>);
-                case 402:
+                    // 400 => indicates not enough credit
                     return new CreditLimitError(message);
+                case 401:
+                    // 401 => indicates invalid api key
+                    return new AuthenticationError(message);
+                case 404:
+                    // 404 => indicates not found result
+                    return new NotFoundError(message);
+                case 422:
+                    // 422 => indicates an error in the payload
+                    return new PayloadError(message, data as Record<string, unknown>);
                 case 429:
                     const retryAfter = error.response.headers['retry-after'];
                     return new RateLimitError(
@@ -280,10 +288,18 @@ export class BaseApiClient {
                         retryAfter ? parseInt(retryAfter, 10) : undefined
                     );
                 case 500:
+                case 501:
                 case 502:
                 case 503:
                 case 504:
-                    return new NetworkError(`Server error: ${message}`, status);
+                case 505:
+                case 506:
+                case 507:
+                case 508:
+                case 510:
+                case 511:
+                    // 500, 501, ... => server errors
+                    return new ServerError(message, status);
                 default:
                     return new CufinderError(
                         message,

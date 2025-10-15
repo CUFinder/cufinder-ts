@@ -68,8 +68,8 @@ export class Cufinder {
      * @returns Promise resolving to company domain information
      * @example
      * ```typescript
-     * const response = await client.cuf('apple', 'US');
-     * console.log(response.domain); // 'apple.com'
+     * const result = await client.cuf('cufinder', 'US');
+     * console.log(result);
      * ```
      */
     public readonly cuf: (companyName: string, countryCode: string) => Promise<CufResponse>;
@@ -80,8 +80,8 @@ export class Cufinder {
      * @returns Promise resolving to LinkedIn URL information
      * @example
      * ```typescript
-     * const response = await client.lcuf('apple');
-     * console.log(response.linkedin_url); // 'linkedin.com/company/apple'
+     * const result = await client.lcuf('cufinder');
+     * console.log(result);
      * ```
      */
     public readonly lcuf: (companyName: string) => Promise<LcufResponse>;
@@ -92,8 +92,8 @@ export class Cufinder {
      * @returns Promise resolving to company name information
      * @example
      * ```typescript
-     * const response = await client.dtc('https://apple.com');
-     * console.log(response.company_name); // 'apple'
+     * const result = await client.dtc('cufinder.io');
+     * console.log(result);
      * ```
      */
     public readonly dtc: (websiteUrl: string) => Promise<DtcResponse>;
@@ -104,8 +104,8 @@ export class Cufinder {
      * @returns Promise resolving to company email information
      * @example
      * ```typescript
-     * const response = await client.dte('https://apple.com');
-     * console.log(response.emails); // ['contact@apple.com', 'info@apple.com']
+     * const result = await client.dte('cufinder.io');
+     * console.log(result);
      * ```
      */
     public readonly dte: (websiteUrl: string) => Promise<DteResponse>;
@@ -116,8 +116,8 @@ export class Cufinder {
      * @returns Promise resolving to phone number information
      * @example
      * ```typescript
-     * const response = await client.ntp('apple');
-     * console.log(response.phone); // '+1-408-996-1010'
+     * const result = await client.ntp('apple');
+     * console.log(result);
      * ```
      */
     public readonly ntp: (companyName: string) => Promise<NtpResponse>;
@@ -128,8 +128,8 @@ export class Cufinder {
      * @returns Promise resolving to person information
      * @example
      * ```typescript
-     * const response = await client.rel('test@example.com');
-     * console.log(response.person.name); // Person details
+     * const result = await client.rel('iain.mckenzie@stripe.com');
+     * console.log(result);
      * ```
      */
     public readonly rel: (email: string) => Promise<RelResponse>;
@@ -140,8 +140,8 @@ export class Cufinder {
      * @returns Promise resolving to lookalike companies
      * @example
      * ```typescript
-     * const response = await client.fcl('apple');
-     * console.log(response.lookalikes); // Array of similar companies
+     * const result = await client.fcl('apple');
+     * console.log(result);
      * ```
      */
     public readonly fcl: (query: string) => Promise<FclResponse>;
@@ -152,8 +152,8 @@ export class Cufinder {
      * @returns Promise resolving to fundraising data
      * @example
      * ```typescript
-     * const response = await client.elf('apple');
-     * console.log(response.fundraising); // Fundraising details
+     * const result = await client.elf('cufinder');
+     * console.log(result);
      * ```
      */
     public readonly elf: (query: string) => Promise<ElfResponse>;
@@ -164,8 +164,8 @@ export class Cufinder {
      * @returns Promise resolving to revenue data
      * @example
      * ```typescript
-     * const response = await client.car('apple');
-     * console.log(response.revenue.annual_revenue); // '$394.3B'
+     * const result = await client.car('apple');
+     * console.log(result);
      * ```
      */
     public readonly car: (query: string) => Promise<CarResponse>;
@@ -176,8 +176,8 @@ export class Cufinder {
      * @returns Promise resolving to subsidiaries information
      * @example
      * ```typescript
-     * const subsidiaries = await client.fcc('apple');
-     * console.log(subsidiaries.subsidiaries); // Array of subsidiaries
+     * const result = await client.fcc('amazon');
+     * console.log(result);
      * ```
      */
     public readonly fcc: (query: string) => Promise<FccResponse>;
@@ -188,8 +188,8 @@ export class Cufinder {
      * @returns Promise resolving to tech stack information
      * @example
      * ```typescript
-     * const techStack = await client.fts('apple');
-     * console.log(techStack.tech_stack); // Technology stack details
+     * const result = await client.fts('cufinder');
+     * console.log(result);
      * ```
      */
     public readonly fts: (query: string) => Promise<FtsResponse>;
@@ -200,8 +200,8 @@ export class Cufinder {
      * @returns Promise resolving to enriched person data
      * @example
      * ```typescript
-     * const person = await client.epp('https://linkedin.com/in/test');
-     * console.log(person.person); // Enriched person data
+     * const result = await client.epp('linkedin.com/in/iain-mckenzie');
+     * console.log(result);
      * ```
      */
     public readonly epp: (linkedinUrl: string) => Promise<EppResponse>;
@@ -212,8 +212,8 @@ export class Cufinder {
      * @returns Promise resolving to email information
      * @example
      * ```typescript
-     * const email = await client.fwe('https://linkedin.com/in/test');
-     * console.log(email.email); // 'test@example.com'
+     * const result = await client.fwe('linkedin.com/in/iain-mckenzie');
+     * console.log(result);
      * ```
      */
     public readonly fwe: (linkedinUrl: string) => Promise<FweResponse>;
@@ -225,8 +225,8 @@ export class Cufinder {
      * @returns Promise resolving to enriched person data
      * @example
      * ```typescript
-     * const person = await client.tep('john doe', 'apple');
-     * console.log(person.person); // Enriched person data
+     * const result = await client.tep('iain mckenzie', 'stripe');
+     * console.log(result);
      * ```
      */
     public readonly tep: (fullName: string, company: string) => Promise<TepResponse>;
@@ -237,8 +237,8 @@ export class Cufinder {
      * @returns Promise resolving to enriched company data
      * @example
      * ```typescript
-     * const company = await client.enc('apple');
-     * console.log(company.company); // Enriched company data
+     * const result = await client.enc('cufinder');
+     * console.log(result);
      * ```
      */
     public readonly enc: (query: string) => Promise<EncResponse>;
@@ -249,8 +249,8 @@ export class Cufinder {
      * @returns Promise resolving to employee countries data
      * @example
      * ```typescript
-     * const countries = await client.cec('apple');
-     * console.log(countries.countries); // Country distribution data
+     * const result = await client.cec('cufinder');
+     * console.log(result);
      * ```
      */
     public readonly cec: (query: string) => Promise<CecResponse>;
@@ -261,8 +261,8 @@ export class Cufinder {
      * @returns Promise resolving to company locations
      * @example
      * ```typescript
-     * const locations = await client.clo('apple');
-     * console.log(locations.locations); // Array of company locations
+     * const result = await client.clo('apple');
+     * console.log(result);
      * ```
      */
     public readonly clo: (query: string) => Promise<CloResponse>;
@@ -273,8 +273,13 @@ export class Cufinder {
      * @returns Promise resolving to company search results
      * @example
      * ```typescript
-     * const companies = await client.cse({ name: 'technology', country: 'US' });
-     * console.log(companies.companies); // Array of company results
+     * const result = await client.cse({
+     *   name: 'cufinder',
+     *   country: 'germany',
+     *   state: 'hamburg',
+     *   city: 'hamburg'
+     * });
+     * console.log(result);
      * ```
      */
     public readonly cse: (params?: CseParams) => Promise<CseResponse>;
@@ -285,8 +290,11 @@ export class Cufinder {
      * @returns Promise resolving to people search results
      * @example
      * ```typescript
-     * const people = await client.pse({ full_name: 'john doe' });
-     * console.log(people.people); // Array of person results
+     * const result = await client.pse({
+     *   full_name: 'iain mckenzie',
+     *   company_name: 'stripe'
+     * });
+     * console.log(result);
      * ```
      */
     public readonly pse: (params?: PseParams) => Promise<PseResponse>;
@@ -297,8 +305,12 @@ export class Cufinder {
      * @returns Promise resolving to local business search results
      * @example
      * ```typescript
-     * const businesses = await client.lbs({ name: 'restaurant' });
-     * console.log(businesses.businesses); // Array of business results
+     * const result = await client.lbs({
+     *   country: 'united states',
+     *   state: 'california',
+     *   page: 1
+     * });
+     * console.log(result);
      * ```
      */
     public readonly lbs: (params?: LbsParams) => Promise<LbsResponse>;

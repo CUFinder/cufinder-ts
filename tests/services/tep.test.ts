@@ -1,11 +1,11 @@
-import { TepService } from '../../lib/services/tep';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { TepService } from '../../lib/services/tep';
 import { TepResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Tep', () => {
-    let service: Tep;
+    let service: TepService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

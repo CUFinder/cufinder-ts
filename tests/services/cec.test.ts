@@ -1,11 +1,11 @@
-import { CecService } from '../../lib/services/cec';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { CecService } from '../../lib/services/cec';
 import { CecResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Cec', () => {
-    let service: Cec;
+    let service: CecService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

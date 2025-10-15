@@ -51,13 +51,6 @@ export class AuthenticationError extends CufinderError {
     }
 }
 
-export class ValidationError extends CufinderError {
-    constructor(message: string, details?: Record<string, unknown>) {
-        super(message, 'VALIDATION_ERROR', 400, details);
-        this.name = 'ValidationError';
-    }
-}
-
 export class RateLimitError extends CufinderError {
     constructor(message: string = 'Rate limit exceeded', retryAfter?: number) {
         super(message, 'RATE_LIMIT_ERROR', 429, { retryAfter });
@@ -66,16 +59,30 @@ export class RateLimitError extends CufinderError {
 }
 
 export class CreditLimitError extends CufinderError {
-    constructor(message: string = 'Credit limit exceeded') {
-        super(message, 'CREDIT_LIMIT_ERROR', 402);
+    constructor(message: string = 'Not enough credit') {
+        super(message, 'CREDIT_LIMIT_ERROR', 400);
         this.name = 'CreditLimitError';
     }
 }
 
 export class NotFoundError extends CufinderError {
-    constructor(message: string = 'Resource not found') {
+    constructor(message: string = 'Not found result') {
         super(message, 'NOT_FOUND_ERROR', 404);
         this.name = 'NotFoundError';
+    }
+}
+
+export class PayloadError extends CufinderError {
+    constructor(message: string = 'Error in the payload', details?: Record<string, unknown>) {
+        super(message, 'PAYLOAD_ERROR', 422, details);
+        this.name = 'PayloadError';
+    }
+}
+
+export class ServerError extends CufinderError {
+    constructor(message: string = 'Server error', statusCode: number = 500) {
+        super(message, 'SERVER_ERROR', statusCode);
+        this.name = 'ServerError';
     }
 }
 

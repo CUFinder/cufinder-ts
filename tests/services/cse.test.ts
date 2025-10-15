@@ -1,11 +1,11 @@
-import { CseService } from '../../lib/services/cse';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { CseService } from '../../lib/services/cse';
 import { CseResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Cse', () => {
-    let service: Cse;
+    let service: CseService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {
@@ -63,8 +63,6 @@ describe('Cse', () => {
                     },
                 },
             ],
-            total_results: 1,
-            page: 1,
         };
 
         const validParams = {

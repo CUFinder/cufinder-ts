@@ -1,11 +1,11 @@
-import { FtsService } from '../../lib/services/fts';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { FtsService } from '../../lib/services/fts';
 import { FtsResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Fts', () => {
-    let service: Fts;
+    let service: FtsService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

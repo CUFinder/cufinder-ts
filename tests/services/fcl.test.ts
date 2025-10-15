@@ -1,11 +1,11 @@
-import { FclService } from '../../lib/services/fcl';
 import { BaseApiClient } from '../../lib/base_api_client';
+import { FclService } from '../../lib/services/fcl';
 import { FclResponse } from '../../lib/shared/types';
 
 jest.mock('../../lib/base_api_client');
 
 describe('Fcl', () => {
-    let service: Fcl;
+    let service: FclService;
     let mockClient: jest.Mocked<BaseApiClient>;
 
     beforeEach(() => {

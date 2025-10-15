@@ -1,14 +1,35 @@
 # CUFinder Typescript SDK
 
+[![](https://img.shields.io/badge/repo%20status-Active-28a745)](https://github.com/cufinder/cufinder-ts)
+[![License: MIT](https://img.shields.io/badge/License-MIT-514BEE.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/@cufinder/cufinder-ts.svg)](https://www.npmjs.com/package/@cufinder/cufinder-ts)
+
 A Typescript SDK for the CUFinder API that provides access to all company and person enrichment services.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Reference](#api-reference)
+- [Error Handling](#error-handling)
+- [Types](#types)
+- [Support](#support)
 
 ## Installation
 
 ```bash
-npm install @cufinder/cufinder-ts
+npm i @cufinder/cufinder-ts
+```
+or
+```bash
+yarn add @cufinder/cufinder-ts
+```
+or
+```bash
+pnpm add @cufinder/cufinder-ts
 ```
 
-## Quick Start
+## Usage
 
 ```typescript
 import { Cufinder } from '@cufinder/cufinder-ts';
@@ -16,35 +37,13 @@ import { Cufinder } from '@cufinder/cufinder-ts';
 // Initialize the client
 const client = new Cufinder('your-api-key-here');
 
-// API usage
-const company = await client.cuf('apple', 'US');
-console.log('Company domain:', company.domain);
-
-// Search for companies
-const companies = await client.cse({
-  name: 'technology',
-  country: 'US'
-});
-console.log('Found companies:', companies.companies);
-```
-
-## Client Configuration
-
-```typescript
-interface CufinderClientConfig {
-  timeout?: number;         // Optional: Request timeout in ms (default: 30000)
-}
-
-// Initialize with API key only
-const client = new Cufinder('your-api-key-here');
-
-// Initialize with API key and options
+// Initialize with more options
 const client = new Cufinder('your-api-key-here', { timeout: 60000 });
 ```
 
-## API Endpoints Coverage
+## API Reference
 
-This SDK covers all 20 Cufinder API endpoints:
+This SDK covers all 20 Cufinder API (v2) endpoints:
 
 - **CUF** - Company Name to Domain API
 - **LCUF** - Company LinkedIn URL Finder API
@@ -61,234 +60,203 @@ This SDK covers all 20 Cufinder API endpoints:
 - **FWE** - LinkedIn Profile Email Finder API
 - **TEP** - Person Enrichment API
 - **ENC** - Company Enrichment API
-- **CEC** - Company Employees Countries API
+- **CEC** - Company Employee Count API
 - **CLO** - Company Locations API
 - **CSE** - Company Search API
 - **PSE** - Person Search API
-- **LBS** - Local Business Search API
+- **LBS** - Local Business Search API (Google Maps Search API)
 
 
-## API Reference
+**CUF - Company Name to Domain API**
 
-### Company Services
-
-#### `sdk.cuf(params)`
-**CUF - Company Name to Domain API** - Returns the official website URL of a company based on its name.
+Returns the official website URL of a company based on its name.
 
 ```typescript
-const result = await sdk.cuf({
-  company_name: 'TechCorp',
-  country_code: 'US'
-});
-// Returns: { query: 'TechCorp', domain: 'https://techcorp.com', credit_count: 0, ... }
+const result = await client.cuf('cufinder', 'US');
+console.log(result);
 ```
 
-#### `sdk.lcuf(params)`
-**LCUF - Company LinkedIn URL Finder API** - Finds the official LinkedIn company profile URL from a company name.
+**LCUF - Company LinkedIn URL Finder API**
+
+Finds the official LinkedIn company profile URL from a company name.
 
 ```typescript
-const result = await sdk.lcuf({
-  company_name: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', company: { name: 'TechCorp', linkedin_url: '...', ... }, ... }
+const result = await client.lcuf('cufinder');
+console.log(result);
 ```
 
-#### `sdk.dtc(params)`
-**DTC - Domain to Company Name API** - Retrieves the registered company name associated with a given website domain.
+**DTC - Domain to Company Name API**
+
+Retrieves the registered company name associated with a given website domain.
 
 ```typescript
-const result = await sdk.dtc({
-  company_website: 'https://techcorp.com'
-});
-// Returns: { query: 'https://techcorp.com', company_name: 'TechCorp', ... }
+const result = await client.dtc('cufinder.io');
+console.log(result);
 ```
 
-#### `sdk.dte(params)`
-**DTE - Company Email Finder API** - Returns up to five general or role-based business email addresses for a company.
+**DTE - Company Email Finder API**
+
+Returns up to five general or role-based business email addresses for a company.
 
 ```typescript
-const result = await sdk.dte({
-  company_website: 'https://techcorp.com'
-});
-// Returns: { query: 'https://techcorp.com', emails: ['info@techcorp.com', 'contact@techcorp.com'], ... }
+const result = await client.dte('cufinder.io');
+console.log(result);
 ```
 
-#### `sdk.ntp(params)`
-**NTP - Company Phone Finder API** - Returns up to two verified phone numbers for a company.
+**NTP - Company Phone Finder API**
+
+Returns up to two verified phone numbers for a company.
 
 ```typescript
-const result = await sdk.ntp({
-  company_name: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', phones: ['+1-555-123-4567', '+1-555-123-4568'], ... }
+const result = await client.ntp('apple');
+console.log(result);
 ```
 
-#### `sdk.fcl(params)`
-**FCL - Company Lookalikes Finder API** - Provides a list of similar companies based on an input company's profile.
+**REL - Reverse Email Lookup API**
+
+Enriches an email address with detailed person and company information.
 
 ```typescript
-const result = await sdk.fcl({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', companies: [{ name: 'Similar Company', ... }], ... }
+const result = await client.rel('iain.mckenzie@stripe.com');
+console.log(result);
 ```
 
-#### `sdk.elf(params)`
-**ELF - Company Fundraising API** - Returns detailed funding information about a company.
+**FCL - Company Lookalikes Finder API**
+
+Provides a list of similar companies based on an input company's profile.
 
 ```typescript
-const result = await sdk.elf({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', fundraising_info: { funding_last_round_type: 'Series B', ... }, ... }
+const result = await client.fcl('apple');
+console.log(result);
 ```
 
-#### `sdk.car(params)`
-**CAR - Company Revenue Finder API** - Estimates a company's annual revenue based on name.
+**ELF - Company Fundraising API**
+
+Returns detailed funding information about a company.
 
 ```typescript
-const result = await sdk.car({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', annual_revenue: '$75M', ... }
+const result = await client.elf('cufinder');
+console.log(result);
 ```
 
-#### `sdk.fcc(params)`
-**FCC - Company Subsidiaries Finder API** - Identifies known subsidiaries of a parent company.
+**CAR - Company Revenue Finder API**
+
+Estimates a company's annual revenue based on name.
 
 ```typescript
-const result = await sdk.fcc({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', subsidiaries: ['Subsidiary A', 'Subsidiary B'], ... }
+const result = await client.car('apple');
+console.log(result);
 ```
 
-#### `sdk.fts(params)`
-**FTS - Company Tech Stack Finder API** - Detects the technologies a company uses.
+**FCC - Company Subsidiaries Finder API**
+
+Identifies known subsidiaries of a parent company.
 
 ```typescript
-const result = await sdk.fts({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', technologies: ['React', 'Node.js', 'AWS'], ... }
+const result = await client.fcc('amazon');
+console.log(result);
 ```
 
-#### `sdk.enc(params)`
-**ENC - Company Enrichment API** - Provides a complete company profile from a company name.
+**FTS - Company Tech Stack Finder API**
+
+Detects the technologies a company uses.
 
 ```typescript
-const result = await sdk.enc({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', company: { name: 'TechCorp', domain: 'techcorp.com', ... }, ... }
+const result = await client.fts('cufinder');
+console.log(result);
 ```
 
-#### `sdk.cec(params)`
-**CEC - Company Employees Countries API** - Returns an estimated number of employees for a company.
+**EPP - LinkedIn Profile Enrichment API**
+
+Takes a LinkedIn profile URL and returns enriched person and company data.
 
 ```typescript
-const result = await sdk.cec({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', countries: { 'US': 500, 'UK': 100 }, ... }
+const result = await client.epp('linkedin.com/in/iain-mckenzie');
+console.log(result);
 ```
 
-#### `sdk.clo(params)`
-**CLO - Company Locations API** - Returns the known physical office locations of a company.
+**FWE - LinkedIn Profile Email Finder API**
+
+Extracts a verified business email address from a LinkedIn profile URL.
 
 ```typescript
-const result = await sdk.clo({
-  query: 'TechCorp'
-});
-// Returns: { query: 'TechCorp', locations: [{ country: 'US', city: 'San Francisco', ... }], ... }
+const result = await client.fwe('linkedin.com/in/iain-mckenzie');
+console.log(result);
 ```
 
-#### `sdk.cse(params?)`
-**CSE - Company Search API** - Search for companies by keyword, partial name, industry, location, or other filters.
+**TEP - Person Enrichment API**
+
+Returns enriched person data based on full name and company name.
 
 ```typescript
-const result = await sdk.cse({
-  name: 'technology',
-  country: 'US',
-  industry: 'Software',
-  employee_size: '201-500',
+const result = await client.tep('iain mckenzie', 'stripe');
+console.log(result);
+```
+
+**ENC - Company Enrichment API**
+
+Provides a complete company profile from a company name.
+
+```typescript
+const result = await client.enc('cufinder');
+console.log(result);
+```
+
+**CEC - Company Employee Count API**
+
+Returns an estimated number of employees for a company.
+
+```typescript
+const result = await client.cec('cufinder');
+console.log(result);
+```
+
+**CLO - Company Locations API**
+
+Returns the known physical office locations of a company.
+
+```typescript
+const result = await client.clo('apple');
+console.log(result);
+```
+
+**CSE - Company Search API**
+
+Search for companies by keyword, partial name, industry, location, or other filters.
+
+```typescript
+const result = await client.cse({
+  name: 'cufinder',
+  country: 'germany',
+  state: 'hamburg',
+  city: 'hamburg'
+});
+console.log(result);
+```
+
+**PSE - Person Search API**
+
+Search for people by name, company, job title, location, or other filters.
+
+```typescript
+const result = await client.pse({
+  full_name: 'iain mckenzie',
+  company_name: 'stripe'
+});
+console.log(result);
+```
+
+**LBS - Local Business Search API (Google Maps Search API)**
+
+Search for local businesses by location, industry, or name.
+
+```typescript
+const result = await client.lbs({
+  country: 'united states',
+  state: 'california',
   page: 1
 });
-// Returns: { companies: [...], ... }
-```
-
-### Person Services
-
-#### `sdk.rel(params)`
-**REL - Reverse Email Lookup API** - Enriches an email address with detailed person and company information.
-
-```typescript
-const result = await sdk.rel({
-  email: 'john.doe@techcorp.com'
-});
-// Returns: { query: 'john.doe@techcorp.com', person: { full_name: 'John Doe', ... }, ... }
-```
-
-#### `sdk.tep(params)`
-**TEP - Person Enrichment API** - Returns enriched person data based on full name and company name.
-
-```typescript
-const result = await sdk.tep({
-  full_name: 'John Doe',
-  company: 'TechCorp'
-});
-// Returns: { query: 'John Doe at TechCorp', person: { full_name: 'John Doe', ... }, ... }
-```
-
-#### `sdk.pse(params?)`
-**PSE - Person Search API** - Search for people by name, company, job title, location, or other filters.
-
-```typescript
-const result = await sdk.pse({
-  full_name: 'John',
-  company_name: 'TechCorp',
-  job_title_role: 'Engineer',
-  country: 'US',
-  page: 1
-});
-// Returns: { peoples: [...], ... }
-```
-
-### LinkedIn Services
-
-#### `sdk.epp(params)`
-**EPP - LinkedIn Profile Enrichment API** - Takes a LinkedIn profile URL and returns enriched person and company data.
-
-```typescript
-const result = await sdk.epp({
-  linkedin_url: 'https://linkedin.com/in/john-doe'
-});
-// Returns: { query: 'https://linkedin.com/in/john-doe', person: { full_name: 'John Doe', ... }, ... }
-```
-
-#### `sdk.fwe(params)`
-**FWE - LinkedIn Profile Email Finder API** - Extracts a verified business email address from a LinkedIn profile URL.
-
-```typescript
-const result = await sdk.fwe({
-  linkedin_url: 'https://linkedin.com/in/john-doe'
-});
-// Returns: { query: 'https://linkedin.com/in/john-doe', work_email: 'john.doe@techcorp.com', ... }
-```
-
-### Search Services
-
-#### `sdk.lbs(params?)`
-**LBS - Local Business Search API** - Search for local businesses by location, industry, or name.
-
-```typescript
-const result = await sdk.lbs({
-  name: 'coffee',
-  city: 'San Francisco',
-  industry: 'Food & Beverage',
-  page: 1
-});
-// Returns: { companies: [...], ... }
+console.log(result);
 ```
 
 ## Error Handling
@@ -299,29 +267,35 @@ The SDK provides comprehensive error handling with custom error types:
 import {
   CufinderError,
   AuthenticationError,
-  ValidationError,
-  RateLimitError,
   CreditLimitError,
   NotFoundError,
+  PayloadError,
+  RateLimitError,
+  ServerError,
   NetworkError
 } from '@cufinder/cufinder-ts';
 
 try {
-  const result = await sdk.cuf({
-    company_name: 'TechCorp',
-    country_code: 'US'
-  });
+  const result = await client.cuf('cufinder', 'US');
 } catch (error) {
   if (error instanceof AuthenticationError) {
+    // 401 - Invalid API key
     console.log('Authentication failed:', error.message);
   } else if (error instanceof CreditLimitError) {
-    console.log('Credit limit exceeded');
-  } else if (error instanceof RateLimitError) {
-    console.log('Rate limit exceeded. Retry after:', error.details?.retryAfter);
-  } else if (error instanceof ValidationError) {
-    console.log('Validation error:', error.message, error.details);
+    // 400 - Not enough credit
+    console.log('Not enough credit:', error.message);
   } else if (error instanceof NotFoundError) {
-    console.log('Resource not found:', error.message);
+    // 404 - Not found result
+    console.log('Not found result:', error.message);
+  } else if (error instanceof PayloadError) {
+    // 422 - Error in the payload
+    console.log('Payload error:', error.message, error.details);
+  } else if (error instanceof RateLimitError) {
+    // 429 - Rate limit exceeded
+    console.log('Rate limit exceeded. Retry after:', error.details?.retryAfter);
+  } else if (error instanceof ServerError) {
+    // 500, 501, ... - Server errors
+    console.log('Server error:', error.message, 'Status:', error.statusCode);
   } else if (error instanceof NetworkError) {
     console.log('Network error:', error.message);
   } else {
@@ -337,23 +311,6 @@ The SDK exports comprehensive TypeScript types:
 ```typescript
 import type {
   // Request types
-  CufParams,
-  LcufParams,
-  DtcParams,
-  DteParams,
-  NtpParams,
-  RelParams,
-  FclParams,
-  ElfParams,
-  CarParams,
-  FccParams,
-  FtsParams,
-  EppParams,
-  FweParams,
-  TepParams,
-  EncParams,
-  CecParams,
-  CloParams,
   CseParams,
   PseParams,
   LbsParams,
@@ -365,14 +322,14 @@ import type {
   // Model types
   Company,
   Person,
-  EnrichedCompany,
-  EnrichedPerson,
-  CompanySearchResult,
-  PersonSearchResult,
-  LocalBusinessResult,
   LookalikeCompany,
   FundraisingInfo,
   CompanyLocation,
+  TepPerson,
+  CloCompanyLocation
+  CompanySearchResult,
+  PersonSearchResult,
+  LocalBusinessResult,
 
   // Configuration
   CufinderClientConfig,
@@ -380,10 +337,11 @@ import type {
   // Error types
   CufinderError,
   AuthenticationError,
-  ValidationError,
-  RateLimitError,
   CreditLimitError,
   NotFoundError,
+  PayloadError,
+  RateLimitError,
+  ServerError,
   NetworkError
 } from '@cufinder/cufinder-ts';
 ```

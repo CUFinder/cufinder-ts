@@ -7,7 +7,7 @@ export interface Person {
     full_name: string | null;
     linkedin_url: string | null;
     summary: string | null;
-    followers_count: number | null;
+    followers_count: number;
     facebook: string | null;
     twitter: string | null;
     avatar: string | null;
@@ -182,46 +182,17 @@ export interface PeopleCertification {
 }
 
 /**
- * Enriched person model
- */
-export interface EnrichedPerson {
-    mng_id: string;
-    first_name: string | null;
-    last_name: string | null;
-    full_name: string | null;
-    logo: string | null;
-    overview: string | null;
-    experience: number;
-    connections: PeopleConnections;
-    interests: string[];
-    skills: string[];
-    educations: PeopleEducation[];
-    experiences: PeopleExperience[];
-    certifications: PeopleCertification[];
-    company: PeopleCompany;
-    location: PeopleLocation;
-    current_job: PeopleCurrentJob;
-    social: PeopleSocial;
-}
-
-/**
  * Person search result model
  */
 export interface PersonSearchResult {
     full_name: string | null;
-    first_name: string | null;
-    last_name: string | null;
-    overview: string | null;
     current_job: {
         title: string | null;
-        category: string[];
     };
-    logo: string | null;
     company: {
         name: string | null;
         linkedin: string | null;
         website: string | null;
-        size: string | null;
         industry: string | null;
         main_location: {
             country: string | null;
@@ -241,7 +212,6 @@ export interface PersonSearchResult {
     };
     social: {
         linkedin: string | null;
-        connections: number;
         facebook: string | null;
         twitter: string | null;
     };
@@ -266,4 +236,9 @@ export interface Education {
     degree: string;
     field_of_study: string;
     graduation_year: number;
+}
+
+export interface TepPerson extends Person {
+    email: string | null;
+    phone: string | null;
 }
