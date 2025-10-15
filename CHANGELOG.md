@@ -1,5 +1,25 @@
 # Cufinder TypeScript SDK Changelog
 
+## 1.3.0 (October 15, 2025)
+
+#### Bug Fixes
+- **Updated NTP response type**: Changed `NtpResponse.phones` from `string` to `string[]` to match API response format
+- **Updated error handling**: Fixed HTTP status code mappings to match API specifications
+  - **400**: Now correctly maps to `CreditLimitError` (not enough credit)
+  - **401**: Maps to `AuthenticationError` (invalid API key)
+  - **404**: Maps to `NotFoundError` (not found result)
+  - **422**: Maps to `PayloadError` (error in the payload)
+  - **500, 501, 502, 503, 504, 505, 506, 507, 508, 510, 511**: Maps to `ServerError` (server errors)
+- **Added new error classes**: `PayloadError` and `ServerError` for better error categorization
+- **Updated error messages**: Improved default error messages to match API responses
+
+#### Maintenance
+- **Updated JSDoc examples**: Synchronized all JSDoc `@example` tags in `client.ts` to match README.md examples
+- **Improved documentation consistency**: Ensured all service examples use consistent `const result = await client.method(...)` and `console.log(result)` format
+
+
+
+
 ## 1.2.0 (October 13, 2025)
 
 #### Breaking Changes
