@@ -322,14 +322,14 @@ import type {
   // Model types
   Company,
   Person,
-  EnrichedCompany,
-  EnrichedPerson,
-  CompanySearchResult,
-  PersonSearchResult,
-  LocalBusinessResult,
   LookalikeCompany,
   FundraisingInfo,
   CompanyLocation,
+  TepPerson,
+  CloCompanyLocation
+  CompanySearchResult,
+  PersonSearchResult,
+  LocalBusinessResult,
 
   // Configuration
   CufinderClientConfig,
