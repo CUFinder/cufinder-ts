@@ -8,14 +8,12 @@ A Typescript SDK for the CUFinder API that provides access to all company and pe
 
 ## Table of Contents
 
-- [CUFinder Typescript SDK](#cufinder-typescript-sdk)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [API Reference](#api-reference)
-  - [Error Handling](#error-handling)
-  - [Types](#types)
-  - [Support](#support)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Reference](#api-reference)
+- [Error Handling](#error-handling)
+- [Types](#types)
+- [Support](#support)
 
 ## Installation
 
@@ -313,23 +311,6 @@ The SDK exports comprehensive TypeScript types:
 ```typescript
 import type {
   // Request types
-  CufParams,
-  LcufParams,
-  DtcParams,
-  DteParams,
-  NtpParams,
-  RelParams,
-  FclParams,
-  ElfParams,
-  CarParams,
-  FccParams,
-  FtsParams,
-  EppParams,
-  FweParams,
-  TepParams,
-  EncParams,
-  CecParams,
-  CloParams,
   CseParams,
   PseParams,
   LbsParams,
