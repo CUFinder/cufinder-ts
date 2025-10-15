@@ -48,7 +48,6 @@ export interface CompanyTechnology {
  * Enriched company model
  */
 export interface EnrichedCompany {
-    mng_id: string;
     name: string | null;
     website: string | null;
     domain: string | null;
@@ -120,13 +119,10 @@ export interface CompanySearchResult {
     domain: string | null;
     employees: {
         range: string | null;
-        count: number;
     };
     industry: string | null;
     overview: string | null;
     type: string | null;
-    logo: string | null;
-    followers: number;
     main_location: {
         country: string | null;
         state: string | null;
@@ -147,7 +143,12 @@ export interface LocalBusinessResult {
     name: string | null;
     website: string | null;
     industry: string | null;
-    industry_details: object;
+    industry_details: {
+        level_1: string | null;
+        level_2: string | null;
+        naics_code: string | null;
+        sic_code: string | null;
+    };
     main_location: {
         country: string | null;
         state: string | null;
@@ -163,12 +164,13 @@ export interface LocalBusinessResult {
         linkedin: string | null;
         twitter: string | null;
         facebook: string | null;
-        youtube: string | null;
         instagram: string | null;
+        youtube: string | null;
     };
     connections: {
-        emails: string[];
         phones: string[];
+        emails: string[];
+        phone_type: string | null;
     };
 }
 
@@ -204,30 +206,13 @@ export interface FundraisingInfo {
     funding_last_round_investors_url: string | null;
 }
 
-/**
- * Subsidiary model
- */
-export interface Subsidiary {
-    name: string;
-    domain: string;
-    linkedin_url: string;
-    relationship_type: string;
-    ownership_percentage: number;
-}
-
-/**
- * Tech stack model
- */
-export interface TechStack {
-    categories: TechCategory[];
-    total_technologies: number;
-    confidence: number;
-}
-
-/**
- * Tech category model
- */
-export interface TechCategory {
-    category: string;
-    technologies: string[];
+export interface CloCompanyLocation {
+    country: string;
+    state: string;
+    city: string;
+    postal_code: string;
+    line1: string;
+    line2: string;
+    latitude: number;
+    longitude: number;
 }

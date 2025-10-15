@@ -1,14 +1,13 @@
 import { BaseResponse } from './base.model';
 import {
+    CloCompanyLocation,
+    Company,
     CompanySearchResult,
-    EnrichedCompany,
     FundraisingInfo,
     LocalBusinessResult,
     LookalikeCompany,
-    Subsidiary,
-    TechStack,
 } from './company.model';
-import { EnrichedPerson, Person, PersonSearchResult } from './person.model';
+import { Person, PersonSearchResult, TepPerson } from './person.model';
 
 // Service Response Types
 
@@ -44,7 +43,7 @@ export interface DteResponse extends BaseResponse {
  * NTP Response - Company Phone Finder
  */
 export interface NtpResponse extends BaseResponse {
-    phone: string;
+    phones: string;
 }
 
 /**
@@ -58,7 +57,7 @@ export interface RelResponse extends BaseResponse {
  * FCL Response - Company Lookalikes Finder
  */
 export interface FclResponse extends BaseResponse {
-    lookalikes: LookalikeCompany[];
+    companies: LookalikeCompany[];
 }
 
 /**
@@ -79,42 +78,42 @@ export interface CarResponse extends BaseResponse {
  * FCC Response - Company Subsidiaries Finder
  */
 export interface FccResponse extends BaseResponse {
-    subsidiaries: Subsidiary[];
+    subsidiaries: string[];
 }
 
 /**
  * FTS Response - Company Tech Stack Finder
  */
 export interface FtsResponse extends BaseResponse {
-    tech_stack: TechStack;
+    technologies: string[];
 }
 
 /**
  * EPP Response - LinkedIn Profile Enrichment
  */
 export interface EppResponse extends BaseResponse {
-    person: EnrichedPerson;
+    person: Person;
 }
 
 /**
  * FWE Response - LinkedIn Profile Email Finder
  */
 export interface FweResponse extends BaseResponse {
-    email: string;
+    work_email: string;
 }
 
 /**
  * TEP Response - Person Enrichment
  */
 export interface TepResponse extends BaseResponse {
-    person: EnrichedPerson;
+    person: TepPerson;
 }
 
 /**
  * ENC Response - Company Enrichment
  */
 export interface EncResponse extends BaseResponse {
-    company: EnrichedCompany;
+    company: Company;
 }
 
 /**
@@ -128,12 +127,7 @@ export interface CecResponse extends BaseResponse {
  * CLO Response - Company Locations
  */
 export interface CloResponse extends BaseResponse {
-    locations: Array<{
-        country: string;
-        state: string;
-        city: string;
-        address: string;
-    }>;
+    locations: CloCompanyLocation[];
 }
 
 /**
