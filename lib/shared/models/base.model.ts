@@ -4,14 +4,6 @@
 export interface BaseResponse {
     query: string;
     credit_count: number;
-    meta_data: {
-        user_id: number;
-        service_name: string;
-        spent_time: number;
-        status_code?: number;
-        message?: string;
-        query_log: string;
-    };
 }
 
 /**
@@ -20,14 +12,6 @@ export interface BaseResponse {
 export interface BaseErrorResponse {
     query: string;
     credit_count: number;
-    meta_data: {
-        user_id: number;
-        service_name: string;
-        spent_time: number;
-        status_code: number;
-        message: string;
-        query_log: string;
-    };
 }
 
 /**
