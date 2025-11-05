@@ -1,5 +1,12 @@
 # Cufinder TypeScript SDK Changelog
 
+## 1.3.1 (November 5, 2025)
+
+#### Documentation
+- **Updated README.md**: Added API reference for all services
+
+
+
 ## 1.3.0 (October 15, 2025)
 
 #### Bug Fixes
@@ -16,7 +23,6 @@
 #### Maintenance
 - **Updated JSDoc examples**: Synchronized all JSDoc `@example` tags in `client.ts` to match README.md examples
 - **Improved documentation consistency**: Ensured all service examples use consistent `const result = await client.method(...)` and `console.log(result)` format
-
 
 
 
@@ -66,7 +72,6 @@
 
 
 
-
 ## 1.1.0
 
 #### Features
@@ -94,11 +99,9 @@
 
 
 
-
 ## 1.0.2
 
 Initial stable release with basic API functionality.
-
 
 
 

@@ -38,7 +38,7 @@ export class BaseApiClient {
             headers: {
                 'x-api-key': config.apiKey,
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': '@cufinder/cufinder-ts/1.3.0',
+                'User-Agent': '@cufinder/cufinder-ts/1.3.1',
             },
         });
 
