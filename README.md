@@ -45,29 +45,29 @@ const client = new Cufinder('your-api-key-here', { timeout: 60000 });
 
 This SDK covers all 20 Cufinder API (v2) endpoints:
 
-- **CUF** - Company Name to Domain API
-- **LCUF** - Company LinkedIn URL Finder API
-- **DTC** - Domain to Company Name API
-- **DTE** - Company Email Finder API
-- **NTP** - Company Phone Finder API
-- **REL** - Reverse Email Lookup API
-- **FCL** - Company Lookalikes Finder API
-- **ELF** - Company Fundraising API
-- **CAR** - Company Revenue Finder API
-- **FCC** - Company Subsidiaries Finder API
-- **FTS** - Company Tech Stack Finder API
-- **EPP** - LinkedIn Profile Enrichment API
-- **FWE** - LinkedIn Profile Email Finder API
-- **TEP** - Person Enrichment API
-- **ENC** - Company Enrichment API
-- **CEC** - Company Employee Count API
-- **CLO** - Company Locations API
-- **CSE** - Company Search API
-- **PSE** - Person Search API
-- **LBS** - Local Business Search API (Google Maps Search API)
+- **CUF** - [Company Name to Domain](https://apidoc.cufinder.io/apis/company-name-to-domain)
+- **LCUF** - [LinkedIn Company URL Finder](https://apidoc.cufinder.io/apis/company-linkedin-url-finder)
+- **DTC** - [Domain to Company Name](https://apidoc.cufinder.io/apis/domain-to-company-name)
+- **DTE** - [Company Email Finder](https://apidoc.cufinder.io/apis/company-email-finder)
+- **NTP** - [Company Phone Finder](https://apidoc.cufinder.io/apis/company-phone-finder)
+- **REL** - [Reverse Email Lookup](https://apidoc.cufinder.io/apis/reverse-email-lookup)
+- **FCL** - [Company Lookalikes Finder](https://apidoc.cufinder.io/apis/company-lookalikes-finder)
+- **ELF** - [Company Fundraising](https://apidoc.cufinder.io/apis/company-fundraising)
+- **CAR** - [Company Revenue Finder](https://apidoc.cufinder.io/apis/company-revenue-finder)
+- **FCC** - [Company Subsidiaries Finder](https://apidoc.cufinder.io/apis/company-subsidiaries-finder)
+- **FTS** - [Company Tech Stack Finder](https://apidoc.cufinder.io/apis/company-tech-stack-finder)
+- **EPP** - [LinkedIn Profile Enrichment](https://apidoc.cufinder.io/apis/linkedin-profile-enrichment)
+- **FWE** - [LinkedIn Profile Email Finder](https://apidoc.cufinder.io/apis/linkedin-profile-email-finder)
+- **TEP** - [Person Enrichment](https://apidoc.cufinder.io/apis/person-enrichment)
+- **ENC** - [Company Enrichment](https://apidoc.cufinder.io/apis/company-enrichment)
+- **CEC** - [Company Employee Count](https://apidoc.cufinder.io/apis/company-employee-count)
+- **CLO** - [Company Locations](https://apidoc.cufinder.io/apis/company-locations)
+- **CSE** - [Company Search](https://apidoc.cufinder.io/apis/company-search)
+- **PSE** - [Person Search](https://apidoc.cufinder.io/apis/person-search)
+- **LBS** - [Local Business Search (Google Maps Search API)](https://apidoc.cufinder.io/apis/local-business-search-google-maps-search-api)
 
 
-**CUF - Company Name to Domain API**
+**CUF - Company Name to Domain**
 
 Returns the official website URL of a company based on its name.
 
@@ -76,7 +76,7 @@ const result = await client.cuf('cufinder', 'US');
 console.log(result);
 ```
 
-**LCUF - Company LinkedIn URL Finder API**
+**LCUF - LinkedIn Company URL Finder**
 
 Finds the official LinkedIn company profile URL from a company name.
 
@@ -85,7 +85,7 @@ const result = await client.lcuf('cufinder');
 console.log(result);
 ```
 
-**DTC - Domain to Company Name API**
+**DTC - Domain to Company Name**
 
 Retrieves the registered company name associated with a given website domain.
 
@@ -94,7 +94,7 @@ const result = await client.dtc('cufinder.io');
 console.log(result);
 ```
 
-**DTE - Company Email Finder API**
+**DTE - Company Email Finder**
 
 Returns up to five general or role-based business email addresses for a company.
 
@@ -103,7 +103,7 @@ const result = await client.dte('cufinder.io');
 console.log(result);
 ```
 
-**NTP - Company Phone Finder API**
+**NTP - Company Phone Finder**
 
 Returns up to two verified phone numbers for a company.
 
@@ -112,7 +112,7 @@ const result = await client.ntp('apple');
 console.log(result);
 ```
 
-**REL - Reverse Email Lookup API**
+**REL - Reverse Email Lookup**
 
 Enriches an email address with detailed person and company information.
 
@@ -121,7 +121,7 @@ const result = await client.rel('iain.mckenzie@stripe.com');
 console.log(result);
 ```
 
-**FCL - Company Lookalikes Finder API**
+**FCL - Company Lookalikes Finder**
 
 Provides a list of similar companies based on an input company's profile.
 
@@ -130,7 +130,7 @@ const result = await client.fcl('apple');
 console.log(result);
 ```
 
-**ELF - Company Fundraising API**
+**ELF - Company Fundraising**
 
 Returns detailed funding information about a company.
 
@@ -139,7 +139,7 @@ const result = await client.elf('cufinder');
 console.log(result);
 ```
 
-**CAR - Company Revenue Finder API**
+**CAR - Company Revenue Finder**
 
 Estimates a company's annual revenue based on name.
 
@@ -148,7 +148,7 @@ const result = await client.car('apple');
 console.log(result);
 ```
 
-**FCC - Company Subsidiaries Finder API**
+**FCC - Company Subsidiaries Finder**
 
 Identifies known subsidiaries of a parent company.
 
@@ -157,7 +157,7 @@ const result = await client.fcc('amazon');
 console.log(result);
 ```
 
-**FTS - Company Tech Stack Finder API**
+**FTS - Company Tech Stack Finder**
 
 Detects the technologies a company uses.
 
@@ -166,7 +166,7 @@ const result = await client.fts('cufinder');
 console.log(result);
 ```
 
-**EPP - LinkedIn Profile Enrichment API**
+**EPP - LinkedIn Profile Enrichment**
 
 Takes a LinkedIn profile URL and returns enriched person and company data.
 
@@ -175,7 +175,7 @@ const result = await client.epp('linkedin.com/in/iain-mckenzie');
 console.log(result);
 ```
 
-**FWE - LinkedIn Profile Email Finder API**
+**FWE - LinkedIn Profile Email Finder**
 
 Extracts a verified business email address from a LinkedIn profile URL.
 
@@ -184,7 +184,7 @@ const result = await client.fwe('linkedin.com/in/iain-mckenzie');
 console.log(result);
 ```
 
-**TEP - Person Enrichment API**
+**TEP - Person Enrichment**
 
 Returns enriched person data based on full name and company name.
 
@@ -193,7 +193,7 @@ const result = await client.tep('iain mckenzie', 'stripe');
 console.log(result);
 ```
 
-**ENC - Company Enrichment API**
+**ENC - Company Enrichment**
 
 Provides a complete company profile from a company name.
 
@@ -202,7 +202,7 @@ const result = await client.enc('cufinder');
 console.log(result);
 ```
 
-**CEC - Company Employee Count API**
+**CEC - Company Employee Count**
 
 Returns an estimated number of employees for a company.
 
@@ -211,7 +211,7 @@ const result = await client.cec('cufinder');
 console.log(result);
 ```
 
-**CLO - Company Locations API**
+**CLO - Company Locations**
 
 Returns the known physical office locations of a company.
 
@@ -220,7 +220,7 @@ const result = await client.clo('apple');
 console.log(result);
 ```
 
-**CSE - Company Search API**
+**CSE - Company Search**
 
 Search for companies by keyword, partial name, industry, location, or other filters.
 
@@ -234,7 +234,7 @@ const result = await client.cse({
 console.log(result);
 ```
 
-**PSE - Person Search API**
+**PSE - Person Search**
 
 Search for people by name, company, job title, location, or other filters.
 
@@ -246,7 +246,7 @@ const result = await client.pse({
 console.log(result);
 ```
 
-**LBS - Local Business Search API (Google Maps Search API)**
+**LBS - Local Business Search (Google Maps Search API)**
 
 Search for local businesses by location, industry, or name.
 
