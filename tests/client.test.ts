@@ -58,6 +58,7 @@ describe('Cufinder', () => {
             expect(client.cse).toBeDefined();
             expect(client.pse).toBeDefined();
             expect(client.lbs).toBeDefined();
+            expect(client.bcd).toBeDefined();
         });
     });
 
@@ -93,6 +94,7 @@ describe('Cufinder', () => {
             expect(client.cec).toBeDefined();
             expect(client.clo).toBeDefined();
             expect(client.lbs).toBeDefined();
+            expect(client.bcd).toBeDefined();
 
             // Test that they are functions
             expect(typeof client.cuf).toBe('function');
@@ -115,6 +117,7 @@ describe('Cufinder', () => {
             expect(typeof client.cec).toBe('function');
             expect(typeof client.clo).toBe('function');
             expect(typeof client.lbs).toBe('function');
+            expect(typeof client.bcd).toBe('function');
         });
     });
 });

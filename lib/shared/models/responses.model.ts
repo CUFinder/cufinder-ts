@@ -150,3 +150,10 @@ export interface PseResponse extends BaseResponse {
 export interface LbsResponse extends BaseResponse {
     companies: LocalBusinessResult[];
 }
+
+/**
+ * BCD Response - Extract B2B Customers
+ */
+export interface BcdResponse extends BaseResponse {
+    customers: string[];
+}

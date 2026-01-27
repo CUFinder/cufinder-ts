@@ -1,5 +1,6 @@
 import { BaseApiClient } from './base_api_client';
 import {
+    BcdResponse,
     CarResponse,
     CecResponse,
     CloResponse,
@@ -25,6 +26,7 @@ import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/
 
 // Services
 import {
+    BcdService,
     CarService,
     CecService,
     CloService,
@@ -315,6 +317,18 @@ export class Cufinder {
      */
     public readonly lbs: (params?: LbsParams) => Promise<LbsResponse>;
 
+    /**
+     * Extract B2B Customers From the Domain
+     * @param url - The domain to extract B2B customers for
+     * @returns List of business names
+     * @example
+     * ```typescript
+     * const result = await client.bcd('stripe.com');
+     * console.log(result);
+     * ```
+     */
+    public readonly bcd: (url: string) => Promise<BcdResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -339,6 +353,7 @@ export class Cufinder {
         const cse = new CseService(this.client);
         const pse = new PseService(this.client);
         const lbs = new LbsService(this.client);
+        const bcd = new BcdService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -361,5 +376,6 @@ export class Cufinder {
         this.cse = params => cse.searchCompanies(params);
         this.pse = params => pse.searchPeople(params);
         this.lbs = params => lbs.searchLocalBusinesses(params);
+        this.bcd = url => bcd.extractB2BCustomers(url);
     }
 }
