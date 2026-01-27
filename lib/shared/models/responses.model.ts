@@ -157,3 +157,10 @@ export interface LbsResponse extends BaseResponse {
 export interface BcdResponse extends BaseResponse {
     customers: string[];
 }
+
+/**
+ * CCP Response - Extract B2B Customers
+ */
+export interface CcpResponse extends BaseResponse {
+    careers_page_url: string | null;
+}

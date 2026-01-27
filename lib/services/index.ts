@@ -1,6 +1,7 @@
 // Services
 export { BcdService } from './bcd';
 export { CarService } from './car';
+export { CcpService } from './ccp';
 export { CecService } from './cec';
 export { CloService } from './clo';
 export { CseService } from './cse';
@@ -20,4 +21,3 @@ export { NtpService } from './ntp';
 export { PseService } from './pse';
 export { RelService } from './rel';
 export { TepService } from './tep';
-
