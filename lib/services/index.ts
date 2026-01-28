@@ -7,6 +7,7 @@ export { CecService } from './cec';
 export { CloService } from './clo';
 export { CscService } from './csc';
 export { CseService } from './cse';
+export { CsnService } from './csn';
 export { CufService } from './cuf';
 export { DtcService } from './dtc';
 export { DteService } from './dte';

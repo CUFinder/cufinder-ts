@@ -8,6 +8,7 @@ import {
     CloResponse,
     CSCResponse,
     CseResponse,
+    CSNResponse,
     CufResponse,
     DtcResponse,
     DteResponse,
@@ -38,6 +39,7 @@ import {
     CloService,
     CscService,
     CseService,
+    CsnService,
     CufService,
     DtcService,
     DteService,
@@ -382,6 +384,17 @@ export class Cufinder {
      */
     public readonly csc: (url: string) => Promise<CSCResponse>;
 
+    /**
+     * Get company snapshot info
+     * @param url - The company domain you want to check
+     * @example
+     * ```typescript
+     * const result = await client.csn('stripe.com')
+     * console.log(result.company_snapshot);
+     * ```
+     */
+    public readonly csn: (url: string) => Promise<CSNResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -411,6 +424,7 @@ export class Cufinder {
         const isc = new IscService(this.client);
         const cbc = new CbcService(this.client);
         const csc = new CscService(this.client);
+        const csn = new CsnService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -438,5 +452,6 @@ export class Cufinder {
         this.isc = url => isc.isSaas(url);
         this.cbc = url => cbc.getCompanyBusinessType(url);
         this.csc = url => csc.getCompanyMissionStatment(url);
+        this.csn = url => csn.getCompanySnapshot(url);
     }
 }

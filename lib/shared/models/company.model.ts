@@ -216,3 +216,13 @@ export interface CloCompanyLocation {
     latitude: number;
     longitude: number;
 }
+
+/**
+ * Company snapshot info model
+ */
+export interface CompanySnapshotInfo {
+    icp: null;
+    target_industries: [];
+    target_personas: [];
+    value_proposition: null;
+}

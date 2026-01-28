@@ -3,6 +3,7 @@ import {
     CloCompanyLocation,
     Company,
     CompanySearchResult,
+    CompanySnapshotInfo,
     FundraisingInfo,
     LocalBusinessResult,
     LookalikeCompany,
@@ -184,4 +185,11 @@ export interface CBCResponse extends BaseResponse {
  */
 export interface CSCResponse extends BaseResponse {
     mission_statement: string;
+}
+
+/**
+ * CSN Response
+ */
+export interface CSNResponse extends BaseResponse {
+    company_snapshot: CompanySnapshotInfo;
 }
