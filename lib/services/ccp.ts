@@ -8,7 +8,7 @@ import { BaseService } from './base';
 export class CcpService extends BaseService {
     /**
      * Find companies careers page
-     * @param url - The domain to extract B2B customers for
+     * @param url - The company domain you want to find it's career page
      * @example
      * ```typescript
      * const result = await client.ccp('stripe.com')
