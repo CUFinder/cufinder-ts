@@ -2,6 +2,7 @@ import { BaseApiClient } from './base_api_client';
 import {
     BcdResponse,
     CarResponse,
+    CBCResponse,
     CcpResponse,
     CecResponse,
     CloResponse,
@@ -30,6 +31,7 @@ import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/
 import {
     BcdService,
     CarService,
+    CbcService,
     CcpService,
     CecService,
     CloService,
@@ -356,6 +358,17 @@ export class Cufinder {
      */
     public readonly isc: (url: string) => Promise<ISCResponse>;
 
+    /**
+     * Get a company's business type
+     * @param url - The company domain you want to check
+     * @example
+     * ```typescript
+     * const result = await client.cbc('stripe.com')
+     * console.log(result.business_type);
+     * ```
+     */
+    public readonly cbc: (url: string) => Promise<CBCResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -383,6 +396,7 @@ export class Cufinder {
         const bcd = new BcdService(this.client);
         const ccp = new CcpService(this.client);
         const isc = new IscService(this.client);
+        const cbc = new CbcService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -408,5 +422,6 @@ export class Cufinder {
         this.bcd = url => bcd.extractB2BCustomers(url);
         this.ccp = url => ccp.findCareersPage(url);
         this.isc = url => isc.isSaas(url);
+        this.cbc = url => cbc.getCompanyBusinessType(url);
     }
 }
