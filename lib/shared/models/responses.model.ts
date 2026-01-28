@@ -164,3 +164,10 @@ export interface BcdResponse extends BaseResponse {
 export interface CcpResponse extends BaseResponse {
     careers_page_url: string | null;
 }
+
+/**
+ * ISP Response - Check is SaaS
+ */
+export interface ISCResponse extends BaseResponse {
+    is_saas: 'yes' | 'no'
+}

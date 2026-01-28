@@ -15,9 +15,11 @@ export { FccService } from './fcc';
 export { FclService } from './fcl';
 export { FtsService } from './fts';
 export { FweService } from './fwe';
+export { IscService } from './isc';
 export { LbsService } from './lbs';
 export { LcufService } from './lcuf';
 export { NtpService } from './ntp';
 export { PseService } from './pse';
 export { RelService } from './rel';
 export { TepService } from './tep';
+

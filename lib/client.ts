@@ -16,6 +16,7 @@ import {
     FclResponse,
     FtsResponse,
     FweResponse,
+    ISCResponse,
     LbsResponse,
     LcufResponse,
     NtpResponse,
@@ -43,6 +44,7 @@ import {
     FclService,
     FtsService,
     FweService,
+    IscService,
     LbsService,
     LcufService,
     NtpService,
@@ -333,15 +335,26 @@ export class Cufinder {
 
     /**
      * Extract B2B Customers From the Domain
-     * @param url - The domain to extract B2B customers for
+     * @param url - The company domain you want to find it's career page
      * @returns List of business names
      * @example
      * ```typescript
-     * const result = await client.bcd('stripe.com');
+     * const result = await client.ccp('stripe.com');
      * console.log(result);
      * ```
      */
     public readonly ccp: (url: string) => Promise<CcpResponse>;
+
+    /**
+     * Check company you want to know is saas or not
+     * @param url - The company domain you want to check is saas or not
+     * @example
+     * ```typescript
+     * const result = await client.isc('stripe.com')
+     * console.log(result.is_saas);
+     * ```
+     */
+    public readonly isc: (url: string) => Promise<ISCResponse>;
 
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
@@ -369,6 +382,7 @@ export class Cufinder {
         const lbs = new LbsService(this.client);
         const bcd = new BcdService(this.client);
         const ccp = new CcpService(this.client);
+        const isc = new IscService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -393,5 +407,6 @@ export class Cufinder {
         this.lbs = params => lbs.searchLocalBusinesses(params);
         this.bcd = url => bcd.extractB2BCustomers(url);
         this.ccp = url => ccp.findCareersPage(url);
+        this.isc = url => isc.isSaas(url);
     }
 }
