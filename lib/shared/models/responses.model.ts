@@ -178,3 +178,10 @@ export interface ISCResponse extends BaseResponse {
 export interface CBCResponse extends BaseResponse {
     business_type: 'B2B' | 'B2C';
 }
+
+/**
+ * CSC Response
+ */
+export interface CSCResponse extends BaseResponse {
+    mission_statement: string;
+}

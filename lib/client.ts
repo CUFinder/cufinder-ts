@@ -6,6 +6,7 @@ import {
     CcpResponse,
     CecResponse,
     CloResponse,
+    CSCResponse,
     CseResponse,
     CufResponse,
     DtcResponse,
@@ -35,6 +36,7 @@ import {
     CcpService,
     CecService,
     CloService,
+    CscService,
     CseService,
     CufService,
     DtcService,
@@ -369,6 +371,17 @@ export class Cufinder {
      */
     public readonly cbc: (url: string) => Promise<CBCResponse>;
 
+    /**
+     * Get company mission statement
+     * @param url - The company domain you want to check
+     * @example
+     * ```typescript
+     * const result = await client.csc('stripe.com')
+     * console.log(result.mission_statement);
+     * ```
+     */
+    public readonly csc: (url: string) => Promise<CSCResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -397,6 +410,7 @@ export class Cufinder {
         const ccp = new CcpService(this.client);
         const isc = new IscService(this.client);
         const cbc = new CbcService(this.client);
+        const csc = new CscService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -423,5 +437,6 @@ export class Cufinder {
         this.ccp = url => ccp.findCareersPage(url);
         this.isc = url => isc.isSaas(url);
         this.cbc = url => cbc.getCompanyBusinessType(url);
+        this.csc = url => csc.getCompanyMissionStatment(url);
     }
 }
