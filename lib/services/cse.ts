@@ -1,23 +1,13 @@
-import { CseParams, CseResponse } from '../shared/types';
 import { BaseService } from './base';
+import { CseParams, CseResponse } from '../shared/types';
 
 /**
  * CSE - Company Search API (V2)
- * Search for companies by keyword, partial name, industry, location, or other filters
  */
 export class CseService extends BaseService {
     /**
      * Search companies
-     * @param params - CSE V2 parameters
-     * @returns Promise resolving to company search results
-     * @example
-     * ```typescript
-     * const companies = await sdk.cse({
-     *   name: 'technology',
-     *   country: 'US'
-     * });
-     * console.log(companies.companies); // Array of company results
-     * ```
+     * @param params - Search parameters
      */
     public async searchCompanies(params: CseParams = {}): Promise<CseResponse> {
         try {

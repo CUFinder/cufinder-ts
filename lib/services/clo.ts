@@ -1,20 +1,13 @@
-import { CloResponse } from '../shared/types';
 import { BaseService } from './base';
+import { CloResponse } from '../shared/types';
 
 /**
  * CLO - Company Locations API (V2)
- * Returns the known physical office locations of a company
  */
 export class CloService extends BaseService {
     /**
      * Get company locations
      * @param query - The company name to get locations for
-     * @returns Promise resolving to locations data
-     * @example
-     * ```typescript
-     * const result = await client.clo('apple');
-     * console.log(result.locations);
-     * ```
      */
     public async getLocations(query: string): Promise<CloResponse> {
         try {

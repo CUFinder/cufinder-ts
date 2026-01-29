@@ -169,28 +169,28 @@ export interface CcpResponse extends BaseResponse {
 /**
  * ISP Response
  */
-export interface ISCResponse extends BaseResponse {
+export interface IscResponse extends BaseResponse {
     is_saas: 'yes' | 'no';
 }
 
 /**
  * CBC Response
  */
-export interface CBCResponse extends BaseResponse {
+export interface CbcResponse extends BaseResponse {
     business_type: 'B2B' | 'B2C';
 }
 
 /**
  * CSC Response
  */
-export interface CSCResponse extends BaseResponse {
+export interface CscResponse extends BaseResponse {
     mission_statement: string;
 }
 
 /**
  * CSN Response
  */
-export interface CSNResponse extends BaseResponse {
+export interface CsnResponse extends BaseResponse {
     company_snapshot: CompanySnapshotInfo;
 }
 

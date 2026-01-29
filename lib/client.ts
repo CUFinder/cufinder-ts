@@ -2,13 +2,13 @@ import { BaseApiClient } from './base_api_client';
 import {
     BcdResponse,
     CarResponse,
-    CBCResponse,
+    CbcResponse,
     CcpResponse,
     CecResponse,
     CloResponse,
-    CSCResponse,
+    CscResponse,
     CseResponse,
-    CSNResponse,
+    CsnResponse,
     CufResponse,
     DtcResponse,
     DteResponse,
@@ -19,7 +19,7 @@ import {
     FclResponse,
     FtsResponse,
     FweResponse,
-    ISCResponse,
+    IscResponse,
     LbsResponse,
     LcufResponse,
     NaaResponse,
@@ -318,7 +318,7 @@ export class Cufinder {
     /**
      * Search for local businesses
      * @param params - Optional search parameters
-     * @returns Promise resolving to local business search results
+     * @returns The local business search results
      * @example
      * ```typescript
      * const result = await client.lbs({
@@ -344,9 +344,9 @@ export class Cufinder {
     public readonly bcd: (url: string) => Promise<BcdResponse>;
 
     /**
-     * Extract B2B Customers From the Domain
+     * Find company careers page
      * @param url - The company domain you want to find it's career page
-     * @returns List of business names
+     * @returns Company's careers page
      * @example
      * ```typescript
      * const result = await client.ccp('stripe.com');
@@ -358,50 +358,55 @@ export class Cufinder {
     /**
      * Check company you want to know is saas or not
      * @param url - The company domain you want to check is saas or not
+     * @returns Is company SaaS or not
      * @example
      * ```typescript
      * const result = await client.isc('stripe.com')
      * console.log(result.is_saas);
      * ```
      */
-    public readonly isc: (url: string) => Promise<ISCResponse>;
+    public readonly isc: (url: string) => Promise<IscResponse>;
 
     /**
      * Get a company's business type
      * @param url - The company domain you want to check
+     * @returns Company's business type
      * @example
      * ```typescript
      * const result = await client.cbc('stripe.com')
      * console.log(result.business_type);
      * ```
      */
-    public readonly cbc: (url: string) => Promise<CBCResponse>;
+    public readonly cbc: (url: string) => Promise<CbcResponse>;
 
     /**
      * Get company mission statement
      * @param url - The company domain you want to check
+     * @returns Company's mission statement
      * @example
      * ```typescript
      * const result = await client.csc('stripe.com')
      * console.log(result.mission_statement);
      * ```
      */
-    public readonly csc: (url: string) => Promise<CSCResponse>;
+    public readonly csc: (url: string) => Promise<CscResponse>;
 
     /**
      * Get company snapshot info
      * @param url - The company domain you want to check
+     * @returns Company's snapshot information
      * @example
      * ```typescript
      * const result = await client.csn('stripe.com')
      * console.log(result.company_snapshot);
      * ```
      */
-    public readonly csn: (url: string) => Promise<CSNResponse>;
+    public readonly csn: (url: string) => Promise<CsnResponse>;
 
     /**
      * Normalize phone number
      * @param phone - The phone number you want to normalize
+     * @returns Normalized phone
      * @example
      * ```typescript
      * const result = await client.nao('+18006676389')
@@ -413,6 +418,7 @@ export class Cufinder {
     /**
      * Get normalized address
      * @param address - The address you want to normalize
+     * @returns Normalized address
      * @example
      * ```typescript
      * const result = await client.naa('1095 avenue of the Americas, 6th Avenue ny 10036')
