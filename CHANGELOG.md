@@ -1,9 +1,20 @@
 # Cufinder TypeScript SDK Changelog
 
+## 1.4.0 (January 29, 2025)
+
+#### Features
+- **New V2 API services**: Add new V2 services including `BCD`, `CCP`, `ISC`, `CBC`, `CSC`, `CSN`, `NAO` and `NAA`
+
+
+#### Documentation
+- **Updated README.md**: Add API reference for all new services
+
+
+
 ## 1.3.1 (November 5, 2025)
 
 #### Documentation
-- **Updated README.md**: Added API reference for all services
+- **Updated README.md**: Add API reference for all services
 
 
 
@@ -38,7 +49,7 @@
 - **Directory structure**: Changed from `src/` to `lib/` and `test/` to `tests/`
 
 #### Features
-- **Comprehensive V2 API services**: Added all V2 services including CUF, LCUF, DTC, DTE, TEP, CSE, PSE, LBS, and more
+- **Comprehensive V2 API services**: Added all V2 services including `CUF`, `LCUF`, `DTC`, `DTE`, `TEP`, `CSE`, `PSE`, `LBS`, and more
 - **Enhanced type safety**: All services now use explicit `Promise<ResponseType>` return types
 - **Extensive JSDoc documentation**: Added complete `@example` sections for all service methods and main client
 - **Improved error handling**: Better response parsing with automatic handling of API response wrapper format
