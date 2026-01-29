@@ -200,3 +200,10 @@ export interface CSNResponse extends BaseResponse {
 export interface NaoResponse extends BaseResponse {
     phone: string;
 }
+
+/**
+ * NAA Response
+ */
+export interface NaaResponse extends BaseResponse {
+    address: string;
+}

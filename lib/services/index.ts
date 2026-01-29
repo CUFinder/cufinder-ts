@@ -21,6 +21,7 @@ export { FweService } from './fwe';
 export { IscService } from './isc';
 export { LbsService } from './lbs';
 export { LcufService } from './lcuf';
+export { NaaService } from './naa';
 export { NaoService } from './nao';
 export { NtpService } from './ntp';
 export { PseService } from './pse';

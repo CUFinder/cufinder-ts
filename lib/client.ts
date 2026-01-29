@@ -22,6 +22,7 @@ import {
     ISCResponse,
     LbsResponse,
     LcufResponse,
+    NaaResponse,
     NaoResponse,
     NtpResponse,
     PseResponse,
@@ -54,6 +55,7 @@ import {
     IscService,
     LbsService,
     LcufService,
+    NaaService,
     NaoService,
     NtpService,
     PseService,
@@ -408,6 +410,17 @@ export class Cufinder {
      */
     public readonly nao: (phone: string) => Promise<NaoResponse>;
 
+    /**
+     * Get normalized address
+     * @param address - The address you want to normalize
+     * @example
+     * ```typescript
+     * const result = await client.naa('1095 avenue of the Americas, 6th Avenue ny 10036')
+     * console.log(result.address); // 1095 AVENUE OF THE AMERICAS 6TH AVENUE NY 10036
+     * ```
+     */
+    public readonly naa: (address: string) => Promise<NaaResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -439,6 +452,7 @@ export class Cufinder {
         const csc = new CscService(this.client);
         const csn = new CsnService(this.client);
         const nao = new NaoService(this.client);
+        const naa = new NaaService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -468,5 +482,6 @@ export class Cufinder {
         this.csc = url => csc.getCompanyMissionStatment(url);
         this.csn = url => csn.getCompanySnapshot(url);
         this.nao = phone => nao.normalizePhone(phone);
+        this.naa = address => naa.normalizeAddress(address);
     }
 }
