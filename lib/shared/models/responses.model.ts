@@ -193,3 +193,10 @@ export interface CSCResponse extends BaseResponse {
 export interface CSNResponse extends BaseResponse {
     company_snapshot: CompanySnapshotInfo;
 }
+
+/**
+ * NAO Response
+ */
+export interface NaoResponse extends BaseResponse {
+    phone: string;
+}

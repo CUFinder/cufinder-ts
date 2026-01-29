@@ -22,6 +22,7 @@ import {
     ISCResponse,
     LbsResponse,
     LcufResponse,
+    NaoResponse,
     NtpResponse,
     PseResponse,
     RelResponse,
@@ -53,6 +54,7 @@ import {
     IscService,
     LbsService,
     LcufService,
+    NaoService,
     NtpService,
     PseService,
     RelService,
@@ -395,6 +397,17 @@ export class Cufinder {
      */
     public readonly csn: (url: string) => Promise<CSNResponse>;
 
+    /**
+     * Normalize phone number
+     * @param phone - The phone number you want to normalize
+     * @example
+     * ```typescript
+     * const result = await client.nao('+18006676389')
+     * console.log(result.phone); // +1 800 667 6389
+     * ```
+     */
+    public readonly nao: (phone: string) => Promise<NaoResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -425,6 +438,7 @@ export class Cufinder {
         const cbc = new CbcService(this.client);
         const csc = new CscService(this.client);
         const csn = new CsnService(this.client);
+        const nao = new NaoService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -453,5 +467,6 @@ export class Cufinder {
         this.cbc = url => cbc.getCompanyBusinessType(url);
         this.csc = url => csc.getCompanyMissionStatment(url);
         this.csn = url => csn.getCompanySnapshot(url);
+        this.nao = phone => nao.normalizePhone(phone);
     }
 }
