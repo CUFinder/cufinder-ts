@@ -65,6 +65,14 @@ This SDK covers all 20 Cufinder API (v2) endpoints:
 - **CSE** - [Company Search](https://apidoc.cufinder.io/apis/company-search)
 - **PSE** - [Person Search](https://apidoc.cufinder.io/apis/person-search)
 - **LBS** - [Local Business Search (Google Maps Search API)](https://apidoc.cufinder.io/apis/local-business-search-google-maps-search-api)
+- **BCD** - [B2B Customers Finder](https://apidoc.cufinder.io/apis/b2b-customers-finder)
+- **CCP** - [Company Career Page Finder](https://apidoc.cufinder.io/apis/company-career-page-finder)
+- **ISC** - [Company Saas Checker](https://apidoc.cufinder.io/apis/company-saas-checker)
+- **CBC** - [Company B2B or B2C Checker](https://apidoc.cufinder.io/apis/company-b2b-or-b2c-checker)
+- **CSC** - [Company Mission Statement](https://apidoc.cufinder.io/apis/company-mission-statement)
+- **CSN** - [Company Snapshot](https://apidoc.cufinder.io/apis/company-snapshot)
+- **NAO** - [Phone Number Normalizer](https://apidoc.cufinder.io/apis/phone-number-normalizer)
+- **NAA** - [Address Normalizer](https://apidoc.cufinder.io/apis/address-normalizer)
 
 
 **CUF - Company Name to Domain**
@@ -257,6 +265,78 @@ const result = await client.lbs({
   page: 1
 });
 console.log(result);
+```
+
+**BCD - B2B Customers Finder**
+
+Returns company's careers page
+
+```typescript
+const result = await client.bcd('stripe.com');
+console.log(result);
+```
+
+**CCP - Company Career Page Finder**
+
+Returns is company SaaS or not
+
+```typescript
+const result = await client.ccp('stripe.com');
+console.log(result);
+```
+
+**ISC - Company Saas Checker**
+
+Returns is company SaaS or not
+
+```typescript
+const result = await client.isc('stripe.com')
+console.log(result.is_saas);
+```
+
+**CBC - Company B2B or B2C Checker**
+
+Returns company's business type
+
+```typescript
+const result = await client.cbc('stripe.com')
+console.log(result.business_type);
+```
+
+**CSC - Company Mission Statement**
+
+Returns company's mission statement
+
+```typescript
+const result = await client.csc('stripe.com')
+console.log(result.mission_statement);
+```
+
+**CSN - Company Snapshot**
+
+Returns company's snapshot information
+
+```typescript
+const result = await client.csn('stripe.com')
+console.log(result.company_snapshot);
+```
+
+**NAO - Phone Number Normalizer**
+
+Returns normalized phone
+
+```typescript
+const result = await client.nao('+18006676389')
+console.log(result.phone); // +1 800 667 6389
+```
+
+**NAA - Address Normalizer**
+
+Returns normalized address
+
+```typescript
+const result = await client.naa('1095 avenue of the Americas, 6th Avenue ny 10036')
+console.log(result.address); // 1095 AVENUE OF THE AMERICAS 6TH AVENUE NY 10036
 ```
 
 ## Error Handling

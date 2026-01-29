@@ -1,9 +1,14 @@
 import { BaseApiClient } from './base_api_client';
 import {
+    BcdResponse,
     CarResponse,
+    CbcResponse,
+    CcpResponse,
     CecResponse,
     CloResponse,
+    CscResponse,
     CseResponse,
+    CsnResponse,
     CufResponse,
     DtcResponse,
     DteResponse,
@@ -14,8 +19,11 @@ import {
     FclResponse,
     FtsResponse,
     FweResponse,
+    IscResponse,
     LbsResponse,
     LcufResponse,
+    NaaResponse,
+    NaoResponse,
     NtpResponse,
     PseResponse,
     RelResponse,
@@ -25,10 +33,15 @@ import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/
 
 // Services
 import {
+    BcdService,
     CarService,
+    CbcService,
+    CcpService,
     CecService,
     CloService,
+    CscService,
     CseService,
+    CsnService,
     CufService,
     DtcService,
     DteService,
@@ -39,8 +52,11 @@ import {
     FclService,
     FtsService,
     FweService,
+    IscService,
     LbsService,
     LcufService,
+    NaaService,
+    NaoService,
     NtpService,
     PseService,
     RelService,
@@ -302,7 +318,7 @@ export class Cufinder {
     /**
      * Search for local businesses
      * @param params - Optional search parameters
-     * @returns Promise resolving to local business search results
+     * @returns The local business search results
      * @example
      * ```typescript
      * const result = await client.lbs({
@@ -314,6 +330,102 @@ export class Cufinder {
      * ```
      */
     public readonly lbs: (params?: LbsParams) => Promise<LbsResponse>;
+
+    /**
+     * Extract B2B Customers From the Domain
+     * @param url - The domain to extract B2B customers for
+     * @returns List of business names
+     * @example
+     * ```typescript
+     * const result = await client.bcd('stripe.com');
+     * console.log(result);
+     * ```
+     */
+    public readonly bcd: (url: string) => Promise<BcdResponse>;
+
+    /**
+     * Find company careers page
+     * @param url - The company domain you want to find it's career page
+     * @returns Company's careers page
+     * @example
+     * ```typescript
+     * const result = await client.ccp('stripe.com');
+     * console.log(result);
+     * ```
+     */
+    public readonly ccp: (url: string) => Promise<CcpResponse>;
+
+    /**
+     * Check company you want to know is saas or not
+     * @param url - The company domain you want to check is saas or not
+     * @returns Is company SaaS or not
+     * @example
+     * ```typescript
+     * const result = await client.isc('stripe.com')
+     * console.log(result.is_saas);
+     * ```
+     */
+    public readonly isc: (url: string) => Promise<IscResponse>;
+
+    /**
+     * Get a company's business type
+     * @param url - The company domain you want to check
+     * @returns Company's business type
+     * @example
+     * ```typescript
+     * const result = await client.cbc('stripe.com')
+     * console.log(result.business_type);
+     * ```
+     */
+    public readonly cbc: (url: string) => Promise<CbcResponse>;
+
+    /**
+     * Get company mission statement
+     * @param url - The company domain you want to check
+     * @returns Company's mission statement
+     * @example
+     * ```typescript
+     * const result = await client.csc('stripe.com')
+     * console.log(result.mission_statement);
+     * ```
+     */
+    public readonly csc: (url: string) => Promise<CscResponse>;
+
+    /**
+     * Get company snapshot info
+     * @param url - The company domain you want to check
+     * @returns Company's snapshot information
+     * @example
+     * ```typescript
+     * const result = await client.csn('stripe.com')
+     * console.log(result.company_snapshot);
+     * ```
+     */
+    public readonly csn: (url: string) => Promise<CsnResponse>;
+
+    /**
+     * Normalize phone number
+     * @param phone - The phone number you want to normalize
+     * @returns Normalized phone
+     * @example
+     * ```typescript
+     * const result = await client.nao('+18006676389')
+     * console.log(result.phone); // +1 800 667 6389
+     * ```
+     */
+    public readonly nao: (phone: string) => Promise<NaoResponse>;
+
+    /**
+     * Get normalized address
+     * @param address - The address you want to normalize
+     * @returns Normalized address
+     * @example
+     * ```typescript
+     * const result = await client.naa('1095 avenue of the Americas, 6th Avenue ny 10036')
+     * console.log(result.address); // 1095 AVENUE OF THE AMERICAS 6TH AVENUE NY 10036
+     * ```
+     */
+    public readonly naa: (address: string) => Promise<NaaResponse>;
 
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
@@ -339,6 +451,14 @@ export class Cufinder {
         const cse = new CseService(this.client);
         const pse = new PseService(this.client);
         const lbs = new LbsService(this.client);
+        const bcd = new BcdService(this.client);
+        const ccp = new CcpService(this.client);
+        const isc = new IscService(this.client);
+        const cbc = new CbcService(this.client);
+        const csc = new CscService(this.client);
+        const csn = new CsnService(this.client);
+        const nao = new NaoService(this.client);
+        const naa = new NaaService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -361,5 +481,13 @@ export class Cufinder {
         this.cse = params => cse.searchCompanies(params);
         this.pse = params => pse.searchPeople(params);
         this.lbs = params => lbs.searchLocalBusinesses(params);
+        this.bcd = url => bcd.extractB2BCustomers(url);
+        this.ccp = url => ccp.findCareersPage(url);
+        this.isc = url => isc.isSaas(url);
+        this.cbc = url => cbc.getCompanyBusinessType(url);
+        this.csc = url => csc.getCompanyMissionStatment(url);
+        this.csn = url => csn.getCompanySnapshot(url);
+        this.nao = phone => nao.normalizePhone(phone);
+        this.naa = address => naa.normalizeAddress(address);
     }
 }

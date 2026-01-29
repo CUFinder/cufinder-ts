@@ -1,20 +1,13 @@
-import { FtsResponse } from '../shared/types';
 import { BaseService } from './base';
+import { FtsResponse } from '../shared/types';
 
 /**
  * FTS - Company Tech Stack Finder API (V2)
- * Detects the technologies a company uses
  */
 export class FtsService extends BaseService {
     /**
      * Get company tech stack
      * @param query - The company name to get tech stack for
-     * @returns Promise resolving to tech stack data
-     * @example
-     * ```typescript
-     * const result = await client.fts('apple');
-     * console.log(result.tech_stack);
-     * ```
      */
     public async getTechStack(query: string): Promise<FtsResponse> {
         try {

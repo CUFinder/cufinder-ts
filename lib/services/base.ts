@@ -3,7 +3,6 @@ import { CufinderError } from '../shared/types';
 
 /**
  * Base service class that provides common functionality for all services
- * Follows SOLID principles by providing a single responsibility base class
  */
 export abstract class BaseService {
     protected client: BaseApiClient;
