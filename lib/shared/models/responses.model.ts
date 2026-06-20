@@ -214,3 +214,10 @@ export interface NaaResponse extends BaseResponse {
 export interface CefResponse extends BaseResponse {
     employees: Record<string, unknown>[];
 }
+
+/**
+ * NAC Response
+ */
+export interface NacResponse extends BaseResponse {
+    company: string;
+}

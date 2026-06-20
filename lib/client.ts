@@ -29,6 +29,7 @@ import {
     RelResponse,
     TepResponse,
     CefResponse,
+    NacResponse,
 } from './shared/models/responses.model';
 import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/types';
 
@@ -63,6 +64,7 @@ import {
     RelService,
     TepService,
     CefService,
+    NacService,
 } from './services';
 
 /**
@@ -442,6 +444,18 @@ export class Cufinder {
      */
     public readonly cef: (query: string, page?: number) => Promise<CefResponse>;
 
+    /**
+     * Normalize company name
+     * @param company - The company name to normalize
+     * @returns Promise resolving to normalized company name
+     * @example
+     * ```typescript
+     * const result = await client.nac('acme llc');
+     * console.log(result.company); // 'Acme LLC'
+     * ```
+     */
+    public readonly nac: (company: string) => Promise<NacResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -475,6 +489,7 @@ export class Cufinder {
         const nao = new NaoService(this.client);
         const naa = new NaaService(this.client);
         const cef = new CefService(this.client);
+        const nac = new NacService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -506,5 +521,6 @@ export class Cufinder {
         this.nao = phone => nao.normalizePhone(phone);
         this.naa = address => naa.normalizeAddress(address);
         this.cef = (query, page) => cef.findCompanyEmployees(query, page);
+        this.nac = company => nac.normalizeCompanyName(company);
     }
 }
