@@ -47,7 +47,7 @@ describe('CAA', () => {
                 headers: {},
             });
 
-            const result = await service.getCompanyActivities({ query: 'TechCorp' });
+            const result = await service.getCompanyActivities('TechCorp');
 
             expect(result).toEqual(mockResponse);
             expect(mockClient.post).toHaveBeenCalledWith('/caa', {
@@ -64,7 +64,7 @@ describe('CAA', () => {
                 headers: {},
             });
 
-            await service.getCompanyActivities({ query: 'TechCorp', page: 2 });
+            await service.getCompanyActivities('TechCorp', 2);
 
             expect(mockClient.post).toHaveBeenCalledWith('/caa', {
                 query: 'TechCorp',
@@ -80,7 +80,7 @@ describe('CAA', () => {
                 headers: {},
             });
 
-            await service.getCompanyActivities({ query: '  TechCorp  ' });
+            await service.getCompanyActivities('  TechCorp  ');
 
             expect(mockClient.post).toHaveBeenCalledWith('/caa', {
                 query: 'TechCorp',
@@ -92,7 +92,7 @@ describe('CAA', () => {
             const error = new Error('Network error');
             mockClient.post.mockRejectedValue(error);
 
-            await expect(service.getCompanyActivities({ query: 'TechCorp' })).rejects.toThrow(
+            await expect(service.getCompanyActivities('TechCorp')).rejects.toThrow(
                 'Network error'
             );
         });
