@@ -4,6 +4,7 @@ import {
     Company,
     CompanySearchResult,
     CompanySnapshotInfo,
+    CjaResult,
     FundraisingInfo,
     LocalBusinessResult,
     LookalikeCompany,
@@ -227,4 +228,11 @@ export interface NacResponse extends BaseResponse {
  */
 export interface CaaResponse extends BaseResponse {
     activities: Record<string, unknown>[];
+}
+
+/**
+ * CJA Response
+ */
+export interface CjaResponse extends BaseResponse {
+    jobs: CjaResult[];
 }

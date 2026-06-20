@@ -31,8 +31,9 @@ import {
     CefResponse,
     NacResponse,
     CaaResponse,
+    CjaResponse,
 } from './shared/models/responses.model';
-import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/types';
+import { CjaParams, CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/types';
 
 // Services
 import {
@@ -67,6 +68,7 @@ import {
     CefService,
     NacService,
     CaaService,
+    CjaService,
 } from './services';
 
 /**
@@ -471,6 +473,18 @@ export class Cufinder {
      */
     public readonly caa: (query: string, page?: number) => Promise<CaaResponse>;
 
+    /**
+     * Search for company jobs
+     * @param params - Optional search parameters
+     * @returns Promise resolving to job search results
+     * @example
+     * ```typescript
+     * const result = await client.cja({ name: 'google' });
+     * console.log(result.jobs);
+     * ```
+     */
+    public readonly cja: (params?: CjaParams) => Promise<CjaResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -506,6 +520,7 @@ export class Cufinder {
         const cef = new CefService(this.client);
         const nac = new NacService(this.client);
         const caa = new CaaService(this.client);
+        const cja = new CjaService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -539,5 +554,6 @@ export class Cufinder {
         this.cef = (query, page) => cef.findCompanyEmployees(query, page);
         this.nac = company => nac.normalizeCompanyName(company);
         this.caa = (query, page) => caa.getCompanyActivities(query, page);
+        this.cja = params => cja.searchCompanyJobs(params);
     }
 }
