@@ -30,6 +30,7 @@ import {
     TepResponse,
     CefResponse,
     NacResponse,
+    CaaResponse,
 } from './shared/models/responses.model';
 import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/types';
 
@@ -65,6 +66,7 @@ import {
     TepService,
     CefService,
     NacService,
+    CaaService,
 } from './services';
 
 /**
@@ -456,6 +458,19 @@ export class Cufinder {
      */
     public readonly nac: (company: string) => Promise<NacResponse>;
 
+    /**
+     * Get company activities
+     * @param query - The company name / website / linkedin URL
+     * @param page - The page of result
+     * @returns Promise resolving to company activity data
+     * @example
+     * ```typescript
+     * const result = await client.caa('cufinder', 1);
+     * console.log(result.activities);
+     * ```
+     */
+    public readonly caa: (query: string, page?: number) => Promise<CaaResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -490,6 +505,7 @@ export class Cufinder {
         const naa = new NaaService(this.client);
         const cef = new CefService(this.client);
         const nac = new NacService(this.client);
+        const caa = new CaaService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -522,5 +538,6 @@ export class Cufinder {
         this.naa = address => naa.normalizeAddress(address);
         this.cef = (query, page) => cef.findCompanyEmployees(query, page);
         this.nac = company => nac.normalizeCompanyName(company);
+        this.caa = (query, page) => caa.getCompanyActivities(query, page);
     }
 }

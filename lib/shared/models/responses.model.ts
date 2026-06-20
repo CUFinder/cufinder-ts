@@ -221,3 +221,10 @@ export interface CefResponse extends BaseResponse {
 export interface NacResponse extends BaseResponse {
     company: string;
 }
+
+/**
+ * CAA Response
+ */
+export interface CaaResponse extends BaseResponse {
+    activities: Record<string, unknown>[];
+}
