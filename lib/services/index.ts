@@ -27,3 +27,7 @@ export { CscService } from './csc';
 export { CsnService } from './csn';
 export { NaoService } from './nao';
 export { NaaService } from './naa';
+export { CefService } from './cef';
+export { NacService } from './nac';
+export { CaaService } from './caa';
+export { CjaService } from './cja';

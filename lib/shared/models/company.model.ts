@@ -226,3 +226,43 @@ export interface CompanySnapshotInfo {
     target_personas: [];
     value_proposition: null;
 }
+
+/**
+ * CJA Company model (within job listing)
+ */
+export interface CjaCompany {
+    name: string | null;
+    industry: string | null;
+    website: string | null;
+    linkedin: string | null;
+    followers_count: number | null;
+    employees: { range: string | null };
+    founded_date: string | null;
+    annual_revenue: string | null;
+    funding_amount: number | null;
+    main_location: {
+        country: string | null;
+        state: string | null;
+        city: string | null;
+    };
+}
+
+/**
+ * CJA Job model
+ */
+export interface CjaJob {
+    job_id: string | null;
+    title: string | null;
+    url: string | null;
+    location: string | null;
+    posted_at: string | null;
+    posted_at_text: string | null;
+}
+
+/**
+ * CJA Result model (job listing with company info)
+ */
+export interface CjaResult {
+    company: CjaCompany;
+    job: CjaJob;
+}
