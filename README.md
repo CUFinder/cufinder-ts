@@ -43,7 +43,7 @@ const client = new Cufinder('your-api-key-here', { timeout: 60000 });
 
 ## API Reference
 
-This SDK covers all 20 Cufinder API (v2) endpoints:
+This SDK covers all 32 Cufinder API (v2) endpoints:
 
 - **CUF** - [Company Name to Domain](https://apidoc.cufinder.io/apis/company-name-to-domain)
 - **LCUF** - [LinkedIn Company URL Finder](https://apidoc.cufinder.io/apis/company-linkedin-url-finder)
@@ -73,6 +73,10 @@ This SDK covers all 20 Cufinder API (v2) endpoints:
 - **CSN** - [Company Snapshot](https://apidoc.cufinder.io/apis/company-snapshot)
 - **NAO** - [Phone Number Normalizer](https://apidoc.cufinder.io/apis/phone-number-normalizer)
 - **NAA** - [Address Normalizer](https://apidoc.cufinder.io/apis/address-normalizer)
+- **CEF** - [Company Employee Finder](https://apidoc.cufinder.io/apis/company-employee-finder)
+- **NAC** - [Company Name Normalizer](https://apidoc.cufinder.io/apis/company-name-normalizer)
+- **CAA** - [Company Activity API](https://apidoc.cufinder.io/apis/company-activity-api)
+- **CJA** - [Company Jobs API](https://apidoc.cufinder.io/apis/company-jobs-api)
 
 
 **CUF - Company Name to Domain**
@@ -291,7 +295,7 @@ Returns is company SaaS or not
 
 ```typescript
 const result = await client.isc('stripe.com')
-console.log(result.is_saas);
+console.log(result);
 ```
 
 **CBC - Company B2B or B2C Checker**
@@ -300,7 +304,7 @@ Returns company's business type
 
 ```typescript
 const result = await client.cbc('stripe.com')
-console.log(result.business_type);
+console.log(result);
 ```
 
 **CSC - Company Mission Statement**
@@ -309,7 +313,7 @@ Returns company's mission statement
 
 ```typescript
 const result = await client.csc('stripe.com')
-console.log(result.mission_statement);
+console.log(result);
 ```
 
 **CSN - Company Snapshot**
@@ -318,7 +322,7 @@ Returns company's snapshot information
 
 ```typescript
 const result = await client.csn('stripe.com')
-console.log(result.company_snapshot);
+console.log(result);
 ```
 
 **NAO - Phone Number Normalizer**
@@ -327,7 +331,7 @@ Returns normalized phone
 
 ```typescript
 const result = await client.nao('+18006676389')
-console.log(result.phone); // +1 800 667 6389
+console.log(result);
 ```
 
 **NAA - Address Normalizer**
@@ -336,7 +340,48 @@ Returns normalized address
 
 ```typescript
 const result = await client.naa('1095 avenue of the Americas, 6th Avenue ny 10036')
-console.log(result.address); // 1095 AVENUE OF THE AMERICAS 6TH AVENUE NY 10036
+console.log(result);
+```
+
+**CEF - Company Employee Finder**
+
+Returns a list of employees for a given company. Supports pagination.
+
+```typescript
+const result = await client.cef('cufinder', 1);
+console.log(result.employees);
+```
+
+**NAC - Company Name Normalizer**
+
+Normalizes a raw company name by properly capitalizing words and legal suffixes (e.g., LLC, Inc., Corp.).
+
+```typescript
+const result = await client.nac('acme llc');
+console.log(result.company); // 'Acme LLC'
+```
+
+**CAA - Company Activity API**
+
+Returns recent activities and events for a company. Supports pagination.
+
+```typescript
+const result = await client.caa('cufinder', 1);
+console.log(result.activities);
+```
+
+**CJA - Company Jobs API**
+
+Search for job listings at companies. Supports filtering by location, industry, company size, funding, and more.
+
+```typescript
+const result = await client.cja({
+  name: 'google',
+  country: 'US',
+  industry: 'Technology',
+  page: 1
+});
+console.log(result.jobs);
 ```
 
 ## Error Handling
@@ -394,6 +439,10 @@ import type {
   CseParams,
   PseParams,
   LbsParams,
+  CefParams,
+  NacParams,
+  CaaParams,
+  CjaParams,
 
   // Response types
   BaseResponse,
@@ -406,10 +455,13 @@ import type {
   FundraisingInfo,
   CompanyLocation,
   TepPerson,
-  CloCompanyLocation
+  CloCompanyLocation,
   CompanySearchResult,
   PersonSearchResult,
   LocalBusinessResult,
+  CjaCompany,
+  CjaJob,
+  CjaResult,
 
   // Configuration
   CufinderClientConfig,
