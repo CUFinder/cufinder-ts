@@ -1,5 +1,22 @@
 # Cufinder TypeScript SDK Changelog
 
+## 1.5.0 (June 20, 2026)
+
+#### Features
+- **New V2 API services**: Add new V2 services including `CEF`, `NAC`, `CAA` and `CJA`
+  - **CEF** - Company Employee Finder: Find employees by company name
+  - **NAC** - Company Name Normalizer: Normalize and properly capitalize company names
+  - **CAA** - Company Activity API: Get company activities and events
+  - **CJA** - Company Jobs API: Search for job listings with advanced filters
+
+#### Documentation
+- **Updated README.md**: Add API reference for all new services with usage examples
+- **Updated CHANGELOG.md**: Documented new service additions
+
+
+
+
+
 ## 1.4.0 (January 29, 2025)
 
 #### Features
@@ -11,10 +28,14 @@
 
 
 
+
+
 ## 1.3.1 (November 5, 2025)
 
 #### Documentation
 - **Updated README.md**: Add API reference for all services
+
+
 
 
 
@@ -34,6 +55,8 @@
 #### Maintenance
 - **Updated JSDoc examples**: Synchronized all JSDoc `@example` tags in `client.ts` to match README.md examples
 - **Improved documentation consistency**: Ensured all service examples use consistent `const result = await client.method(...)` and `console.log(result)` format
+
+
 
 
 
@@ -83,6 +106,8 @@
 
 
 
+
+
 ## 1.1.0
 
 #### Features
@@ -110,9 +135,13 @@
 
 
 
+
+
 ## 1.0.2
 
 Initial stable release with basic API functionality.
+
+
 
 
 

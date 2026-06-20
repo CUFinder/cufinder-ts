@@ -47,7 +47,7 @@ describe('CEF', () => {
                 headers: {},
             });
 
-            const result = await service.findCompanyEmployees({ query: 'TechCorp' });
+            const result = await service.findCompanyEmployees('TechCorp');
 
             expect(result).toEqual(mockResponse);
             expect(mockClient.post).toHaveBeenCalledWith('/cef', {
@@ -64,7 +64,7 @@ describe('CEF', () => {
                 headers: {},
             });
 
-            await service.findCompanyEmployees({ query: 'TechCorp', page: 2 });
+            await service.findCompanyEmployees('TechCorp', 2);
 
             expect(mockClient.post).toHaveBeenCalledWith('/cef', {
                 query: 'TechCorp',
@@ -80,7 +80,7 @@ describe('CEF', () => {
                 headers: {},
             });
 
-            await service.findCompanyEmployees({ query: '  TechCorp  ' });
+            await service.findCompanyEmployees('  TechCorp  ');
 
             expect(mockClient.post).toHaveBeenCalledWith('/cef', {
                 query: 'TechCorp',
@@ -92,7 +92,7 @@ describe('CEF', () => {
             const error = new Error('Network error');
             mockClient.post.mockRejectedValue(error);
 
-            await expect(service.findCompanyEmployees({ query: 'TechCorp' })).rejects.toThrow(
+            await expect(service.findCompanyEmployees('TechCorp')).rejects.toThrow(
                 'Network error'
             );
         });
