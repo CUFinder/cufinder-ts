@@ -28,6 +28,7 @@ import {
     PseResponse,
     RelResponse,
     TepResponse,
+    CefResponse,
 } from './shared/models/responses.model';
 import { CseParams, CufinderClientConfig, LbsParams, PseParams } from './shared/types';
 
@@ -61,6 +62,7 @@ import {
     PseService,
     RelService,
     TepService,
+    CefService,
 } from './services';
 
 /**
@@ -427,6 +429,19 @@ export class Cufinder {
      */
     public readonly naa: (address: string) => Promise<NaaResponse>;
 
+    /**
+     * Find company employees
+     * @param query - The company name / website / linkedin URL
+     * @param page - The page of result
+     * @returns Promise resolving to company employee data
+     * @example
+     * ```typescript
+     * const result = await client.cef('cufinder', 1);
+     * console.log(result.employees);
+     * ```
+     */
+    public readonly cef: (query: string, page?: number) => Promise<CefResponse>;
+
     constructor(apiKey: string, options?: CufinderClientConfig) {
         this.client = new BaseApiClient({ apiKey, ...options });
 
@@ -459,6 +474,7 @@ export class Cufinder {
         const csn = new CsnService(this.client);
         const nao = new NaoService(this.client);
         const naa = new NaaService(this.client);
+        const cef = new CefService(this.client);
 
         // Expose services as direct functions
         this.cuf = (companyName, countryCode) => cuf.getDomain(companyName, countryCode);
@@ -489,5 +505,6 @@ export class Cufinder {
         this.csn = url => csn.getCompanySnapshot(url);
         this.nao = phone => nao.normalizePhone(phone);
         this.naa = address => naa.normalizeAddress(address);
+        this.cef = (query, page) => cef.findCompanyEmployees(query, page);
     }
 }

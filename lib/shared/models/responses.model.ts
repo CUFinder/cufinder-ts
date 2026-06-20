@@ -207,3 +207,10 @@ export interface NaoResponse extends BaseResponse {
 export interface NaaResponse extends BaseResponse {
     address: string;
 }
+
+/**
+ * CEF Response
+ */
+export interface CefResponse extends BaseResponse {
+    employees: Record<string, unknown>[];
+}
